@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(remint_basic_test)
 
     pwalletMain->SetBroadcastTransactions(true);
 
-    // Mint 1 FIVEG zerocoin and remint it on wrong fork
+    // Mint 1 VGC zerocoin and remint it on wrong fork
     BOOST_CHECK_MESSAGE(pwalletMain->CreateZerocoinMintModel(stringError, "1"), stringError + " - Create Mint failed");
     CreateAndProcessBlock({}, scriptPubKey);
     CBlockIndex *forkBlockIndex = chainActive.Tip();

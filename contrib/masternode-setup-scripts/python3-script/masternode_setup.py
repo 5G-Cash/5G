@@ -235,8 +235,8 @@ def porologe():
     Alias: zn{}
     IP: {}
     Private key: {}
-    Transaction ID: [10k FIVEG deposit transaction id. 'fivegnode outputs']
-    Transaction fiveg: [10k FIVEG deposit transaction fiveg. 'fivegnode outputs']
+    Transaction ID: [10k VGC deposit transaction id. 'fivegnode outputs']
+    Transaction fiveg: [10k VGC deposit transaction fiveg. 'fivegnode outputs']
     mnconf line :
     {} {} {} txhash txindex
     --------------------------------------------------

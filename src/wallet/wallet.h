@@ -801,7 +801,7 @@ public:
     void ListLockedCoins(std::vector<COutPoint>& vOutpts);
 
     // fivegnode
-    /// Get 10000 FIVEG output and keys which can be used for the Fivegnode
+    /// Get 50000 VGC output and keys which can be used for the Fivegnode
     bool GetFivegnodeVinAndKeys(CTxIn& txinRet, CPubKey& pubKeyRet, CKey& keyRet, std::string strTxHash = "", std::string strOutputIndex = "");
     /// Extract txin information and keys from output
     bool GetVinAndKeysFromOutput(COutput out, CTxIn& txinRet, CPubKey& pubKeyRet, CKey& keyRet);

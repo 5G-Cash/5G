@@ -3766,13 +3766,13 @@ int GetInputAge(const CTxIn &txin) {
 }
 
 CAmount GetFivegnodePayment(const Consensus::Params &params, bool fMTP,int nHeight) {
-if(nHeight > Params().GetConsensus().nFivegnodePaymentsStartBlock)
-{
-    //Give 45 % to masternode
-    return GetBlockSubsidy(nHeight,params) * 0.45;
-}
-    //No reward before fivegnodepaymentsstartblock
-    return 0;
+    if(nHeight > Params().GetConsensus().nFivegnodePaymentsStartBlock)
+    {
+        //Give 45 % to masternode
+        return GetBlockSubsidy(nHeight,params) * 0.45;
+    }
+        //No reward before fivegnodepaymentsstartblock
+        return 0;
 }
 
 bool DisconnectBlocks(int blocks) {
@@ -4597,14 +4597,14 @@ bool CheckBlock(const CBlock &block, CValidationState &state,
                         instantsend.Relay(hashLocked);
                         LOCK(cs_main);
                         mapRejectedBlocks.insert(make_pair(block.GetHash(), GetTime()));
-                        return state.DoS(0, error("CheckBlock(FIVEG): transaction %s conflicts with transaction lock %s",
+                        return state.DoS(0, error("CheckBlock(VGC): transaction %s conflicts with transaction lock %s",
                                                   tx.GetHash().ToString(), hashLocked.ToString()),
                                          REJECT_INVALID, "conflict-tx-lock");
                     }
                 }
             }
         } else {
-            LogPrintf("CheckBlock(FIVEG): spork is off, skipping transaction locking checks\n");
+            LogPrintf("CheckBlock(VGC): spork is off, skipping transaction locking checks\n");
         }
 
         // Check transactions

@@ -234,7 +234,7 @@ void CActiveFivegnode::ManageStateInitial() {
     }
 
     if (pwalletMain->GetBalance() < FIVEGNODE_COIN_REQUIRED * COIN) {
-        LogPrintf("CActiveFivegnode::ManageStateInitial -- %s: Wallet balance is < 10000 FIVEG\n", GetStateString());
+        LogPrintf("CActiveFivegnode::ManageStateInitial -- %s: Wallet balance is < 50000 VGC\n", GetStateString());
         return;
     }
 
