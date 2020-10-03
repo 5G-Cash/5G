@@ -91,7 +91,7 @@ public:
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         //static const int64 nInterval = nTargetTimespan / nTargetSpacing;
         consensus.nPowTargetTimespan = 40 * 60; // 40 minutes between retargets 
-        consensus.nPowTargetSpacing = 120; // alternate PoW/PoS every one minute
+        consensus.nPowTargetSpacing = 10 * 60; // alternate PoW/PoS every five minutes
         consensus.nDgwPastBlocks = 30; // number of blocks to average in Dark Gravity Wave
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
