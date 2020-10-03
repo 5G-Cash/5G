@@ -95,18 +95,18 @@ int netinfo_addr_set_addr_ipv4(netinfo_addr_t *inp, uint32_t val);
  * field of the netinfo_addr_t in 'inp'.
  */
 size_t netinfo_addr_getlen_addr_ipv6(const netinfo_addr_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * addr_ipv6 of the netinfo_addr_t in 'inp'.
  */
-uint8_t netinfo_addr_get_addr_ipv6(netinfo_addr_t *inp, size_t idx);
+uint8_t netinfo_addr_get_addr_ipv6(netinfo_addr_t *inp, size_t vgc);
 /** As netinfo_addr_get_addr_ipv6, but take and return a const pointer
  */
-uint8_t netinfo_addr_getconst_addr_ipv6(const netinfo_addr_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t netinfo_addr_getconst_addr_ipv6(const netinfo_addr_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * addr_ipv6 of the netinfo_addr_t in 'inp', so that it will hold the
  * value 'elt'.
  */
-int netinfo_addr_set_addr_ipv6(netinfo_addr_t *inp, size_t idx, uint8_t elt);
+int netinfo_addr_set_addr_ipv6(netinfo_addr_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 16-element array field addr_ipv6 of 'inp'.
  */
 uint8_t * netinfo_addr_getarray_addr_ipv6(netinfo_addr_t *inp);
@@ -188,22 +188,22 @@ int netinfo_cell_set_n_my_addrs(netinfo_cell_t *inp, uint8_t val);
  * of the netinfo_cell_t in 'inp'.
  */
 size_t netinfo_cell_getlen_my_addrs(const netinfo_cell_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * my_addrs of the netinfo_cell_t in 'inp'.
  */
-struct netinfo_addr_st * netinfo_cell_get_my_addrs(netinfo_cell_t *inp, size_t idx);
+struct netinfo_addr_st * netinfo_cell_get_my_addrs(netinfo_cell_t *inp, size_t vgc);
 /** As netinfo_cell_get_my_addrs, but take and return a const pointer
  */
- const struct netinfo_addr_st * netinfo_cell_getconst_my_addrs(const netinfo_cell_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+ const struct netinfo_addr_st * netinfo_cell_getconst_my_addrs(const netinfo_cell_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * my_addrs of the netinfo_cell_t in 'inp', so that it will hold the
  * value 'elt'. Free the previous value, if any.
  */
-int netinfo_cell_set_my_addrs(netinfo_cell_t *inp, size_t idx, struct netinfo_addr_st * elt);
+int netinfo_cell_set_my_addrs(netinfo_cell_t *inp, size_t vgc, struct netinfo_addr_st * elt);
 /** As netinfo_cell_set_my_addrs, but does not free the previous
  * value.
  */
-int netinfo_cell_set0_my_addrs(netinfo_cell_t *inp, size_t idx, struct netinfo_addr_st * elt);
+int netinfo_cell_set0_my_addrs(netinfo_cell_t *inp, size_t vgc, struct netinfo_addr_st * elt);
 /** Append a new element 'elt' to the dynamic array field my_addrs of
  * the netinfo_cell_t in 'inp'.
  */

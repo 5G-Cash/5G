@@ -115,8 +115,8 @@ BOOST_AUTO_TEST_CASE(tx_valid)
     UniValue tests = read_json(std::string(json_tests::tx_valid, json_tests::tx_valid + sizeof(json_tests::tx_valid)));
 
     ScriptError err;
-    for (unsigned int idx = 0; idx < tests.size(); idx++) {
-        UniValue test = tests[idx];
+    for (unsigned int vgc = 0; vgc < tests.size(); vgc++) {
+        UniValue test = tests[vgc];
         string strTest = test.write();
         if (test[0].isArray())
         {
@@ -201,8 +201,8 @@ BOOST_AUTO_TEST_CASE(tx_invalid)
     UniValue tests = read_json(std::string(json_tests::tx_invalid, json_tests::tx_invalid + sizeof(json_tests::tx_invalid)));
 
     ScriptError err;
-    for (unsigned int idx = 0; idx < tests.size(); idx++) {
-        UniValue test = tests[idx];
+    for (unsigned int vgc = 0; vgc < tests.size(); vgc++) {
+        UniValue test = tests[vgc];
         string strTest = test.write();
         if (test[0].isArray())
         {

@@ -156,18 +156,18 @@ int domainname_set_len(domainname_t *inp, uint8_t val);
  * the domainname_t in 'inp'.
  */
 size_t domainname_getlen_name(const domainname_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * name of the domainname_t in 'inp'.
  */
-char domainname_get_name(domainname_t *inp, size_t idx);
+char domainname_get_name(domainname_t *inp, size_t vgc);
 /** As domainname_get_name, but take and return a const pointer
  */
-char domainname_getconst_name(const domainname_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+char domainname_getconst_name(const domainname_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * name of the domainname_t in 'inp', so that it will hold the value
  * 'elt'.
  */
-int domainname_set_name(domainname_t *inp, size_t idx, char elt);
+int domainname_set_name(domainname_t *inp, size_t vgc, char elt);
 /** Append a new element 'elt' to the dynamic array field name of the
  * domainname_t in 'inp'.
  */
@@ -421,19 +421,19 @@ int socks5_client_userpass_auth_set_username_len(socks5_client_userpass_auth_t *
  * of the socks5_client_userpass_auth_t in 'inp'.
  */
 size_t socks5_client_userpass_auth_getlen_username(const socks5_client_userpass_auth_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * username of the socks5_client_userpass_auth_t in 'inp'.
  */
-char socks5_client_userpass_auth_get_username(socks5_client_userpass_auth_t *inp, size_t idx);
+char socks5_client_userpass_auth_get_username(socks5_client_userpass_auth_t *inp, size_t vgc);
 /** As socks5_client_userpass_auth_get_username, but take and return a
  * const pointer
  */
-char socks5_client_userpass_auth_getconst_username(const socks5_client_userpass_auth_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+char socks5_client_userpass_auth_getconst_username(const socks5_client_userpass_auth_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * username of the socks5_client_userpass_auth_t in 'inp', so that it
  * will hold the value 'elt'.
  */
-int socks5_client_userpass_auth_set_username(socks5_client_userpass_auth_t *inp, size_t idx, char elt);
+int socks5_client_userpass_auth_set_username(socks5_client_userpass_auth_t *inp, size_t vgc, char elt);
 /** Append a new element 'elt' to the dynamic array field username of
  * the socks5_client_userpass_auth_t in 'inp'.
  */
@@ -480,19 +480,19 @@ int socks5_client_userpass_auth_set_passwd_len(socks5_client_userpass_auth_t *in
  * the socks5_client_userpass_auth_t in 'inp'.
  */
 size_t socks5_client_userpass_auth_getlen_passwd(const socks5_client_userpass_auth_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * passwd of the socks5_client_userpass_auth_t in 'inp'.
  */
-char socks5_client_userpass_auth_get_passwd(socks5_client_userpass_auth_t *inp, size_t idx);
+char socks5_client_userpass_auth_get_passwd(socks5_client_userpass_auth_t *inp, size_t vgc);
 /** As socks5_client_userpass_auth_get_passwd, but take and return a
  * const pointer
  */
-char socks5_client_userpass_auth_getconst_passwd(const socks5_client_userpass_auth_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+char socks5_client_userpass_auth_getconst_passwd(const socks5_client_userpass_auth_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * passwd of the socks5_client_userpass_auth_t in 'inp', so that it
  * will hold the value 'elt'.
  */
-int socks5_client_userpass_auth_set_passwd(socks5_client_userpass_auth_t *inp, size_t idx, char elt);
+int socks5_client_userpass_auth_set_passwd(socks5_client_userpass_auth_t *inp, size_t vgc, char elt);
 /** Append a new element 'elt' to the dynamic array field passwd of
  * the socks5_client_userpass_auth_t in 'inp'.
  */
@@ -584,19 +584,19 @@ int socks5_client_version_set_n_methods(socks5_client_version_t *inp, uint8_t va
  * of the socks5_client_version_t in 'inp'.
  */
 size_t socks5_client_version_getlen_methods(const socks5_client_version_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * methods of the socks5_client_version_t in 'inp'.
  */
-uint8_t socks5_client_version_get_methods(socks5_client_version_t *inp, size_t idx);
+uint8_t socks5_client_version_get_methods(socks5_client_version_t *inp, size_t vgc);
 /** As socks5_client_version_get_methods, but take and return a const
  * pointer
  */
-uint8_t socks5_client_version_getconst_methods(const socks5_client_version_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t socks5_client_version_getconst_methods(const socks5_client_version_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * methods of the socks5_client_version_t in 'inp', so that it will
  * hold the value 'elt'.
  */
-int socks5_client_version_set_methods(socks5_client_version_t *inp, size_t idx, uint8_t elt);
+int socks5_client_version_set_methods(socks5_client_version_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field methods of
  * the socks5_client_version_t in 'inp'.
  */
@@ -809,19 +809,19 @@ int socks5_client_request_set_dest_addr_ipv4(socks5_client_request_t *inp, uint3
  * dest_addr_ipv6 field of the socks5_client_request_t in 'inp'.
  */
 size_t socks5_client_request_getlen_dest_addr_ipv6(const socks5_client_request_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * dest_addr_ipv6 of the socks5_client_request_t in 'inp'.
  */
-uint8_t socks5_client_request_get_dest_addr_ipv6(socks5_client_request_t *inp, size_t idx);
+uint8_t socks5_client_request_get_dest_addr_ipv6(socks5_client_request_t *inp, size_t vgc);
 /** As socks5_client_request_get_dest_addr_ipv6, but take and return a
  * const pointer
  */
-uint8_t socks5_client_request_getconst_dest_addr_ipv6(const socks5_client_request_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t socks5_client_request_getconst_dest_addr_ipv6(const socks5_client_request_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * dest_addr_ipv6 of the socks5_client_request_t in 'inp', so that it
  * will hold the value 'elt'.
  */
-int socks5_client_request_set_dest_addr_ipv6(socks5_client_request_t *inp, size_t idx, uint8_t elt);
+int socks5_client_request_set_dest_addr_ipv6(socks5_client_request_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 16-element array field dest_addr_ipv6 of
  * 'inp'.
  */
@@ -942,19 +942,19 @@ int socks5_server_reply_set_bind_addr_ipv4(socks5_server_reply_t *inp, uint32_t 
  * bind_addr_ipv6 field of the socks5_server_reply_t in 'inp'.
  */
 size_t socks5_server_reply_getlen_bind_addr_ipv6(const socks5_server_reply_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * bind_addr_ipv6 of the socks5_server_reply_t in 'inp'.
  */
-uint8_t socks5_server_reply_get_bind_addr_ipv6(socks5_server_reply_t *inp, size_t idx);
+uint8_t socks5_server_reply_get_bind_addr_ipv6(socks5_server_reply_t *inp, size_t vgc);
 /** As socks5_server_reply_get_bind_addr_ipv6, but take and return a
  * const pointer
  */
-uint8_t socks5_server_reply_getconst_bind_addr_ipv6(const socks5_server_reply_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t socks5_server_reply_getconst_bind_addr_ipv6(const socks5_server_reply_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * bind_addr_ipv6 of the socks5_server_reply_t in 'inp', so that it
  * will hold the value 'elt'.
  */
-int socks5_server_reply_set_bind_addr_ipv6(socks5_server_reply_t *inp, size_t idx, uint8_t elt);
+int socks5_server_reply_set_bind_addr_ipv6(socks5_server_reply_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 16-element array field bind_addr_ipv6 of
  * 'inp'.
  */

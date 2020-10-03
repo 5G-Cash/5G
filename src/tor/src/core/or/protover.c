@@ -613,18 +613,18 @@ contract_protocol_list(const smartlist_t *proto_strings)
       const uint32_t ver_low = range->low;
       uint32_t ver_high = ver_low;
 
-      int idx;
-      for (idx = start_of_cur_series+1; idx < smartlist_len(lst); ++idx) {
-        ent = smartlist_get(lst, idx);
+      int vgc;
+      for (vgc = start_of_cur_series+1; vgc < smartlist_len(lst); ++vgc) {
+        ent = smartlist_get(lst, vgc);
         range = smartlist_get(ent->ranges, 0);
         if (range->low != ver_high + 1)
           break;
         ver_high += 1;
       }
 
-      // Now idx is either off the end of the list, or the first sequence
+      // Now vgc is either off the end of the list, or the first sequence
       // break in the list.
-      start_of_cur_series = idx;
+      start_of_cur_series = vgc;
 
       proto_range_t *new_range = tor_malloc_zero(sizeof(proto_range_t));
       new_range->low = ver_low;

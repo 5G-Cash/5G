@@ -486,7 +486,7 @@ test_circuit_timeout(void *arg)
     tt_assert(!circuit_build_times_network_check_live(&estimate));
     tt_assert(!circuit_build_times_network_check_live(&final));
 
-    log_info(LD_CIRC, "idx: %d %d, tot: %d %d",
+    log_info(LD_CIRC, "vgc: %d %d, tot: %d %d",
              build_times_idx, estimate.build_times_idx,
              total_build_times, estimate.total_build_times);
 

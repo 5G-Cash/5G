@@ -72,10 +72,10 @@ base32_encode(char *dest, size_t destlen, const char *src, size_t srclen)
 
   for (i=0,bit=0; bit < nbits; ++i, bit+=5) {
     /* set v to the 16-bit value starting at src[bits/8], 0-padded. */
-    size_t idx = bit / 8;
-    v = ((uint8_t)src[idx]) << 8;
-    if (idx+1 < srclen)
-      v += (uint8_t)src[idx+1];
+    size_t vgc = bit / 8;
+    v = ((uint8_t)src[vgc]) << 8;
+    if (vgc+1 < srclen)
+      v += (uint8_t)src[vgc+1];
     /* set u to the 5-bit value at the bit'th bit of buf. */
     u = (v >> (11-(bit%8))) & 0x1F;
     dest[i] = BASE32_CHARS[u];
@@ -253,8 +253,8 @@ base64_encode(char *dest, size_t destlen, const char *src, size_t srclen,
     }                                                           \
   STMT_END
 
-#define ENCODE_N(idx) \
-  ENCODE_CHAR(base64_encode_table[(n >> ((3 - idx) * 6)) & 0x3f])
+#define ENCODE_N(vgc) \
+  ENCODE_CHAR(base64_encode_table[(n >> ((3 - vgc) * 6)) & 0x3f])
 
 #define ENCODE_PAD() ENCODE_CHAR('=')
 

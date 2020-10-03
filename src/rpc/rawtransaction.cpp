@@ -325,8 +325,8 @@ UniValue gettxoutproof(const UniValue& params, bool fHelp)
     set<uint256> setTxids;
     uint256 oneTxid;
     UniValue txids = params[0].get_array();
-    for (unsigned int idx = 0; idx < txids.size(); idx++) {
-        const UniValue& txid = txids[idx];
+    for (unsigned int vgc = 0; vgc < txids.size(); vgc++) {
+        const UniValue& txid = txids[vgc];
         if (txid.get_str().length() != 64 || !IsHex(txid.get_str()))
             throw JSONRPCError(RPC_INVALID_PARAMETER, string("Invalid txid ")+txid.get_str());
         uint256 hash(uint256S(txid.get_str()));
@@ -469,8 +469,8 @@ UniValue createrawtransaction(const UniValue& params, bool fHelp)
         rawTx.nLockTime = nLockTime;
     }
 
-    for (unsigned int idx = 0; idx < inputs.size(); idx++) {
-        const UniValue& input = inputs[idx];
+    for (unsigned int vgc = 0; vgc < inputs.size(); vgc++) {
+        const UniValue& input = inputs[vgc];
         const UniValue& o = input.get_obj();
 
         uint256 txid = ParseHashO(o, "txid");
@@ -770,8 +770,8 @@ UniValue signrawtransaction(const UniValue& params, bool fHelp)
     if (params.size() > 2 && !params[2].isNull()) {
         fGivenKeys = true;
         UniValue keys = params[2].get_array();
-        for (unsigned int idx = 0; idx < keys.size(); idx++) {
-            UniValue k = keys[idx];
+        for (unsigned int vgc = 0; vgc < keys.size(); vgc++) {
+            UniValue k = keys[vgc];
             CBitcoinSecret vchSecret;
             bool fGood = vchSecret.SetString(k.get_str());
             if (!fGood)
@@ -790,8 +790,8 @@ UniValue signrawtransaction(const UniValue& params, bool fHelp)
     // Add previous txouts given in the RPC call:
     if (params.size() > 1 && !params[1].isNull()) {
         UniValue prevTxs = params[1].get_array();
-        for (unsigned int idx = 0; idx < prevTxs.size(); idx++) {
-            const UniValue& p = prevTxs[idx];
+        for (unsigned int vgc = 0; vgc < prevTxs.size(); vgc++) {
+            const UniValue& p = prevTxs[vgc];
             if (!p.isObject())
                 throw JSONRPCError(RPC_DESERIALIZATION_ERROR, "expected object with {\"txid'\",\"vout\",\"scriptPubKey\"}");
 

@@ -1724,7 +1724,7 @@ bool AcceptToMemoryPoolWorker(
                         if (pool.mapTx.find(tx.vin[j].prevout.hash) != pool.mapTx.end())
                             return state.DoS(0, false,
                                              REJECT_NONSTANDARD, "replacement-adds-unconfirmed", false,
-                                             strprintf("replacement %s adds unconfirmed input, idx %d",
+                                             strprintf("replacement %s adds unconfirmed input, vgc %d",
                                                        hash.ToString(), j));
                     }
                 }
@@ -3695,7 +3695,7 @@ ConnectTip(CValidationState &state, const CChainParams &chainparams, CBlockIndex
 #ifdef ENABLE_ELYSIUM
         //! Elysium: new confirmed transaction notification
         if (fElysium) {
-            LogPrint("handler", "Elysium handler: new confirmed transaction [height: %d, idx: %u]\n", GetHeight(), nTxIdx);
+            LogPrint("handler", "Elysium handler: new confirmed transaction [height: %d, vgc: %u]\n", GetHeight(), nTxIdx);
             if (elysium_handler_tx(tx, GetHeight(), nTxIdx++, pindexNew)) ++nNumMetaTxs;
         }
 #endif

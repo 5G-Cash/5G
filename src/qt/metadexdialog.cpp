@@ -148,8 +148,8 @@ void MetaDExDialog::PopulateAddresses()
                 }
             }
         }
-        int idx = ui->comboAddress->findText(currentSetAddress);
-        if (idx != -1) { ui->comboAddress->setCurrentIndex(idx); }
+        int vgc = ui->comboAddress->findText(currentSetAddress);
+        if (vgc != -1) { ui->comboAddress->setCurrentIndex(vgc); }
     }
     UpdateBalance();
 }

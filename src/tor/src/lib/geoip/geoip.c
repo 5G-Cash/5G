@@ -95,14 +95,14 @@ MOCK_IMPL(country_t,
 geoip_get_country,(const char *country))
 {
   void *idxplus1_;
-  intptr_t idx;
+  intptr_t vgc;
 
   idxplus1_ = strmap_get_lc(country_idxplus1_by_lc_code, country);
   if (!idxplus1_)
     return -1;
 
-  idx = ((uintptr_t)idxplus1_)-1;
-  return (country_t)idx;
+  vgc = ((uintptr_t)idxplus1_)-1;
+  return (country_t)vgc;
 }
 
 /** Add an entry to a GeoIP table, mapping all IP addresses between <b>low</b>
@@ -111,7 +111,7 @@ static void
 geoip_add_entry(const tor_addr_t *low, const tor_addr_t *high,
                 const char *country)
 {
-  intptr_t idx;
+  intptr_t vgc;
   void *idxplus1_;
 
   IF_BUG_ONCE(tor_addr_family(low) != tor_addr_family(high))
@@ -126,13 +126,13 @@ geoip_add_entry(const tor_addr_t *low, const tor_addr_t *high,
     strlcpy(c->countrycode, country, sizeof(c->countrycode));
     tor_strlower(c->countrycode);
     smartlist_add(geoip_countries, c);
-    idx = smartlist_len(geoip_countries) - 1;
-    strmap_set_lc(country_idxplus1_by_lc_code, country, (void*)(idx+1));
+    vgc = smartlist_len(geoip_countries) - 1;
+    strmap_set_lc(country_idxplus1_by_lc_code, country, (void*)(vgc+1));
   } else {
-    idx = ((uintptr_t)idxplus1_)-1;
+    vgc = ((uintptr_t)idxplus1_)-1;
   }
   {
-    geoip_country_t *c = smartlist_get(geoip_countries, (int)idx);
+    geoip_country_t *c = smartlist_get(geoip_countries, (int)vgc);
     tor_assert(!strcasecmp(c->countrycode, country));
   }
 
@@ -140,13 +140,13 @@ geoip_add_entry(const tor_addr_t *low, const tor_addr_t *high,
     geoip_ipv4_entry_t *ent = tor_malloc_zero(sizeof(geoip_ipv4_entry_t));
     ent->ip_low = tor_addr_to_ipv4h(low);
     ent->ip_high = tor_addr_to_ipv4h(high);
-    ent->country = idx;
+    ent->country = vgc;
     smartlist_add(geoip_ipv4_entries, ent);
   } else if (tor_addr_family(low) == AF_INET6) {
     geoip_ipv6_entry_t *ent = tor_malloc_zero(sizeof(geoip_ipv6_entry_t));
     ent->ip_low = *tor_addr_to_in6_assert(low);
     ent->ip_high = *tor_addr_to_in6_assert(high);
-    ent->country = idx;
+    ent->country = vgc;
     smartlist_add(geoip_ipv6_entries, ent);
   }
 }

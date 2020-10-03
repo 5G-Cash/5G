@@ -58,8 +58,8 @@ static std::vector<unsigned char> createMockSpendPayload()
 CBlock getHeighestBlock()
 {
     CBlock block;
-    auto idx = chainActive.Tip();
-    BOOST_CHECK(ReadBlockFromDisk(block, idx, Params().GetConsensus()));
+    auto vgc = chainActive.Tip();
+    BOOST_CHECK(ReadBlockFromDisk(block, vgc, Params().GetConsensus()));
     return block;
 }
 

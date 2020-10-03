@@ -416,7 +416,7 @@ void LookupSPDialog::searchButtonClicked()
     searchSP();
 }
 
-void LookupSPDialog::matchingComboBoxChanged(int idx)
+void LookupSPDialog::matchingComboBoxChanged(int vgc)
 {
     updateDisplayedProperty();
 }

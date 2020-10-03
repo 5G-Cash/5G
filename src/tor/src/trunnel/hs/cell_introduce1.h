@@ -93,19 +93,19 @@ int trn_cell_introduce1_clear_errors(trn_cell_introduce1_t *obj);
  * legacy_key_id field of the trn_cell_introduce1_t in 'inp'.
  */
 size_t trn_cell_introduce1_getlen_legacy_key_id(const trn_cell_introduce1_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * legacy_key_id of the trn_cell_introduce1_t in 'inp'.
  */
-uint8_t trn_cell_introduce1_get_legacy_key_id(trn_cell_introduce1_t *inp, size_t idx);
+uint8_t trn_cell_introduce1_get_legacy_key_id(trn_cell_introduce1_t *inp, size_t vgc);
 /** As trn_cell_introduce1_get_legacy_key_id, but take and return a
  * const pointer
  */
-uint8_t trn_cell_introduce1_getconst_legacy_key_id(const trn_cell_introduce1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t trn_cell_introduce1_getconst_legacy_key_id(const trn_cell_introduce1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * legacy_key_id of the trn_cell_introduce1_t in 'inp', so that it
  * will hold the value 'elt'.
  */
-int trn_cell_introduce1_set_legacy_key_id(trn_cell_introduce1_t *inp, size_t idx, uint8_t elt);
+int trn_cell_introduce1_set_legacy_key_id(trn_cell_introduce1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the TRUNNEL_SHA1_LEN-element array field
  * legacy_key_id of 'inp'.
  */
@@ -136,19 +136,19 @@ int trn_cell_introduce1_set_auth_key_len(trn_cell_introduce1_t *inp, uint16_t va
  * of the trn_cell_introduce1_t in 'inp'.
  */
 size_t trn_cell_introduce1_getlen_auth_key(const trn_cell_introduce1_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * auth_key of the trn_cell_introduce1_t in 'inp'.
  */
-uint8_t trn_cell_introduce1_get_auth_key(trn_cell_introduce1_t *inp, size_t idx);
+uint8_t trn_cell_introduce1_get_auth_key(trn_cell_introduce1_t *inp, size_t vgc);
 /** As trn_cell_introduce1_get_auth_key, but take and return a const
  * pointer
  */
-uint8_t trn_cell_introduce1_getconst_auth_key(const trn_cell_introduce1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t trn_cell_introduce1_getconst_auth_key(const trn_cell_introduce1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * auth_key of the trn_cell_introduce1_t in 'inp', so that it will
  * hold the value 'elt'.
  */
-int trn_cell_introduce1_set_auth_key(trn_cell_introduce1_t *inp, size_t idx, uint8_t elt);
+int trn_cell_introduce1_set_auth_key(trn_cell_introduce1_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field auth_key of
  * the trn_cell_introduce1_t in 'inp'.
  */
@@ -188,19 +188,19 @@ int trn_cell_introduce1_set0_extensions(trn_cell_introduce1_t *inp, struct trn_c
  * of the trn_cell_introduce1_t in 'inp'.
  */
 size_t trn_cell_introduce1_getlen_encrypted(const trn_cell_introduce1_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * encrypted of the trn_cell_introduce1_t in 'inp'.
  */
-uint8_t trn_cell_introduce1_get_encrypted(trn_cell_introduce1_t *inp, size_t idx);
+uint8_t trn_cell_introduce1_get_encrypted(trn_cell_introduce1_t *inp, size_t vgc);
 /** As trn_cell_introduce1_get_encrypted, but take and return a const
  * pointer
  */
-uint8_t trn_cell_introduce1_getconst_encrypted(const trn_cell_introduce1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t trn_cell_introduce1_getconst_encrypted(const trn_cell_introduce1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * encrypted of the trn_cell_introduce1_t in 'inp', so that it will
  * hold the value 'elt'.
  */
-int trn_cell_introduce1_set_encrypted(trn_cell_introduce1_t *inp, size_t idx, uint8_t elt);
+int trn_cell_introduce1_set_encrypted(trn_cell_introduce1_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field encrypted of
  * the trn_cell_introduce1_t in 'inp'.
  */
@@ -323,19 +323,19 @@ int trn_cell_introduce_encrypted_clear_errors(trn_cell_introduce_encrypted_t *ob
  * field of the trn_cell_introduce_encrypted_t in 'inp'.
  */
 size_t trn_cell_introduce_encrypted_getlen_rend_cookie(const trn_cell_introduce_encrypted_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * rend_cookie of the trn_cell_introduce_encrypted_t in 'inp'.
  */
-uint8_t trn_cell_introduce_encrypted_get_rend_cookie(trn_cell_introduce_encrypted_t *inp, size_t idx);
+uint8_t trn_cell_introduce_encrypted_get_rend_cookie(trn_cell_introduce_encrypted_t *inp, size_t vgc);
 /** As trn_cell_introduce_encrypted_get_rend_cookie, but take and
  * return a const pointer
  */
-uint8_t trn_cell_introduce_encrypted_getconst_rend_cookie(const trn_cell_introduce_encrypted_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t trn_cell_introduce_encrypted_getconst_rend_cookie(const trn_cell_introduce_encrypted_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * rend_cookie of the trn_cell_introduce_encrypted_t in 'inp', so that
  * it will hold the value 'elt'.
  */
-int trn_cell_introduce_encrypted_set_rend_cookie(trn_cell_introduce_encrypted_t *inp, size_t idx, uint8_t elt);
+int trn_cell_introduce_encrypted_set_rend_cookie(trn_cell_introduce_encrypted_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the TRUNNEL_REND_COOKIE_LEN-element array
  * field rend_cookie of 'inp'.
  */
@@ -384,19 +384,19 @@ int trn_cell_introduce_encrypted_set_onion_key_len(trn_cell_introduce_encrypted_
  * of the trn_cell_introduce_encrypted_t in 'inp'.
  */
 size_t trn_cell_introduce_encrypted_getlen_onion_key(const trn_cell_introduce_encrypted_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * onion_key of the trn_cell_introduce_encrypted_t in 'inp'.
  */
-uint8_t trn_cell_introduce_encrypted_get_onion_key(trn_cell_introduce_encrypted_t *inp, size_t idx);
+uint8_t trn_cell_introduce_encrypted_get_onion_key(trn_cell_introduce_encrypted_t *inp, size_t vgc);
 /** As trn_cell_introduce_encrypted_get_onion_key, but take and return
  * a const pointer
  */
-uint8_t trn_cell_introduce_encrypted_getconst_onion_key(const trn_cell_introduce_encrypted_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t trn_cell_introduce_encrypted_getconst_onion_key(const trn_cell_introduce_encrypted_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * onion_key of the trn_cell_introduce_encrypted_t in 'inp', so that
  * it will hold the value 'elt'.
  */
-int trn_cell_introduce_encrypted_set_onion_key(trn_cell_introduce_encrypted_t *inp, size_t idx, uint8_t elt);
+int trn_cell_introduce_encrypted_set_onion_key(trn_cell_introduce_encrypted_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field onion_key of
  * the trn_cell_introduce_encrypted_t in 'inp'.
  */
@@ -427,23 +427,23 @@ int trn_cell_introduce_encrypted_set_nspec(trn_cell_introduce_encrypted_t *inp, 
  * the trn_cell_introduce_encrypted_t in 'inp'.
  */
 size_t trn_cell_introduce_encrypted_getlen_nspecs(const trn_cell_introduce_encrypted_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * nspecs of the trn_cell_introduce_encrypted_t in 'inp'.
  */
-struct link_specifier_st * trn_cell_introduce_encrypted_get_nspecs(trn_cell_introduce_encrypted_t *inp, size_t idx);
+struct link_specifier_st * trn_cell_introduce_encrypted_get_nspecs(trn_cell_introduce_encrypted_t *inp, size_t vgc);
 /** As trn_cell_introduce_encrypted_get_nspecs, but take and return a
  * const pointer
  */
- const struct link_specifier_st * trn_cell_introduce_encrypted_getconst_nspecs(const trn_cell_introduce_encrypted_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+ const struct link_specifier_st * trn_cell_introduce_encrypted_getconst_nspecs(const trn_cell_introduce_encrypted_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * nspecs of the trn_cell_introduce_encrypted_t in 'inp', so that it
  * will hold the value 'elt'. Free the previous value, if any.
  */
-int trn_cell_introduce_encrypted_set_nspecs(trn_cell_introduce_encrypted_t *inp, size_t idx, struct link_specifier_st * elt);
+int trn_cell_introduce_encrypted_set_nspecs(trn_cell_introduce_encrypted_t *inp, size_t vgc, struct link_specifier_st * elt);
 /** As trn_cell_introduce_encrypted_set_nspecs, but does not free the
  * previous value.
  */
-int trn_cell_introduce_encrypted_set0_nspecs(trn_cell_introduce_encrypted_t *inp, size_t idx, struct link_specifier_st * elt);
+int trn_cell_introduce_encrypted_set0_nspecs(trn_cell_introduce_encrypted_t *inp, size_t vgc, struct link_specifier_st * elt);
 /** Append a new element 'elt' to the dynamic array field nspecs of
  * the trn_cell_introduce_encrypted_t in 'inp'.
  */
@@ -466,19 +466,19 @@ int trn_cell_introduce_encrypted_setlen_nspecs(trn_cell_introduce_encrypted_t *i
  * the trn_cell_introduce_encrypted_t in 'inp'.
  */
 size_t trn_cell_introduce_encrypted_getlen_pad(const trn_cell_introduce_encrypted_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * pad of the trn_cell_introduce_encrypted_t in 'inp'.
  */
-uint8_t trn_cell_introduce_encrypted_get_pad(trn_cell_introduce_encrypted_t *inp, size_t idx);
+uint8_t trn_cell_introduce_encrypted_get_pad(trn_cell_introduce_encrypted_t *inp, size_t vgc);
 /** As trn_cell_introduce_encrypted_get_pad, but take and return a
  * const pointer
  */
-uint8_t trn_cell_introduce_encrypted_getconst_pad(const trn_cell_introduce_encrypted_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t trn_cell_introduce_encrypted_getconst_pad(const trn_cell_introduce_encrypted_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * pad of the trn_cell_introduce_encrypted_t in 'inp', so that it will
  * hold the value 'elt'.
  */
-int trn_cell_introduce_encrypted_set_pad(trn_cell_introduce_encrypted_t *inp, size_t idx, uint8_t elt);
+int trn_cell_introduce_encrypted_set_pad(trn_cell_introduce_encrypted_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field pad of the
  * trn_cell_introduce_encrypted_t in 'inp'.
  */

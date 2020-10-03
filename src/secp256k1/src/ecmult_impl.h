@@ -678,7 +678,7 @@ static int secp256k1_ecmult_pippenger_wnaf(secp256k1_gej *buckets, int bucket_wi
             int n = state->wnaf_na[np*n_wnaf + i];
             struct secp256k1_pippenger_point_state point_state = state->ps[np];
             secp256k1_ge tmp;
-            int idx;
+            int vgc;
 
             if (i == 0) {
                 /* correct for wnaf skew */
@@ -689,12 +689,12 @@ static int secp256k1_ecmult_pippenger_wnaf(secp256k1_gej *buckets, int bucket_wi
                 }
             }
             if (n > 0) {
-                idx = (n - 1)/2;
-                secp256k1_gej_add_ge_var(&buckets[idx], &buckets[idx], &pt[point_state.input_pos], NULL);
+                vgc = (n - 1)/2;
+                secp256k1_gej_add_ge_var(&buckets[vgc], &buckets[vgc], &pt[point_state.input_pos], NULL);
             } else if (n < 0) {
-                idx = -(n + 1)/2;
+                vgc = -(n + 1)/2;
                 secp256k1_ge_neg(&tmp, &pt[point_state.input_pos]);
-                secp256k1_gej_add_ge_var(&buckets[idx], &buckets[idx], &tmp, NULL);
+                secp256k1_gej_add_ge_var(&buckets[vgc], &buckets[vgc], &tmp, NULL);
             }
         }
 
@@ -807,7 +807,7 @@ static int secp256k1_ecmult_pippenger_batch(const secp256k1_ecmult_context *ctx,
     secp256k1_scalar *scalars;
     secp256k1_gej *buckets;
     struct secp256k1_pippenger_state *state_space;
-    size_t idx = 0;
+    size_t vgc = 0;
     size_t point_idx = 0;
     int i, j;
     int bucket_window;
@@ -832,32 +832,32 @@ static int secp256k1_ecmult_pippenger_batch(const secp256k1_ecmult_context *ctx,
     if (inp_g_sc != NULL) {
         scalars[0] = *inp_g_sc;
         points[0] = secp256k1_ge_const_g;
-        idx++;
+        vgc++;
 #ifdef USE_ENDOMORPHISM
         secp256k1_ecmult_endo_split(&scalars[0], &scalars[1], &points[0], &points[1]);
-        idx++;
+        vgc++;
 #endif
     }
 
     while (point_idx < n_points) {
         secp256k1_gej point;
-        if (!cb(&scalars[idx], &point, point_idx + cb_offset, cbdata)) {
+        if (!cb(&scalars[vgc], &point, point_idx + cb_offset, cbdata)) {
             secp256k1_scratch_deallocate_frame(scratch);
             return 0;
         }
-        secp256k1_ge_set_gej(&points[idx], &point);
-        idx++;
+        secp256k1_ge_set_gej(&points[vgc], &point);
+        vgc++;
 #ifdef USE_ENDOMORPHISM
-        secp256k1_ecmult_endo_split(&scalars[idx - 1], &scalars[idx], &points[idx - 1], &points[idx]);
-        idx++;
+        secp256k1_ecmult_endo_split(&scalars[vgc - 1], &scalars[vgc], &points[vgc - 1], &points[vgc]);
+        vgc++;
 #endif
         point_idx++;
     }
 
-    secp256k1_ecmult_pippenger_wnaf(buckets, bucket_window, state_space, r, scalars, points, idx);
+    secp256k1_ecmult_pippenger_wnaf(buckets, bucket_window, state_space, r, scalars, points, vgc);
 
     /* Clear data */
-    for(i = 0; (size_t)i < idx; i++) {
+    for(i = 0; (size_t)i < vgc; i++) {
         secp256k1_scalar_clear(&scalars[i]);
         state_space->ps[i].skew_na = 0;
         for(j = 0; j < WNAF_SIZE(bucket_window+1); j++) {

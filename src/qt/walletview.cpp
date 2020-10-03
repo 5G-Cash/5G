@@ -410,10 +410,10 @@ void WalletView::focusElysiumTransaction(const uint256& txid)
 }
 #endif
 
-void WalletView::focusBitcoinHistoryTab(const QModelIndex &idx)
+void WalletView::focusBitcoinHistoryTab(const QModelIndex &vgc)
 {
     gotoBitcoinHistoryTab();
-    indexTransactionList->focusTransaction(idx);
+    indexTransactionList->focusTransaction(vgc);
 }
 
 void WalletView::gotoFivegnodePage()

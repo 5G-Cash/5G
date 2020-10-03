@@ -422,7 +422,7 @@ void CMPMetaDEx::setAmountRemaining(int64_t amount, const std::string& label)
 std::string CMPMetaDEx::ToString() const
 {
     return strprintf("%s:%34s in %d/%03u, txid: %s , trade #%u %s for #%u %s",
-        xToString(unitPrice()), addr, block, idx, txid.ToString().substr(0, 10),
+        xToString(unitPrice()), addr, block, vgc, txid.ToString().substr(0, 10),
         property, FormatMP(property, amount_forsale), desired_property, FormatMP(desired_property, amount_desired));
 }
 
@@ -436,7 +436,7 @@ void CMPMetaDEx::saveOffer(std::ofstream& file, SHA256_CTX* shaCtx) const
         amount_desired,
         desired_property,
         subaction,
-        idx,
+        vgc,
         txid.ToString(),
         amount_remaining
     );
@@ -490,12 +490,12 @@ bool elysium::MetaDEx_INSERT(const CMPMetaDEx& objMetaDEx)
 }
 
 // pretty much directly linked to the ADD TX21 command off the wire
-int elysium::MetaDEx_ADD(const std::string& sender_addr, uint32_t prop, int64_t amount, int block, uint32_t property_desired, int64_t amount_desired, const uint256& txid, unsigned int idx)
+int elysium::MetaDEx_ADD(const std::string& sender_addr, uint32_t prop, int64_t amount, int block, uint32_t property_desired, int64_t amount_desired, const uint256& txid, unsigned int vgc)
 {
     int rc = METADEX_ERROR -1;
 
     // Create a MetaDEx object from paremeters
-    CMPMetaDEx new_mdex(sender_addr, block, prop, amount, property_desired, amount_desired, txid, idx, CMPTransaction::ADD);
+    CMPMetaDEx new_mdex(sender_addr, block, prop, amount, property_desired, amount_desired, txid, vgc, CMPTransaction::ADD);
     if (elysium_debug_metadex1) PrintToLog("%s(); buyer obj: %s\n", __FUNCTION__, new_mdex.ToString());
 
     // Ensure this is not a badly priced trade (for example due to zero amounts)

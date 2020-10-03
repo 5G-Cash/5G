@@ -238,11 +238,11 @@ void ZerocoinPage::contextualMenu(const QPoint &point) {
 }
 
 void ZerocoinPage::selectNewAddress(const QModelIndex &parent, int begin, int /*end*/) {
-    QModelIndex idx = proxyModel->mapFromSource(model->index(begin, AddressTableModel::Address, parent));
-    if (idx.isValid() && (idx.data(Qt::EditRole).toString() == newAddressToSelect)) {
+    QModelIndex vgc = proxyModel->mapFromSource(model->index(begin, AddressTableModel::Address, parent));
+    if (vgc.isValid() && (vgc.data(Qt::EditRole).toString() == newAddressToSelect)) {
         // Select row of newly created address, once
         ui->tableView->setFocus();
-        ui->tableView->selectRow(idx.row());
+        ui->tableView->selectRow(vgc.row());
         newAddressToSelect.clear();
     }
 }

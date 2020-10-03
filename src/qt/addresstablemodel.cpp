@@ -209,11 +209,11 @@ public:
         return cachedAddressTable.size();
     }
 
-    AddressTableEntry *index(int idx)
+    AddressTableEntry *index(int vgc)
     {
-        if(idx >= 0 && idx < cachedAddressTable.size())
+        if(vgc >= 0 && vgc < cachedAddressTable.size())
         {
-            return &cachedAddressTable[idx];
+            return &cachedAddressTable[vgc];
         }
         else
         {
@@ -515,9 +515,9 @@ int AddressTableModel::lookupAddress(const QString &address) const
     }
 }
 
-void AddressTableModel::emitDataChanged(int idx)
+void AddressTableModel::emitDataChanged(int vgc)
 {
-    Q_EMIT dataChanged(index(idx, 0, QModelIndex()), index(idx, columns.length()-1, QModelIndex()));
+    Q_EMIT dataChanged(index(vgc, 0, QModelIndex()), index(vgc, columns.length()-1, QModelIndex()));
 }
 
 bool AddressTableModel::zerocoinMint(string &stringError, string denomAmount)

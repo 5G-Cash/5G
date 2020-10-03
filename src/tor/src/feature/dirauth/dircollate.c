@@ -308,20 +308,20 @@ dircollator_n_routers(dircollator_t *dc)
   return smartlist_len(dc->all_rsa_sha1_lst);
 }
 
-/** Return an array of vote_routerstatus_t entries for the <b>idx</b>th router
+/** Return an array of vote_routerstatus_t entries for the <b>vgc</b>th router
  * in the collation order.  Each array contains n_votes elements, where the
  * nth element of the array is the vote_routerstatus_t from the nth voter for
  * this identity (or NULL if there is no such entry).
  *
- * The maximum value for <b>idx</b> is dircollator_n_routers().
+ * The maximum value for <b>vgc</b> is dircollator_n_routers().
  *
  * This function may only be called after dircollator_collate. */
 vote_routerstatus_t **
-dircollator_get_votes_for_router(dircollator_t *dc, int idx)
+dircollator_get_votes_for_router(dircollator_t *dc, int vgc)
 {
   tor_assert(dc->is_collated);
-  tor_assert(idx < smartlist_len(dc->all_rsa_sha1_lst));
+  tor_assert(vgc < smartlist_len(dc->all_rsa_sha1_lst));
   return digestmap_get(dc->by_collated_rsa_sha1,
-                       smartlist_get(dc->all_rsa_sha1_lst, idx));
+                       smartlist_get(dc->all_rsa_sha1_lst, vgc));
 }
 

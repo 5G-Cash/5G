@@ -19,7 +19,7 @@ class CRPCConvertParam
 {
 public:
     std::string methodName; //!< method whose params want conversion
-    int paramIdx;           //!< 0-based idx of param to convert
+    int paramIdx;           //!< 0-based vgc of param to convert
 };
 
 static const CRPCConvertParam vRPCConvertParams[] =
@@ -302,8 +302,8 @@ private:
 public:
     CRPCConvertTable();
 
-    bool convert(const std::string& method, int idx) {
-        return (members.count(std::make_pair(method, idx)) > 0);
+    bool convert(const std::string& method, int vgc) {
+        return (members.count(std::make_pair(method, vgc)) > 0);
     }
 };
 
@@ -337,10 +337,10 @@ UniValue RPCConvertValues(const std::string &strMethod, const std::vector<std::s
 {
     UniValue params(UniValue::VARR);
 
-    for (unsigned int idx = 0; idx < strParams.size(); idx++) {
-        const std::string& strVal = strParams[idx];
+    for (unsigned int vgc = 0; vgc < strParams.size(); vgc++) {
+        const std::string& strVal = strParams[vgc];
 
-        if (!rpcCvtTable.convert(strMethod, idx)) {
+        if (!rpcCvtTable.convert(strMethod, vgc)) {
             // insert string value directly
             params.push_back(strVal);
         } else {

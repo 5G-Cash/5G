@@ -118,19 +118,19 @@ int auth_challenge_cell_clear_errors(auth_challenge_cell_t *obj);
  * field of the auth_challenge_cell_t in 'inp'.
  */
 size_t auth_challenge_cell_getlen_challenge(const auth_challenge_cell_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * challenge of the auth_challenge_cell_t in 'inp'.
  */
-uint8_t auth_challenge_cell_get_challenge(auth_challenge_cell_t *inp, size_t idx);
+uint8_t auth_challenge_cell_get_challenge(auth_challenge_cell_t *inp, size_t vgc);
 /** As auth_challenge_cell_get_challenge, but take and return a const
  * pointer
  */
-uint8_t auth_challenge_cell_getconst_challenge(const auth_challenge_cell_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t auth_challenge_cell_getconst_challenge(const auth_challenge_cell_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * challenge of the auth_challenge_cell_t in 'inp', so that it will
  * hold the value 'elt'.
  */
-int auth_challenge_cell_set_challenge(auth_challenge_cell_t *inp, size_t idx, uint8_t elt);
+int auth_challenge_cell_set_challenge(auth_challenge_cell_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field challenge of 'inp'.
  */
 uint8_t * auth_challenge_cell_getarray_challenge(auth_challenge_cell_t *inp);
@@ -151,19 +151,19 @@ int auth_challenge_cell_set_n_methods(auth_challenge_cell_t *inp, uint16_t val);
  * of the auth_challenge_cell_t in 'inp'.
  */
 size_t auth_challenge_cell_getlen_methods(const auth_challenge_cell_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * methods of the auth_challenge_cell_t in 'inp'.
  */
-uint16_t auth_challenge_cell_get_methods(auth_challenge_cell_t *inp, size_t idx);
+uint16_t auth_challenge_cell_get_methods(auth_challenge_cell_t *inp, size_t vgc);
 /** As auth_challenge_cell_get_methods, but take and return a const
  * pointer
  */
-uint16_t auth_challenge_cell_getconst_methods(const auth_challenge_cell_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint16_t auth_challenge_cell_getconst_methods(const auth_challenge_cell_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * methods of the auth_challenge_cell_t in 'inp', so that it will hold
  * the value 'elt'.
  */
-int auth_challenge_cell_set_methods(auth_challenge_cell_t *inp, size_t idx, uint16_t elt);
+int auth_challenge_cell_set_methods(auth_challenge_cell_t *inp, size_t vgc, uint16_t elt);
 /** Append a new element 'elt' to the dynamic array field methods of
  * the auth_challenge_cell_t in 'inp'.
  */
@@ -254,18 +254,18 @@ int certs_cell_cert_set_cert_len(certs_cell_cert_t *inp, uint16_t val);
  * the certs_cell_cert_t in 'inp'.
  */
 size_t certs_cell_cert_getlen_body(const certs_cell_cert_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * body of the certs_cell_cert_t in 'inp'.
  */
-uint8_t certs_cell_cert_get_body(certs_cell_cert_t *inp, size_t idx);
+uint8_t certs_cell_cert_get_body(certs_cell_cert_t *inp, size_t vgc);
 /** As certs_cell_cert_get_body, but take and return a const pointer
  */
-uint8_t certs_cell_cert_getconst_body(const certs_cell_cert_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t certs_cell_cert_getconst_body(const certs_cell_cert_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * body of the certs_cell_cert_t in 'inp', so that it will hold the
  * value 'elt'.
  */
-int certs_cell_cert_set_body(certs_cell_cert_t *inp, size_t idx, uint8_t elt);
+int certs_cell_cert_set_body(certs_cell_cert_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field body of the
  * certs_cell_cert_t in 'inp'.
  */
@@ -321,19 +321,19 @@ int rsa_ed_crosscert_clear_errors(rsa_ed_crosscert_t *obj);
  * of the rsa_ed_crosscert_t in 'inp'.
  */
 size_t rsa_ed_crosscert_getlen_ed_key(const rsa_ed_crosscert_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * ed_key of the rsa_ed_crosscert_t in 'inp'.
  */
-uint8_t rsa_ed_crosscert_get_ed_key(rsa_ed_crosscert_t *inp, size_t idx);
+uint8_t rsa_ed_crosscert_get_ed_key(rsa_ed_crosscert_t *inp, size_t vgc);
 /** As rsa_ed_crosscert_get_ed_key, but take and return a const
  * pointer
  */
-uint8_t rsa_ed_crosscert_getconst_ed_key(const rsa_ed_crosscert_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t rsa_ed_crosscert_getconst_ed_key(const rsa_ed_crosscert_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * ed_key of the rsa_ed_crosscert_t in 'inp', so that it will hold the
  * value 'elt'.
  */
-int rsa_ed_crosscert_set_ed_key(rsa_ed_crosscert_t *inp, size_t idx, uint8_t elt);
+int rsa_ed_crosscert_set_ed_key(rsa_ed_crosscert_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field ed_key of 'inp'.
  */
 uint8_t * rsa_ed_crosscert_getarray_ed_key(rsa_ed_crosscert_t *inp);
@@ -366,18 +366,18 @@ int rsa_ed_crosscert_set_sig_len(rsa_ed_crosscert_t *inp, uint8_t val);
  * the rsa_ed_crosscert_t in 'inp'.
  */
 size_t rsa_ed_crosscert_getlen_sig(const rsa_ed_crosscert_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * sig of the rsa_ed_crosscert_t in 'inp'.
  */
-uint8_t rsa_ed_crosscert_get_sig(rsa_ed_crosscert_t *inp, size_t idx);
+uint8_t rsa_ed_crosscert_get_sig(rsa_ed_crosscert_t *inp, size_t vgc);
 /** As rsa_ed_crosscert_get_sig, but take and return a const pointer
  */
-uint8_t rsa_ed_crosscert_getconst_sig(const rsa_ed_crosscert_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t rsa_ed_crosscert_getconst_sig(const rsa_ed_crosscert_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * sig of the rsa_ed_crosscert_t in 'inp', so that it will hold the
  * value 'elt'.
  */
-int rsa_ed_crosscert_set_sig(rsa_ed_crosscert_t *inp, size_t idx, uint8_t elt);
+int rsa_ed_crosscert_set_sig(rsa_ed_crosscert_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field sig of the
  * rsa_ed_crosscert_t in 'inp'.
  */
@@ -431,17 +431,17 @@ int auth1_clear_errors(auth1_t *obj);
  * of the auth1_t in 'inp'.
  */
 size_t auth1_getlen_type(const auth1_t *inp);
-/** Return the element at position 'idx' of the fixed array field type
+/** Return the element at position 'vgc' of the fixed array field type
  * of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_type(auth1_t *inp, size_t idx);
+uint8_t auth1_get_type(auth1_t *inp, size_t vgc);
 /** As auth1_get_type, but take and return a const pointer
  */
-uint8_t auth1_getconst_type(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field type
+uint8_t auth1_getconst_type(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field type
  * of the auth1_t in 'inp', so that it will hold the value 'elt'.
  */
-int auth1_set_type(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_type(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 8-element array field type of 'inp'.
  */
 uint8_t * auth1_getarray_type(auth1_t *inp);
@@ -452,17 +452,17 @@ const uint8_t  * auth1_getconstarray_type(const auth1_t *inp);
  * the auth1_t in 'inp'.
  */
 size_t auth1_getlen_cid(const auth1_t *inp);
-/** Return the element at position 'idx' of the fixed array field cid
+/** Return the element at position 'vgc' of the fixed array field cid
  * of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_cid(auth1_t *inp, size_t idx);
+uint8_t auth1_get_cid(auth1_t *inp, size_t vgc);
 /** As auth1_get_cid, but take and return a const pointer
  */
-uint8_t auth1_getconst_cid(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field cid
+uint8_t auth1_getconst_cid(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field cid
  * of the auth1_t in 'inp', so that it will hold the value 'elt'.
  */
-int auth1_set_cid(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_cid(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field cid of 'inp'.
  */
 uint8_t * auth1_getarray_cid(auth1_t *inp);
@@ -473,17 +473,17 @@ const uint8_t  * auth1_getconstarray_cid(const auth1_t *inp);
  * the auth1_t in 'inp'.
  */
 size_t auth1_getlen_sid(const auth1_t *inp);
-/** Return the element at position 'idx' of the fixed array field sid
+/** Return the element at position 'vgc' of the fixed array field sid
  * of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_sid(auth1_t *inp, size_t idx);
+uint8_t auth1_get_sid(auth1_t *inp, size_t vgc);
 /** As auth1_get_sid, but take and return a const pointer
  */
-uint8_t auth1_getconst_sid(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field sid
+uint8_t auth1_getconst_sid(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field sid
  * of the auth1_t in 'inp', so that it will hold the value 'elt'.
  */
-int auth1_set_sid(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_sid(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field sid of 'inp'.
  */
 uint8_t * auth1_getarray_sid(auth1_t *inp);
@@ -494,18 +494,18 @@ const uint8_t  * auth1_getconstarray_sid(const auth1_t *inp);
  * field of the auth1_t in 'inp'.
  */
 size_t auth1_getlen_u1_cid_ed(const auth1_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * u1_cid_ed of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_u1_cid_ed(auth1_t *inp, size_t idx);
+uint8_t auth1_get_u1_cid_ed(auth1_t *inp, size_t vgc);
 /** As auth1_get_u1_cid_ed, but take and return a const pointer
  */
-uint8_t auth1_getconst_u1_cid_ed(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t auth1_getconst_u1_cid_ed(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * u1_cid_ed of the auth1_t in 'inp', so that it will hold the value
  * 'elt'.
  */
-int auth1_set_u1_cid_ed(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_u1_cid_ed(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field u1_cid_ed of 'inp'.
  */
 uint8_t * auth1_getarray_u1_cid_ed(auth1_t *inp);
@@ -516,18 +516,18 @@ const uint8_t  * auth1_getconstarray_u1_cid_ed(const auth1_t *inp);
  * field of the auth1_t in 'inp'.
  */
 size_t auth1_getlen_u1_sid_ed(const auth1_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * u1_sid_ed of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_u1_sid_ed(auth1_t *inp, size_t idx);
+uint8_t auth1_get_u1_sid_ed(auth1_t *inp, size_t vgc);
 /** As auth1_get_u1_sid_ed, but take and return a const pointer
  */
-uint8_t auth1_getconst_u1_sid_ed(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t auth1_getconst_u1_sid_ed(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * u1_sid_ed of the auth1_t in 'inp', so that it will hold the value
  * 'elt'.
  */
-int auth1_set_u1_sid_ed(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_u1_sid_ed(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field u1_sid_ed of 'inp'.
  */
 uint8_t * auth1_getarray_u1_sid_ed(auth1_t *inp);
@@ -538,17 +538,17 @@ const uint8_t  * auth1_getconstarray_u1_sid_ed(const auth1_t *inp);
  * of the auth1_t in 'inp'.
  */
 size_t auth1_getlen_slog(const auth1_t *inp);
-/** Return the element at position 'idx' of the fixed array field slog
+/** Return the element at position 'vgc' of the fixed array field slog
  * of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_slog(auth1_t *inp, size_t idx);
+uint8_t auth1_get_slog(auth1_t *inp, size_t vgc);
 /** As auth1_get_slog, but take and return a const pointer
  */
-uint8_t auth1_getconst_slog(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field slog
+uint8_t auth1_getconst_slog(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field slog
  * of the auth1_t in 'inp', so that it will hold the value 'elt'.
  */
-int auth1_set_slog(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_slog(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field slog of 'inp'.
  */
 uint8_t * auth1_getarray_slog(auth1_t *inp);
@@ -559,17 +559,17 @@ const uint8_t  * auth1_getconstarray_slog(const auth1_t *inp);
  * of the auth1_t in 'inp'.
  */
 size_t auth1_getlen_clog(const auth1_t *inp);
-/** Return the element at position 'idx' of the fixed array field clog
+/** Return the element at position 'vgc' of the fixed array field clog
  * of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_clog(auth1_t *inp, size_t idx);
+uint8_t auth1_get_clog(auth1_t *inp, size_t vgc);
 /** As auth1_get_clog, but take and return a const pointer
  */
-uint8_t auth1_getconst_clog(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field clog
+uint8_t auth1_getconst_clog(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field clog
  * of the auth1_t in 'inp', so that it will hold the value 'elt'.
  */
-int auth1_set_clog(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_clog(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field clog of 'inp'.
  */
 uint8_t * auth1_getarray_clog(auth1_t *inp);
@@ -580,18 +580,18 @@ const uint8_t  * auth1_getconstarray_clog(const auth1_t *inp);
  * of the auth1_t in 'inp'.
  */
 size_t auth1_getlen_scert(const auth1_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * scert of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_scert(auth1_t *inp, size_t idx);
+uint8_t auth1_get_scert(auth1_t *inp, size_t vgc);
 /** As auth1_get_scert, but take and return a const pointer
  */
-uint8_t auth1_getconst_scert(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t auth1_getconst_scert(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * scert of the auth1_t in 'inp', so that it will hold the value
  * 'elt'.
  */
-int auth1_set_scert(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_scert(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field scert of 'inp'.
  */
 uint8_t * auth1_getarray_scert(auth1_t *inp);
@@ -602,18 +602,18 @@ const uint8_t  * auth1_getconstarray_scert(const auth1_t *inp);
  * field of the auth1_t in 'inp'.
  */
 size_t auth1_getlen_tlssecrets(const auth1_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * tlssecrets of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_tlssecrets(auth1_t *inp, size_t idx);
+uint8_t auth1_get_tlssecrets(auth1_t *inp, size_t vgc);
 /** As auth1_get_tlssecrets, but take and return a const pointer
  */
-uint8_t auth1_getconst_tlssecrets(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t auth1_getconst_tlssecrets(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * tlssecrets of the auth1_t in 'inp', so that it will hold the value
  * 'elt'.
  */
-int auth1_set_tlssecrets(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_tlssecrets(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field tlssecrets of
  * 'inp'.
  */
@@ -629,17 +629,17 @@ const uint8_t * auth1_get_end_of_fixed_part(const auth1_t *inp);
  * of the auth1_t in 'inp'.
  */
 size_t auth1_getlen_rand(const auth1_t *inp);
-/** Return the element at position 'idx' of the fixed array field rand
+/** Return the element at position 'vgc' of the fixed array field rand
  * of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_rand(auth1_t *inp, size_t idx);
+uint8_t auth1_get_rand(auth1_t *inp, size_t vgc);
 /** As auth1_get_rand, but take and return a const pointer
  */
-uint8_t auth1_getconst_rand(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field rand
+uint8_t auth1_getconst_rand(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field rand
  * of the auth1_t in 'inp', so that it will hold the value 'elt'.
  */
-int auth1_set_rand(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_rand(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 24-element array field rand of 'inp'.
  */
 uint8_t * auth1_getarray_rand(auth1_t *inp);
@@ -653,17 +653,17 @@ const uint8_t * auth1_get_end_of_signed(const auth1_t *inp);
  * the auth1_t in 'inp'.
  */
 size_t auth1_getlen_sig(const auth1_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * sig of the auth1_t in 'inp'.
  */
-uint8_t auth1_get_sig(auth1_t *inp, size_t idx);
+uint8_t auth1_get_sig(auth1_t *inp, size_t vgc);
 /** As auth1_get_sig, but take and return a const pointer
  */
-uint8_t auth1_getconst_sig(const auth1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t auth1_getconst_sig(const auth1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * sig of the auth1_t in 'inp', so that it will hold the value 'elt'.
  */
-int auth1_set_sig(auth1_t *inp, size_t idx, uint8_t elt);
+int auth1_set_sig(auth1_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field sig of the
  * auth1_t in 'inp'.
  */
@@ -725,21 +725,21 @@ int certs_cell_set_n_certs(certs_cell_t *inp, uint8_t val);
  * the certs_cell_t in 'inp'.
  */
 size_t certs_cell_getlen_certs(const certs_cell_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * certs of the certs_cell_t in 'inp'.
  */
-struct certs_cell_cert_st * certs_cell_get_certs(certs_cell_t *inp, size_t idx);
+struct certs_cell_cert_st * certs_cell_get_certs(certs_cell_t *inp, size_t vgc);
 /** As certs_cell_get_certs, but take and return a const pointer
  */
- const struct certs_cell_cert_st * certs_cell_getconst_certs(const certs_cell_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+ const struct certs_cell_cert_st * certs_cell_getconst_certs(const certs_cell_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * certs of the certs_cell_t in 'inp', so that it will hold the value
  * 'elt'. Free the previous value, if any.
  */
-int certs_cell_set_certs(certs_cell_t *inp, size_t idx, struct certs_cell_cert_st * elt);
+int certs_cell_set_certs(certs_cell_t *inp, size_t vgc, struct certs_cell_cert_st * elt);
 /** As certs_cell_set_certs, but does not free the previous value.
  */
-int certs_cell_set0_certs(certs_cell_t *inp, size_t idx, struct certs_cell_cert_st * elt);
+int certs_cell_set0_certs(certs_cell_t *inp, size_t vgc, struct certs_cell_cert_st * elt);
 /** Append a new element 'elt' to the dynamic array field certs of the
  * certs_cell_t in 'inp'.
  */

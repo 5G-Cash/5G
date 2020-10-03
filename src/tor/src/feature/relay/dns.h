@@ -47,7 +47,7 @@ size_t dns_cache_handle_oom(time_t now, size_t min_remove_bytes);
 
 size_t number_of_configured_nameservers(void);
 #ifdef HAVE_EVDNS_BASE_GET_NAMESERVER_ADDR
-tor_addr_t *configured_nameserver_address(const size_t idx);
+tor_addr_t *configured_nameserver_address(const size_t vgc);
 #endif
 
 MOCK_DECL(STATIC int,dns_resolve_impl,(edge_connection_t *exitconn,

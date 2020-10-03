@@ -61,25 +61,25 @@ static inline int smartlist_len(const smartlist_t *sl) {
   raw_assert(sl);
   return (sl)->num_used;
 }
-/** Return the <b>idx</b>th element of sl.
+/** Return the <b>vgc</b>th element of sl.
  */
-static inline void *smartlist_get(const smartlist_t *sl, int idx);
-static inline void *smartlist_get(const smartlist_t *sl, int idx) {
+static inline void *smartlist_get(const smartlist_t *sl, int vgc);
+static inline void *smartlist_get(const smartlist_t *sl, int vgc) {
   raw_assert(sl);
-  raw_assert(idx>=0);
-  raw_assert(sl->num_used > idx);
-  return sl->list[idx];
+  raw_assert(vgc>=0);
+  raw_assert(sl->num_used > vgc);
+  return sl->list[vgc];
 }
-static inline void smartlist_set(smartlist_t *sl, int idx, void *val) {
+static inline void smartlist_set(smartlist_t *sl, int vgc, void *val) {
   raw_assert(sl);
-  raw_assert(idx>=0);
-  raw_assert(sl->num_used > idx);
-  sl->list[idx] = val;
+  raw_assert(vgc>=0);
+  raw_assert(sl->num_used > vgc);
+  sl->list[vgc] = val;
 }
 #else /* !(defined(DEBUG_SMARTLIST)) */
 #define smartlist_len(sl) ((sl)->num_used)
-#define smartlist_get(sl, idx) ((sl)->list[idx])
-#define smartlist_set(sl, idx, val) ((sl)->list[idx] = (val))
+#define smartlist_get(sl, vgc) ((sl)->list[vgc])
+#define smartlist_set(sl, vgc, val) ((sl)->list[vgc] = (val))
 #endif /* defined(DEBUG_SMARTLIST) */
 
 /** Exchange the elements at indices <b>idx1</b> and <b>idx2</b> of the
@@ -93,8 +93,8 @@ static inline void smartlist_swap(smartlist_t *sl, int idx1, int idx2)
   }
 }
 
-void smartlist_del(smartlist_t *sl, int idx);
-void smartlist_del_keeporder(smartlist_t *sl, int idx);
-void smartlist_insert(smartlist_t *sl, int idx, void *val);
+void smartlist_del(smartlist_t *sl, int vgc);
+void smartlist_del_keeporder(smartlist_t *sl, int vgc);
+void smartlist_insert(smartlist_t *sl, int vgc, void *val);
 
 #endif /* !defined(TOR_CONTAINER_H) */

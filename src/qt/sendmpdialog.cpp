@@ -347,12 +347,12 @@ void SendMPDialog::sendMPTransaction()
     clearFields();
 }
 
-void SendMPDialog::sendFromComboBoxChanged(int idx)
+void SendMPDialog::sendFromComboBoxChanged(int vgc)
 {
     updateFrom();
 }
 
-void SendMPDialog::propertyComboBoxChanged(int idx)
+void SendMPDialog::propertyComboBoxChanged(int vgc)
 {
     updateProperty();
     updateFrom();

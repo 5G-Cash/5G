@@ -263,7 +263,7 @@ int elysium_handler_disc_begin(int nBlockNow, CBlockIndex const * pBlockIndex);
 int elysium_handler_disc_end(int nBlockNow, CBlockIndex const * pBlockIndex);
 int elysium_handler_block_begin(int nBlockNow, CBlockIndex const * pBlockIndex);
 int elysium_handler_block_end(int nBlockNow, CBlockIndex const * pBlockIndex, unsigned int);
-bool elysium_handler_tx(const CTransaction& tx, int nBlock, unsigned int idx, const CBlockIndex* pBlockIndex);
+bool elysium_handler_tx(const CTransaction& tx, int nBlock, unsigned int vgc, const CBlockIndex* pBlockIndex);
 int elysium_save_state( CBlockIndex const *pBlockIndex );
 
 namespace elysium

@@ -1021,8 +1021,8 @@ UniValue sendmany(const UniValue& params, bool fHelp)
         totalAmount += nAmount;
 
         bool fSubtractFeeFromAmount = false;
-        for (unsigned int idx = 0; idx < subtractFeeFromAmount.size(); idx++) {
-            const UniValue& addr = subtractFeeFromAmount[idx];
+        for (unsigned int vgc = 0; vgc < subtractFeeFromAmount.size(); vgc++) {
+            const UniValue& addr = subtractFeeFromAmount[vgc];
             if (addr.get_str() == name_)
                 fSubtractFeeFromAmount = true;
         }
@@ -2285,8 +2285,8 @@ UniValue lockunspent(const UniValue& params, bool fHelp)
     }
 
     UniValue outputs = params[1].get_array();
-    for (unsigned int idx = 0; idx < outputs.size(); idx++) {
-        const UniValue& output = outputs[idx];
+    for (unsigned int vgc = 0; vgc < outputs.size(); vgc++) {
+        const UniValue& output = outputs[vgc];
         if (!output.isObject())
             throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid parameter, expected object");
         const UniValue& o = output.get_obj();
@@ -2520,8 +2520,8 @@ UniValue listunspent(const UniValue& params, bool fHelp)
     set<CBitcoinAddress> setAddress;
     if (params.size() > 2) {
         UniValue inputs = params[2].get_array();
-        for (unsigned int idx = 0; idx < inputs.size(); idx++) {
-            const UniValue& input = inputs[idx];
+        for (unsigned int vgc = 0; vgc < inputs.size(); vgc++) {
+            const UniValue& input = inputs[vgc];
             CBitcoinAddress address(input.get_str());
             if (!address.IsValid())
                 throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid Fiveg address: ")+input.get_str());

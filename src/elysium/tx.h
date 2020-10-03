@@ -333,11 +333,11 @@ public:
     }
 
     /** Sets the given values. */
-    void Set(const uint256& t, int b, unsigned int idx, int64_t bt)
+    void Set(const uint256& t, int b, unsigned int vgc, int64_t bt)
     {
         txid = t;
         block = b;
-        tx_idx = idx;
+        tx_idx = vgc;
         blockTime = bt;
     }
 
@@ -348,7 +348,7 @@ public:
         uint64_t n,
         const uint256& t,
         int b,
-        unsigned int idx,
+        unsigned int vgc,
         unsigned char *p,
         unsigned int size,
         const boost::optional<elysium::PacketClass>& packetClass,
@@ -379,6 +379,6 @@ private:
 };
 
 /** Parses a transaction and populates the CMPTransaction object. */
-int ParseTransaction(const CTransaction& tx, int nBlock, unsigned int idx, CMPTransaction& mptx, unsigned int nTime=0);
+int ParseTransaction(const CTransaction& tx, int nBlock, unsigned int vgc, CMPTransaction& mptx, unsigned int nTime=0);
 
 #endif // ZCOIN_ELYSIUM_TX_H

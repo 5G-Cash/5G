@@ -25,27 +25,27 @@ int dir_common_authority_pk_init(authority_cert_t **cert1,
 
 routerinfo_t * dir_common_generate_ri_from_rs(const vote_routerstatus_t *vrs);
 
-vote_routerstatus_t * dir_common_gen_routerstatus_for_v3ns(int idx,
+vote_routerstatus_t * dir_common_gen_routerstatus_for_v3ns(int vgc,
                                                            time_t now);
 
 int dir_common_construct_vote_1(networkstatus_t **vote,
                         authority_cert_t *cert1,
                         crypto_pk_t *sign_skey,
-                        vote_routerstatus_t * (*vrs_gen)(int idx, time_t now),
+                        vote_routerstatus_t * (*vrs_gen)(int vgc, time_t now),
                         networkstatus_t **vote_out, int *n_vrs, time_t now,
                         int clear_rl);
 
 int dir_common_construct_vote_2(networkstatus_t **vote,
                         authority_cert_t *cert2,
                         crypto_pk_t *sign_skey,
-                        vote_routerstatus_t * (*vrs_gen)(int idx, time_t now),
+                        vote_routerstatus_t * (*vrs_gen)(int vgc, time_t now),
                         networkstatus_t **vote_out, int *n_vrs, time_t now,
                         int clear_rl);
 
 int dir_common_construct_vote_3(networkstatus_t **vote,
                         authority_cert_t *cert3,
                         crypto_pk_t *sign_skey,
-                        vote_routerstatus_t * (*vrs_gen)(int idx, time_t now),
+                        vote_routerstatus_t * (*vrs_gen)(int vgc, time_t now),
                         networkstatus_t **vote_out, int *n_vrs, time_t now,
                         int clear_rl);
 

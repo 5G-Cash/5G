@@ -38,8 +38,8 @@ public:
     void updatePropSelector();
 
 public Q_SLOTS:
-    void propertyComboBoxChanged(int idx);
-    void sendFromComboBoxChanged(int idx);
+    void propertyComboBoxChanged(int vgc);
+    void sendFromComboBoxChanged(int vgc);
     void clearButtonClicked();
     void sendButtonClicked();
     void balancesUpdated();

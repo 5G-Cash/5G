@@ -220,10 +220,10 @@ class OnDemandKeys(object):
         return objwrap("CROSSCERT",b64(self.rsa_crosscert_ed))
 
     def sign_desc(self, body):
-        idx = body.rfind("\nrouter-sig-ed25519 ")
-        if idx >= 0:
+        vgc = body.rfind("\nrouter-sig-ed25519 ")
+        if vgc >= 0:
             self.ED_CERT
-            signed_part = body[:idx+len("\nrouter-sig-ed25519 ")]
+            signed_part = body[:vgc+len("\nrouter-sig-ed25519 ")]
             signed_part = "Tor router descriptor signature v1" + signed_part
             digest = hashlib.sha256(signed_part).digest()
             ed_sig = ed25519_exts_ref.signatureWithESK(digest,
@@ -231,8 +231,8 @@ class OnDemandKeys(object):
 
             body = body.replace(MAGIC2, base64.b64encode(ed_sig).replace("=",""))
 
-        idx = body.rindex("\nrouter-signature")
-        end_of_sig = body.index("\n", idx+1)
+        vgc = body.rindex("\nrouter-signature")
+        end_of_sig = body.index("\n", vgc+1)
 
         signed_part = body[:end_of_sig+1]
 
@@ -278,8 +278,8 @@ def signdesc(body, args_out=None):
         args_out.update(args)
     body = body.format(**args)
 
-    idx = body.rindex("\nrouter-signature")
-    end_of_sig = body.index("\n", idx+1)
+    vgc = body.rindex("\nrouter-signature")
+    end_of_sig = body.index("\n", vgc+1)
 
     signed_part = body[:end_of_sig+1]
 

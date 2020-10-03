@@ -27,7 +27,7 @@ void dircollator_collate(dircollator_t *dc, int consensus_method);
 
 int dircollator_n_routers(dircollator_t *dc);
 vote_routerstatus_t **dircollator_get_votes_for_router(dircollator_t *dc,
-                                                       int idx);
+                                                       int vgc);
 
 #ifdef DIRCOLLATE_PRIVATE
 struct ddmap_entry_s;

@@ -177,11 +177,11 @@ public:
         return cachedWallet.size();
     }
 
-    TransactionRecord *index(int idx)
+    TransactionRecord *index(int vgc)
     {
-        if(idx >= 0 && idx < cachedWallet.size())
+        if(vgc >= 0 && vgc < cachedWallet.size())
         {
-            TransactionRecord *rec = &cachedWallet[idx];
+            TransactionRecord *rec = &cachedWallet[vgc];
 
             // Get required locks upfront. This avoids the GUI from getting
             // stuck if the core is holding the locks for a longer time - for

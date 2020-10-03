@@ -89,19 +89,19 @@ int pwbox_encoded_set_header_len(pwbox_encoded_t *inp, uint8_t val);
  * field of the pwbox_encoded_t in 'inp'.
  */
 size_t pwbox_encoded_getlen_skey_header(const pwbox_encoded_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * skey_header of the pwbox_encoded_t in 'inp'.
  */
-uint8_t pwbox_encoded_get_skey_header(pwbox_encoded_t *inp, size_t idx);
+uint8_t pwbox_encoded_get_skey_header(pwbox_encoded_t *inp, size_t vgc);
 /** As pwbox_encoded_get_skey_header, but take and return a const
  * pointer
  */
-uint8_t pwbox_encoded_getconst_skey_header(const pwbox_encoded_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t pwbox_encoded_getconst_skey_header(const pwbox_encoded_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * skey_header of the pwbox_encoded_t in 'inp', so that it will hold
  * the value 'elt'.
  */
-int pwbox_encoded_set_skey_header(pwbox_encoded_t *inp, size_t idx, uint8_t elt);
+int pwbox_encoded_set_skey_header(pwbox_encoded_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field skey_header
  * of the pwbox_encoded_t in 'inp'.
  */
@@ -123,18 +123,18 @@ int pwbox_encoded_setlen_skey_header(pwbox_encoded_t *inp, size_t newlen);
  * the pwbox_encoded_t in 'inp'.
  */
 size_t pwbox_encoded_getlen_iv(const pwbox_encoded_t *inp);
-/** Return the element at position 'idx' of the fixed array field iv
+/** Return the element at position 'vgc' of the fixed array field iv
  * of the pwbox_encoded_t in 'inp'.
  */
-uint8_t pwbox_encoded_get_iv(pwbox_encoded_t *inp, size_t idx);
+uint8_t pwbox_encoded_get_iv(pwbox_encoded_t *inp, size_t vgc);
 /** As pwbox_encoded_get_iv, but take and return a const pointer
  */
-uint8_t pwbox_encoded_getconst_iv(const pwbox_encoded_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field iv
+uint8_t pwbox_encoded_getconst_iv(const pwbox_encoded_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field iv
  * of the pwbox_encoded_t in 'inp', so that it will hold the value
  * 'elt'.
  */
-int pwbox_encoded_set_iv(pwbox_encoded_t *inp, size_t idx, uint8_t elt);
+int pwbox_encoded_set_iv(pwbox_encoded_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 16-element array field iv of 'inp'.
  */
 uint8_t * pwbox_encoded_getarray_iv(pwbox_encoded_t *inp);
@@ -145,18 +145,18 @@ const uint8_t  * pwbox_encoded_getconstarray_iv(const pwbox_encoded_t *inp);
  * the pwbox_encoded_t in 'inp'.
  */
 size_t pwbox_encoded_getlen_data(const pwbox_encoded_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * data of the pwbox_encoded_t in 'inp'.
  */
-uint8_t pwbox_encoded_get_data(pwbox_encoded_t *inp, size_t idx);
+uint8_t pwbox_encoded_get_data(pwbox_encoded_t *inp, size_t vgc);
 /** As pwbox_encoded_get_data, but take and return a const pointer
  */
-uint8_t pwbox_encoded_getconst_data(const pwbox_encoded_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t pwbox_encoded_getconst_data(const pwbox_encoded_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * data of the pwbox_encoded_t in 'inp', so that it will hold the
  * value 'elt'.
  */
-int pwbox_encoded_set_data(pwbox_encoded_t *inp, size_t idx, uint8_t elt);
+int pwbox_encoded_set_data(pwbox_encoded_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field data of the
  * pwbox_encoded_t in 'inp'.
  */
@@ -176,18 +176,18 @@ int pwbox_encoded_setlen_data(pwbox_encoded_t *inp, size_t newlen);
  * of the pwbox_encoded_t in 'inp'.
  */
 size_t pwbox_encoded_getlen_hmac(const pwbox_encoded_t *inp);
-/** Return the element at position 'idx' of the fixed array field hmac
+/** Return the element at position 'vgc' of the fixed array field hmac
  * of the pwbox_encoded_t in 'inp'.
  */
-uint8_t pwbox_encoded_get_hmac(pwbox_encoded_t *inp, size_t idx);
+uint8_t pwbox_encoded_get_hmac(pwbox_encoded_t *inp, size_t vgc);
 /** As pwbox_encoded_get_hmac, but take and return a const pointer
  */
-uint8_t pwbox_encoded_getconst_hmac(const pwbox_encoded_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field hmac
+uint8_t pwbox_encoded_getconst_hmac(const pwbox_encoded_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field hmac
  * of the pwbox_encoded_t in 'inp', so that it will hold the value
  * 'elt'.
  */
-int pwbox_encoded_set_hmac(pwbox_encoded_t *inp, size_t idx, uint8_t elt);
+int pwbox_encoded_set_hmac(pwbox_encoded_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field hmac of 'inp'.
  */
 uint8_t * pwbox_encoded_getarray_hmac(pwbox_encoded_t *inp);

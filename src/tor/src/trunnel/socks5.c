@@ -75,20 +75,20 @@ domainname_getlen_name(const domainname_t *inp)
 }
 
 char
-domainname_get_name(domainname_t *inp, size_t idx)
+domainname_get_name(domainname_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->name, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->name, vgc);
 }
 
 char
-domainname_getconst_name(const domainname_t *inp, size_t idx)
+domainname_getconst_name(const domainname_t *inp, size_t vgc)
 {
-  return domainname_get_name((domainname_t*)inp, idx);
+  return domainname_get_name((domainname_t*)inp, vgc);
 }
 int
-domainname_set_name(domainname_t *inp, size_t idx, char elt)
+domainname_set_name(domainname_t *inp, size_t vgc, char elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->name, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->name, vgc, elt);
   return 0;
 }
 int
@@ -1995,20 +1995,20 @@ socks5_client_userpass_auth_getlen_username(const socks5_client_userpass_auth_t 
 }
 
 char
-socks5_client_userpass_auth_get_username(socks5_client_userpass_auth_t *inp, size_t idx)
+socks5_client_userpass_auth_get_username(socks5_client_userpass_auth_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->username, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->username, vgc);
 }
 
 char
-socks5_client_userpass_auth_getconst_username(const socks5_client_userpass_auth_t *inp, size_t idx)
+socks5_client_userpass_auth_getconst_username(const socks5_client_userpass_auth_t *inp, size_t vgc)
 {
-  return socks5_client_userpass_auth_get_username((socks5_client_userpass_auth_t*)inp, idx);
+  return socks5_client_userpass_auth_get_username((socks5_client_userpass_auth_t*)inp, vgc);
 }
 int
-socks5_client_userpass_auth_set_username(socks5_client_userpass_auth_t *inp, size_t idx, char elt)
+socks5_client_userpass_auth_set_username(socks5_client_userpass_auth_t *inp, size_t vgc, char elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->username, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->username, vgc, elt);
   return 0;
 }
 int
@@ -2087,20 +2087,20 @@ socks5_client_userpass_auth_getlen_passwd(const socks5_client_userpass_auth_t *i
 }
 
 char
-socks5_client_userpass_auth_get_passwd(socks5_client_userpass_auth_t *inp, size_t idx)
+socks5_client_userpass_auth_get_passwd(socks5_client_userpass_auth_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->passwd, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->passwd, vgc);
 }
 
 char
-socks5_client_userpass_auth_getconst_passwd(const socks5_client_userpass_auth_t *inp, size_t idx)
+socks5_client_userpass_auth_getconst_passwd(const socks5_client_userpass_auth_t *inp, size_t vgc)
 {
-  return socks5_client_userpass_auth_get_passwd((socks5_client_userpass_auth_t*)inp, idx);
+  return socks5_client_userpass_auth_get_passwd((socks5_client_userpass_auth_t*)inp, vgc);
 }
 int
-socks5_client_userpass_auth_set_passwd(socks5_client_userpass_auth_t *inp, size_t idx, char elt)
+socks5_client_userpass_auth_set_passwd(socks5_client_userpass_auth_t *inp, size_t vgc, char elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->passwd, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->passwd, vgc, elt);
   return 0;
 }
 int
@@ -2422,20 +2422,20 @@ socks5_client_version_getlen_methods(const socks5_client_version_t *inp)
 }
 
 uint8_t
-socks5_client_version_get_methods(socks5_client_version_t *inp, size_t idx)
+socks5_client_version_get_methods(socks5_client_version_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->methods, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->methods, vgc);
 }
 
 uint8_t
-socks5_client_version_getconst_methods(const socks5_client_version_t *inp, size_t idx)
+socks5_client_version_getconst_methods(const socks5_client_version_t *inp, size_t vgc)
 {
-  return socks5_client_version_get_methods((socks5_client_version_t*)inp, idx);
+  return socks5_client_version_get_methods((socks5_client_version_t*)inp, vgc);
 }
 int
-socks5_client_version_set_methods(socks5_client_version_t *inp, size_t idx, uint8_t elt)
+socks5_client_version_set_methods(socks5_client_version_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->methods, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->methods, vgc, elt);
   return 0;
 }
 int
@@ -3133,22 +3133,22 @@ socks5_client_request_getlen_dest_addr_ipv6(const socks5_client_request_t *inp)
 }
 
 uint8_t
-socks5_client_request_get_dest_addr_ipv6(socks5_client_request_t *inp, size_t idx)
+socks5_client_request_get_dest_addr_ipv6(socks5_client_request_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 16);
-  return inp->dest_addr_ipv6[idx];
+  trunnel_assert(vgc < 16);
+  return inp->dest_addr_ipv6[vgc];
 }
 
 uint8_t
-socks5_client_request_getconst_dest_addr_ipv6(const socks5_client_request_t *inp, size_t idx)
+socks5_client_request_getconst_dest_addr_ipv6(const socks5_client_request_t *inp, size_t vgc)
 {
-  return socks5_client_request_get_dest_addr_ipv6((socks5_client_request_t*)inp, idx);
+  return socks5_client_request_get_dest_addr_ipv6((socks5_client_request_t*)inp, vgc);
 }
 int
-socks5_client_request_set_dest_addr_ipv6(socks5_client_request_t *inp, size_t idx, uint8_t elt)
+socks5_client_request_set_dest_addr_ipv6(socks5_client_request_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 16);
-  inp->dest_addr_ipv6[idx] = elt;
+  trunnel_assert(vgc < 16);
+  inp->dest_addr_ipv6[vgc] = elt;
   return 0;
 }
 
@@ -3606,22 +3606,22 @@ socks5_server_reply_getlen_bind_addr_ipv6(const socks5_server_reply_t *inp)
 }
 
 uint8_t
-socks5_server_reply_get_bind_addr_ipv6(socks5_server_reply_t *inp, size_t idx)
+socks5_server_reply_get_bind_addr_ipv6(socks5_server_reply_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 16);
-  return inp->bind_addr_ipv6[idx];
+  trunnel_assert(vgc < 16);
+  return inp->bind_addr_ipv6[vgc];
 }
 
 uint8_t
-socks5_server_reply_getconst_bind_addr_ipv6(const socks5_server_reply_t *inp, size_t idx)
+socks5_server_reply_getconst_bind_addr_ipv6(const socks5_server_reply_t *inp, size_t vgc)
 {
-  return socks5_server_reply_get_bind_addr_ipv6((socks5_server_reply_t*)inp, idx);
+  return socks5_server_reply_get_bind_addr_ipv6((socks5_server_reply_t*)inp, vgc);
 }
 int
-socks5_server_reply_set_bind_addr_ipv6(socks5_server_reply_t *inp, size_t idx, uint8_t elt)
+socks5_server_reply_set_bind_addr_ipv6(socks5_server_reply_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 16);
-  inp->bind_addr_ipv6[idx] = elt;
+  trunnel_assert(vgc < 16);
+  inp->bind_addr_ipv6[vgc] = elt;
   return 0;
 }
 

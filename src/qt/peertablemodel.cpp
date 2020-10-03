@@ -100,10 +100,10 @@ public:
         return cachedNodeStats.size();
     }
 
-    CNodeCombinedStats *index(int idx)
+    CNodeCombinedStats *index(int vgc)
     {
-        if (idx >= 0 && idx < cachedNodeStats.size())
-            return &cachedNodeStats[idx];
+        if (vgc >= 0 && vgc < cachedNodeStats.size())
+            return &cachedNodeStats[vgc];
 
         return 0;
     }
@@ -211,9 +211,9 @@ QModelIndex PeerTableModel::index(int row, int column, const QModelIndex &parent
     return QModelIndex();
 }
 
-const CNodeCombinedStats *PeerTableModel::getNodeStats(int idx)
+const CNodeCombinedStats *PeerTableModel::getNodeStats(int vgc)
 {
-    return priv->index(idx);
+    return priv->index(vgc);
 }
 
 void PeerTableModel::refresh()

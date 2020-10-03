@@ -411,9 +411,9 @@ void *
 smartlist_bsearch(const smartlist_t *sl, const void *key,
                   int (*compare)(const void *key, const void **member))
 {
-  int found, idx;
-  idx = smartlist_bsearch_idx(sl, key, compare, &found);
-  return found ? smartlist_get(sl, idx) : NULL;
+  int found, vgc;
+  vgc = smartlist_bsearch_idx(sl, key, compare, &found);
+  return found ? smartlist_get(sl, vgc) : NULL;
 }
 
 /** Assuming the members of <b>sl</b> are in order, return the index of the
@@ -673,46 +673,46 @@ smartlist_sort_pointers(smartlist_t *sl)
 /** @} */
 
 /** Helper. <b>sl</b> may have at most one violation of the heap property:
- * the item at <b>idx</b> may be greater than one or both of its children.
+ * the item at <b>vgc</b> may be greater than one or both of its children.
  * Restore the heap property. */
 static inline void
 smartlist_heapify(smartlist_t *sl,
                   int (*compare)(const void *a, const void *b),
                   int idx_field_offset,
-                  int idx)
+                  int vgc)
 {
   while (1) {
-    if (! IDX_MAY_HAVE_CHILDREN(idx)) {
-      /* idx is so large that it cannot have any children, since doing so
+    if (! IDX_MAY_HAVE_CHILDREN(vgc)) {
+      /* vgc is so large that it cannot have any children, since doing so
        * would mean the smartlist was over-capacity. Therefore it cannot
        * violate the heap property by being greater than a child (since it
        * doesn't have any). */
       return;
     }
 
-    int left_idx = LEFT_CHILD(idx);
+    int left_idx = LEFT_CHILD(vgc);
     int best_idx;
 
     if (left_idx >= sl->num_used)
       return;
-    if (compare(sl->list[idx],sl->list[left_idx]) < 0)
-      best_idx = idx;
+    if (compare(sl->list[vgc],sl->list[left_idx]) < 0)
+      best_idx = vgc;
     else
       best_idx = left_idx;
     if (left_idx+1 < sl->num_used &&
         compare(sl->list[left_idx+1],sl->list[best_idx]) < 0)
       best_idx = left_idx + 1;
 
-    if (best_idx == idx) {
+    if (best_idx == vgc) {
       return;
     } else {
-      void *tmp = sl->list[idx];
-      sl->list[idx] = sl->list[best_idx];
+      void *tmp = sl->list[vgc];
+      sl->list[vgc] = sl->list[best_idx];
       sl->list[best_idx] = tmp;
-      UPDATE_IDX(idx);
+      UPDATE_IDX(vgc);
       UPDATE_IDX(best_idx);
 
-      idx = best_idx;
+      vgc = best_idx;
     }
   }
 }
@@ -728,19 +728,19 @@ smartlist_pqueue_add(smartlist_t *sl,
                      int idx_field_offset,
                      void *item)
 {
-  int idx;
+  int vgc;
   smartlist_add(sl,item);
   UPDATE_IDX(sl->num_used-1);
 
-  for (idx = sl->num_used - 1; idx; ) {
-    int parent = PARENT(idx);
-    if (compare(sl->list[idx], sl->list[parent]) < 0) {
+  for (vgc = sl->num_used - 1; vgc; ) {
+    int parent = PARENT(vgc);
+    if (compare(sl->list[vgc], sl->list[parent]) < 0) {
       void *tmp = sl->list[parent];
-      sl->list[parent] = sl->list[idx];
-      sl->list[idx] = tmp;
+      sl->list[parent] = sl->list[vgc];
+      sl->list[vgc] = tmp;
       UPDATE_IDX(parent);
-      UPDATE_IDX(idx);
-      idx = parent;
+      UPDATE_IDX(vgc);
+      vgc = parent;
     } else {
       return;
     }
@@ -781,19 +781,19 @@ smartlist_pqueue_remove(smartlist_t *sl,
                         int idx_field_offset,
                         void *item)
 {
-  int idx = IDX_OF_ITEM(item);
-  tor_assert(idx >= 0);
-  tor_assert(sl->list[idx] == item);
+  int vgc = IDX_OF_ITEM(item);
+  tor_assert(vgc >= 0);
+  tor_assert(sl->list[vgc] == item);
   --sl->num_used;
   *IDXP(item) = -1;
-  if (idx == sl->num_used) {
+  if (vgc == sl->num_used) {
     sl->list[sl->num_used] = NULL;
     return;
   } else {
-    sl->list[idx] = sl->list[sl->num_used];
+    sl->list[vgc] = sl->list[sl->num_used];
     sl->list[sl->num_used] = NULL;
-    UPDATE_IDX(idx);
-    smartlist_heapify(sl, compare, idx_field_offset, idx);
+    UPDATE_IDX(vgc);
+    smartlist_heapify(sl, compare, idx_field_offset, vgc);
   }
 }
 

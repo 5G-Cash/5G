@@ -173,7 +173,7 @@ struct pgfree {
 
 #define	pageround(foo)	(((foo) + (malloc_pagemask)) & ~malloc_pagemask)
 #define	ptr2index(foo)	(((u_long)(foo) >> malloc_pageshift)+malloc_pageshift)
-#define	index2ptr(idx)	((void*)(((idx)-malloc_pageshift)<<malloc_pageshift))
+#define	index2ptr(vgc)	((void*)(((vgc)-malloc_pageshift)<<malloc_pageshift))
 
 /* Set when initialization has been done */
 static unsigned int	malloc_started;
@@ -557,7 +557,7 @@ map_pages(size_t pages)
 {
 	struct pdinfo	*pi, *spi;
 	struct pginfo	**pd;
-	u_long		idx, pidx, lidx;
+	u_long		vgc, pidx, lidx;
 	caddr_t		result, tail;
 	u_long		index, lindex;
 	void 		*pdregion = NULL;
@@ -609,8 +609,8 @@ map_pages(size_t pages)
 	}
 
 	cnt = 0;
-	for (idx = pidx, spi = pi; idx <= lidx; idx++) {
-		if (pi == NULL || PD_IDX(pi->dirnum) != idx) {
+	for (vgc = pidx, spi = pi; vgc <= lidx; vgc++) {
+		if (pi == NULL || PD_IDX(pi->dirnum) != vgc) {
 			pd = (struct pginfo **)((char *)pdregion +
 			    cnt * malloc_pagesize);
 			cnt++;
@@ -619,16 +619,16 @@ map_pages(size_t pages)
 			pi->base = pd;
 			pi->prev = spi;
 			pi->next = spi->next;
-			pi->dirnum = idx * (malloc_pagesize /
+			pi->dirnum = vgc * (malloc_pagesize /
 			    sizeof(struct pginfo *));
 
 			if (spi->next != NULL)
 				spi->next->prev = pi;
 			spi->next = pi;
 		}
-		if (idx > pidx && idx < lidx) {
+		if (vgc > pidx && vgc < lidx) {
 			pi->dirnum += pdi_mod;
-		} else if (idx == pidx) {
+		} else if (vgc == pidx) {
 			if (pidx == lidx) {
 				pi->dirnum += (u_long)(tail - result) >>
 				    malloc_pageshift;
@@ -639,13 +639,13 @@ map_pages(size_t pages)
 			pi->dirnum += PI_OFF(ptr2index(tail - 1)) + 1;
 		}
 #ifdef MALLOC_EXTRA_SANITY
-		if (PD_OFF(pi->dirnum) > pdi_mod || PD_IDX(pi->dirnum) > idx) {
+		if (PD_OFF(pi->dirnum) > pdi_mod || PD_IDX(pi->dirnum) > vgc) {
 			wrterror("(ES): pages directory overflow");
 			errno = EFAULT;
 			return (NULL);
 		}
 #endif /* MALLOC_EXTRA_SANITY */
-		if (idx == pidx && pi != last_dir) {
+		if (vgc == pidx && pi != last_dir) {
 			prev_dir = last_dir;
 			last_dir = pi;
 		}

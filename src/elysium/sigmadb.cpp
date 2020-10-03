@@ -82,15 +82,15 @@ std::array<uint8_t, S> CreateKey(KeyType type, T ...args)
 }
 
 // array size represent size of key
-// <1 byte of type><4 bytes of property Id><1 byte of denomination><4 bytes of group id><2 bytes of idx>
+// <1 byte of type><4 bytes of property Id><1 byte of denomination><4 bytes of group id><2 bytes of vgc>
 #define MINT_KEY_SIZE sizeof(KeyType) + sizeof(uint8_t) + sizeof(uint16_t) + 2 * sizeof(uint32_t)
 std::array<uint8_t, MINT_KEY_SIZE> CreateMintKey(
     uint32_t propertyId,
     uint8_t denomination,
     uint32_t groupId,
-    uint16_t idx)
+    uint16_t vgc)
 {
-    return CreateKey(KeyType::Mint, propertyId, denomination, groupId, idx);
+    return CreateKey(KeyType::Mint, propertyId, denomination, groupId, vgc);
 }
 
 // array size represent size of key
@@ -178,7 +178,7 @@ SigmaPublicKey ParseMint(const std::string& val)
 }
 
 bool ParseMintKey(
-    const leveldb::Slice& key, uint32_t& propertyId, uint8_t& denomination, uint32_t& groupId, uint16_t& idx)
+    const leveldb::Slice& key, uint32_t& propertyId, uint8_t& denomination, uint32_t& groupId, uint16_t& vgc)
 {
     if (key.size() > 0 && key.data()[0] == static_cast<char>(KeyType::Mint)) {
         if (key.size() != MINT_KEY_SIZE) {
@@ -189,11 +189,11 @@ bool ParseMintKey(
         std::memcpy(&propertyId, it, sizeof(propertyId));
         std::memcpy(&denomination, it += sizeof(propertyId), sizeof(denomination));
         std::memcpy(&groupId, it += sizeof(denomination), sizeof(groupId));
-        std::memcpy(&idx, it += sizeof(groupId), sizeof(idx));
+        std::memcpy(&vgc, it += sizeof(groupId), sizeof(vgc));
 
         elysium::swapByteOrder(propertyId);
         elysium::swapByteOrder(groupId);
-        elysium::swapByteOrder(idx);
+        elysium::swapByteOrder(vgc);
 
         return true;
     }
@@ -247,7 +247,7 @@ constexpr uint16_t SigmaDatabase::MAX_GROUP_SIZE;
 
 // Database structure
 // Index height and commitment
-// 0<prob_id><denom><group_id><idx>=<GroupElement><int>
+// 0<prob_id><denom><group_id><vgc>=<GroupElement><int>
 // Sequence of mint sorted following blockchain
 // 1<seq uint64>=key
 SigmaDatabase::SigmaDatabase(const boost::filesystem::path& path, bool wipe, uint16_t groupSize)

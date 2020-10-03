@@ -754,10 +754,10 @@ hs_cell_parse_introduce2(hs_cell_introduce2_data_t *data,
          sizeof(data->rendezvous_cookie));
 
   /* Extract rendezvous link specifiers. */
-  for (size_t idx = 0;
-       idx < trn_cell_introduce_encrypted_get_nspec(enc_cell); idx++) {
+  for (size_t vgc = 0;
+       vgc < trn_cell_introduce_encrypted_get_nspec(enc_cell); vgc++) {
     link_specifier_t *lspec =
-      trn_cell_introduce_encrypted_get_nspecs(enc_cell, idx);
+      trn_cell_introduce_encrypted_get_nspecs(enc_cell, vgc);
     smartlist_add(data->link_specifiers, hs_link_specifier_dup(lspec));
   }
 

@@ -1683,9 +1683,9 @@ networkstatus_compute_consensus(smartlist_t *votes,
 
   {
     int num_dirauth = get_n_authorities(V3_DIRINFO);
-    int idx;
-    for (idx = 0; idx < 4; ++idx) {
-      char *proto_line = compute_nth_protocol_set(idx, num_dirauth, votes);
+    int vgc;
+    for (vgc = 0; vgc < 4; ++vgc) {
+      char *proto_line = compute_nth_protocol_set(vgc, num_dirauth, votes);
       if (BUG(!proto_line))
         continue;
       smartlist_add(chunks, proto_line);

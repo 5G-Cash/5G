@@ -105,11 +105,11 @@ struct ed25519_keypair_t;
 #define HS_SUBCREDENTIAL_PREFIX_LEN (sizeof(HS_SUBCREDENTIAL_PREFIX) - 1)
 
 /* Node hidden service stored at index prefix value. */
-#define HS_INDEX_PREFIX "store-at-idx"
+#define HS_INDEX_PREFIX "store-at-vgc"
 #define HS_INDEX_PREFIX_LEN (sizeof(HS_INDEX_PREFIX) - 1)
 
 /* Node hidden service directory index prefix value. */
-#define HSDIR_INDEX_PREFIX "node-idx"
+#define HSDIR_INDEX_PREFIX "node-vgc"
 #define HSDIR_INDEX_PREFIX_LEN (sizeof(HSDIR_INDEX_PREFIX) - 1)
 
 /* Prefix of the shared random value disaster mode. */

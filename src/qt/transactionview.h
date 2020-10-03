@@ -109,9 +109,9 @@ Q_SIGNALS:
     void message(const QString &title, const QString &message, unsigned int style);
 
 public Q_SLOTS:
-    void chooseDate(int idx);
-    void chooseType(int idx);
-    void chooseWatchonly(int idx);
+    void chooseDate(int vgc);
+    void chooseType(int vgc);
+    void chooseWatchonly(int vgc);
     void changedPrefix(const QString &prefix);
     void changedAmount(const QString &amount);
     void exportClicked();

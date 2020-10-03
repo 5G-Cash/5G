@@ -105,17 +105,17 @@ void MetaDExCancelDialog::UpdateAddressSelector()
             for (md_Set::iterator it = indexes.begin(); it != indexes.end(); ++it) {
                 CMPMetaDEx obj = *it;
                 if(IsMyAddress(obj.getAddr())) { // this address is ours and has an active MetaDEx trade
-                    int idx = ui->fromCombo->findText(QString::fromStdString(obj.getAddr())); // avoid adding duplicates
-                    if (idx == -1) ui->fromCombo->addItem(QString::fromStdString(obj.getAddr()));
+                    int vgc = ui->fromCombo->findText(QString::fromStdString(obj.getAddr())); // avoid adding duplicates
+                    if (vgc == -1) ui->fromCombo->addItem(QString::fromStdString(obj.getAddr()));
                 }
             }
         }
     }
 
     // restore initial selection
-    int idx = ui->fromCombo->findText(selectedItem);
-    if (idx != -1) {
-        ui->fromCombo->setCurrentIndex(idx);
+    int vgc = ui->fromCombo->findText(selectedItem);
+    if (vgc != -1) {
+        ui->fromCombo->setCurrentIndex(vgc);
     }
 }
 
@@ -193,8 +193,8 @@ void MetaDExCancelDialog::UpdateCancelCombo()
         if (fTestEcosystem) ui->cancelCombo->addItem("All active orders in the test ecosystem", 2);
     }
 
-    int idx = ui->cancelCombo->findText(existingSelection, Qt::MatchExactly);
-    if (idx != -1) ui->cancelCombo->setCurrentIndex(idx); // if value selected before update and it still exists, reselect it
+    int vgc = ui->cancelCombo->findText(existingSelection, Qt::MatchExactly);
+    if (vgc != -1) ui->cancelCombo->setCurrentIndex(vgc); // if value selected before update and it still exists, reselect it
 }
 
 /**

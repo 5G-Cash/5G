@@ -136,7 +136,7 @@ public Q_SLOTS:
     /** Switch specifically to bitcoin tx history tab */
     void gotoBitcoinHistoryTab();
     /** Switch to bitcoin tx history tab and focus on specific transaction */
-    void focusBitcoinHistoryTab(const QModelIndex &idx);
+    void focusBitcoinHistoryTab(const QModelIndex &vgc);
     /** Switch to fivegnode page */
     void gotoFivegnodePage();
     /** Switch to receive coins page */

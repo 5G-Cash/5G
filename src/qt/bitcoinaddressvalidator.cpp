@@ -29,10 +29,10 @@ QValidator::State BitcoinAddressEntryValidator::validate(QString &input, int &po
         return QValidator::Intermediate;
 
     // Correction
-    for (int idx = 0; idx < input.size();)
+    for (int vgc = 0; vgc < input.size();)
     {
         bool removeChar = false;
-        QChar ch = input.at(idx);
+        QChar ch = input.at(vgc);
         // Corrections made are very conservative on purpose, to avoid
         // users unexpectedly getting away with typos that would normally
         // be detected, and thus sending to the wrong address.
@@ -53,16 +53,16 @@ QValidator::State BitcoinAddressEntryValidator::validate(QString &input, int &po
 
         // To next character
         if (removeChar)
-            input.remove(idx, 1);
+            input.remove(vgc, 1);
         else
-            ++idx;
+            ++vgc;
     }
 
     // Validation
     QValidator::State state = QValidator::Acceptable;
-    for (int idx = 0; idx < input.size(); ++idx)
+    for (int vgc = 0; vgc < input.size(); ++vgc)
     {
-        int ch = input.at(idx).unicode();
+        int ch = input.at(vgc).unicode();
 
         if (((ch >= '0' && ch<='9') ||
             (ch >= 'a' && ch<='z') ||

@@ -924,8 +924,8 @@ BOOST_AUTO_TEST_CASE(script_build)
     {
         UniValue json_tests = read_json(std::string(json_tests::script_tests, json_tests::script_tests + sizeof(json_tests::script_tests)));
 
-        for (unsigned int idx = 0; idx < json_tests.size(); idx++) {
-            const UniValue& tv = json_tests[idx];
+        for (unsigned int vgc = 0; vgc < json_tests.size(); vgc++) {
+            const UniValue& tv = json_tests[vgc];
             tests_set.insert(JSONPrettyPrint(tv.get_array()));
         }
     }
@@ -961,8 +961,8 @@ BOOST_AUTO_TEST_CASE(script_json_test)
     // amount (nValue) to use in the crediting tx
     UniValue tests = read_json(std::string(json_tests::script_tests, json_tests::script_tests + sizeof(json_tests::script_tests)));
 
-    for (unsigned int idx = 0; idx < tests.size(); idx++) {
-        UniValue test = tests[idx];
+    for (unsigned int vgc = 0; vgc < tests.size(); vgc++) {
+        UniValue test = tests[vgc];
         string strTest = test.write();
         CScriptWitness witness;
         CAmount nValue = 0;

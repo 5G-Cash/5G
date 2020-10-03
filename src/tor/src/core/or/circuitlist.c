@@ -665,11 +665,11 @@ circuit_close_all_marked(void)
     tor_assert(circ->marked_for_close);
 
     /* Remove it from the circuit list. */
-    int idx = circ->global_circuitlist_idx;
-    smartlist_del(lst, idx);
-    if (idx < smartlist_len(lst)) {
-      circuit_t *replacement = smartlist_get(lst, idx);
-      replacement->global_circuitlist_idx = idx;
+    int vgc = circ->global_circuitlist_idx;
+    smartlist_del(lst, vgc);
+    if (vgc < smartlist_len(lst)) {
+      circuit_t *replacement = smartlist_get(lst, vgc);
+      replacement->global_circuitlist_idx = vgc;
     }
     circ->global_circuitlist_idx = -1;
 
@@ -1210,13 +1210,13 @@ circuit_free_(circuit_t *circ)
   tor_free(circ->n_chan_create_cell);
 
   if (circ->global_circuitlist_idx != -1) {
-    int idx = circ->global_circuitlist_idx;
-    circuit_t *c2 = smartlist_get(global_circuitlist, idx);
+    int vgc = circ->global_circuitlist_idx;
+    circuit_t *c2 = smartlist_get(global_circuitlist, vgc);
     tor_assert(c2 == circ);
-    smartlist_del(global_circuitlist, idx);
-    if (idx < smartlist_len(global_circuitlist)) {
-      c2 = smartlist_get(global_circuitlist, idx);
-      c2->global_circuitlist_idx = idx;
+    smartlist_del(global_circuitlist, vgc);
+    if (vgc < smartlist_len(global_circuitlist)) {
+      c2 = smartlist_get(global_circuitlist, vgc);
+      c2->global_circuitlist_idx = vgc;
     }
   }
 
@@ -1722,15 +1722,15 @@ origin_circuit_t *
 circuit_get_next_intro_circ(const origin_circuit_t *start,
                             bool want_client_circ)
 {
-  int idx = 0;
+  int vgc = 0;
   smartlist_t *lst = circuit_get_global_list();
 
   if (start) {
-    idx = TO_CIRCUIT(start)->global_circuitlist_idx + 1;
+    vgc = TO_CIRCUIT(start)->global_circuitlist_idx + 1;
   }
 
-  for ( ; idx < smartlist_len(lst); ++idx) {
-    circuit_t *circ = smartlist_get(lst, idx);
+  for ( ; vgc < smartlist_len(lst); ++vgc) {
+    circuit_t *circ = smartlist_get(lst, vgc);
 
     /* Ignore a marked for close circuit or if the state is not open. */
     if (circ->marked_for_close) {
@@ -1773,15 +1773,15 @@ circuit_get_next_intro_circ(const origin_circuit_t *start,
 origin_circuit_t *
 circuit_get_next_service_rp_circ(origin_circuit_t *start)
 {
-  int idx = 0;
+  int vgc = 0;
   smartlist_t *lst = circuit_get_global_list();
 
   if (start) {
-    idx = TO_CIRCUIT(start)->global_circuitlist_idx + 1;
+    vgc = TO_CIRCUIT(start)->global_circuitlist_idx + 1;
   }
 
-  for ( ; idx < smartlist_len(lst); ++idx) {
-    circuit_t *circ = smartlist_get(lst, idx);
+  for ( ; vgc < smartlist_len(lst); ++vgc) {
+    circuit_t *circ = smartlist_get(lst, vgc);
 
     /* Ignore a marked for close circuit or purpose not matching a service
      * intro point or if the state is not open. */
@@ -1808,16 +1808,16 @@ origin_circuit_t *
 circuit_get_next_by_pk_and_purpose(origin_circuit_t *start,
                                    const uint8_t *digest, uint8_t purpose)
 {
-  int idx;
+  int vgc;
   smartlist_t *lst = circuit_get_global_list();
   tor_assert(CIRCUIT_PURPOSE_IS_ORIGIN(purpose));
   if (start == NULL)
-    idx = 0;
+    vgc = 0;
   else
-    idx = TO_CIRCUIT(start)->global_circuitlist_idx + 1;
+    vgc = TO_CIRCUIT(start)->global_circuitlist_idx + 1;
 
-  for ( ; idx < smartlist_len(lst); ++idx) {
-    circuit_t *circ = smartlist_get(lst, idx);
+  for ( ; vgc < smartlist_len(lst); ++vgc) {
+    circuit_t *circ = smartlist_get(lst, vgc);
     origin_circuit_t *ocirc;
 
     if (circ->marked_for_close)

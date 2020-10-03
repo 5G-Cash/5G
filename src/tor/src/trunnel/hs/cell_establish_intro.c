@@ -107,20 +107,20 @@ trn_cell_establish_intro_getlen_auth_key(const trn_cell_establish_intro_t *inp)
 }
 
 uint8_t
-trn_cell_establish_intro_get_auth_key(trn_cell_establish_intro_t *inp, size_t idx)
+trn_cell_establish_intro_get_auth_key(trn_cell_establish_intro_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->auth_key, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->auth_key, vgc);
 }
 
 uint8_t
-trn_cell_establish_intro_getconst_auth_key(const trn_cell_establish_intro_t *inp, size_t idx)
+trn_cell_establish_intro_getconst_auth_key(const trn_cell_establish_intro_t *inp, size_t vgc)
 {
-  return trn_cell_establish_intro_get_auth_key((trn_cell_establish_intro_t*)inp, idx);
+  return trn_cell_establish_intro_get_auth_key((trn_cell_establish_intro_t*)inp, vgc);
 }
 int
-trn_cell_establish_intro_set_auth_key(trn_cell_establish_intro_t *inp, size_t idx, uint8_t elt)
+trn_cell_establish_intro_set_auth_key(trn_cell_establish_intro_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->auth_key, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->auth_key, vgc, elt);
   return 0;
 }
 int
@@ -202,22 +202,22 @@ trn_cell_establish_intro_getlen_handshake_mac(const trn_cell_establish_intro_t *
 }
 
 uint8_t
-trn_cell_establish_intro_get_handshake_mac(trn_cell_establish_intro_t *inp, size_t idx)
+trn_cell_establish_intro_get_handshake_mac(trn_cell_establish_intro_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < TRUNNEL_SHA3_256_LEN);
-  return inp->handshake_mac[idx];
+  trunnel_assert(vgc < TRUNNEL_SHA3_256_LEN);
+  return inp->handshake_mac[vgc];
 }
 
 uint8_t
-trn_cell_establish_intro_getconst_handshake_mac(const trn_cell_establish_intro_t *inp, size_t idx)
+trn_cell_establish_intro_getconst_handshake_mac(const trn_cell_establish_intro_t *inp, size_t vgc)
 {
-  return trn_cell_establish_intro_get_handshake_mac((trn_cell_establish_intro_t*)inp, idx);
+  return trn_cell_establish_intro_get_handshake_mac((trn_cell_establish_intro_t*)inp, vgc);
 }
 int
-trn_cell_establish_intro_set_handshake_mac(trn_cell_establish_intro_t *inp, size_t idx, uint8_t elt)
+trn_cell_establish_intro_set_handshake_mac(trn_cell_establish_intro_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < TRUNNEL_SHA3_256_LEN);
-  inp->handshake_mac[idx] = elt;
+  trunnel_assert(vgc < TRUNNEL_SHA3_256_LEN);
+  inp->handshake_mac[vgc] = elt;
   return 0;
 }
 
@@ -254,20 +254,20 @@ trn_cell_establish_intro_getlen_sig(const trn_cell_establish_intro_t *inp)
 }
 
 uint8_t
-trn_cell_establish_intro_get_sig(trn_cell_establish_intro_t *inp, size_t idx)
+trn_cell_establish_intro_get_sig(trn_cell_establish_intro_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->sig, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->sig, vgc);
 }
 
 uint8_t
-trn_cell_establish_intro_getconst_sig(const trn_cell_establish_intro_t *inp, size_t idx)
+trn_cell_establish_intro_getconst_sig(const trn_cell_establish_intro_t *inp, size_t vgc)
 {
-  return trn_cell_establish_intro_get_sig((trn_cell_establish_intro_t*)inp, idx);
+  return trn_cell_establish_intro_get_sig((trn_cell_establish_intro_t*)inp, vgc);
 }
 int
-trn_cell_establish_intro_set_sig(trn_cell_establish_intro_t *inp, size_t idx, uint8_t elt)
+trn_cell_establish_intro_set_sig(trn_cell_establish_intro_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->sig, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->sig, vgc, elt);
   return 0;
 }
 int

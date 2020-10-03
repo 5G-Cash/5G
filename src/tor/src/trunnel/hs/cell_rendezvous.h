@@ -65,19 +65,19 @@ int trn_cell_rendezvous1_clear_errors(trn_cell_rendezvous1_t *obj);
  * rendezvous_cookie field of the trn_cell_rendezvous1_t in 'inp'.
  */
 size_t trn_cell_rendezvous1_getlen_rendezvous_cookie(const trn_cell_rendezvous1_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * rendezvous_cookie of the trn_cell_rendezvous1_t in 'inp'.
  */
-uint8_t trn_cell_rendezvous1_get_rendezvous_cookie(trn_cell_rendezvous1_t *inp, size_t idx);
+uint8_t trn_cell_rendezvous1_get_rendezvous_cookie(trn_cell_rendezvous1_t *inp, size_t vgc);
 /** As trn_cell_rendezvous1_get_rendezvous_cookie, but take and return
  * a const pointer
  */
-uint8_t trn_cell_rendezvous1_getconst_rendezvous_cookie(const trn_cell_rendezvous1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t trn_cell_rendezvous1_getconst_rendezvous_cookie(const trn_cell_rendezvous1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * rendezvous_cookie of the trn_cell_rendezvous1_t in 'inp', so that
  * it will hold the value 'elt'.
  */
-int trn_cell_rendezvous1_set_rendezvous_cookie(trn_cell_rendezvous1_t *inp, size_t idx, uint8_t elt);
+int trn_cell_rendezvous1_set_rendezvous_cookie(trn_cell_rendezvous1_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the TRUNNEL_REND_COOKIE_LEN-element array
  * field rendezvous_cookie of 'inp'.
  */
@@ -90,19 +90,19 @@ const uint8_t  * trn_cell_rendezvous1_getconstarray_rendezvous_cookie(const trn_
  * field of the trn_cell_rendezvous1_t in 'inp'.
  */
 size_t trn_cell_rendezvous1_getlen_handshake_info(const trn_cell_rendezvous1_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * handshake_info of the trn_cell_rendezvous1_t in 'inp'.
  */
-uint8_t trn_cell_rendezvous1_get_handshake_info(trn_cell_rendezvous1_t *inp, size_t idx);
+uint8_t trn_cell_rendezvous1_get_handshake_info(trn_cell_rendezvous1_t *inp, size_t vgc);
 /** As trn_cell_rendezvous1_get_handshake_info, but take and return a
  * const pointer
  */
-uint8_t trn_cell_rendezvous1_getconst_handshake_info(const trn_cell_rendezvous1_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t trn_cell_rendezvous1_getconst_handshake_info(const trn_cell_rendezvous1_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * handshake_info of the trn_cell_rendezvous1_t in 'inp', so that it
  * will hold the value 'elt'.
  */
-int trn_cell_rendezvous1_set_handshake_info(trn_cell_rendezvous1_t *inp, size_t idx, uint8_t elt);
+int trn_cell_rendezvous1_set_handshake_info(trn_cell_rendezvous1_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field
  * handshake_info of the trn_cell_rendezvous1_t in 'inp'.
  */
@@ -161,19 +161,19 @@ int trn_cell_rendezvous2_clear_errors(trn_cell_rendezvous2_t *obj);
  * handshake_info field of the trn_cell_rendezvous2_t in 'inp'.
  */
 size_t trn_cell_rendezvous2_getlen_handshake_info(const trn_cell_rendezvous2_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * handshake_info of the trn_cell_rendezvous2_t in 'inp'.
  */
-uint8_t trn_cell_rendezvous2_get_handshake_info(trn_cell_rendezvous2_t *inp, size_t idx);
+uint8_t trn_cell_rendezvous2_get_handshake_info(trn_cell_rendezvous2_t *inp, size_t vgc);
 /** As trn_cell_rendezvous2_get_handshake_info, but take and return a
  * const pointer
  */
-uint8_t trn_cell_rendezvous2_getconst_handshake_info(const trn_cell_rendezvous2_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t trn_cell_rendezvous2_getconst_handshake_info(const trn_cell_rendezvous2_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * handshake_info of the trn_cell_rendezvous2_t in 'inp', so that it
  * will hold the value 'elt'.
  */
-int trn_cell_rendezvous2_set_handshake_info(trn_cell_rendezvous2_t *inp, size_t idx, uint8_t elt);
+int trn_cell_rendezvous2_set_handshake_info(trn_cell_rendezvous2_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the TRUNNEL_HANDSHAKE_INFO_LEN-element array
  * field handshake_info of 'inp'.
  */

@@ -110,11 +110,11 @@ struct PrefilledTransaction {
 
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
-        uint64_t idx = index;
-        READWRITE(COMPACTSIZE(idx));
-        if (idx > std::numeric_limits<uint16_t>::max())
+        uint64_t vgc = index;
+        READWRITE(COMPACTSIZE(vgc));
+        if (vgc > std::numeric_limits<uint16_t>::max())
             throw std::ios_base::failure("index overflowed 16-bits");
-        index = idx;
+        index = vgc;
         READWRITE(REF(TransactionCompressor(tx)));
     }
 };

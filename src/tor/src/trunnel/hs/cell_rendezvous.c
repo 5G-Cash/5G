@@ -64,22 +64,22 @@ trn_cell_rendezvous1_getlen_rendezvous_cookie(const trn_cell_rendezvous1_t *inp)
 }
 
 uint8_t
-trn_cell_rendezvous1_get_rendezvous_cookie(trn_cell_rendezvous1_t *inp, size_t idx)
+trn_cell_rendezvous1_get_rendezvous_cookie(trn_cell_rendezvous1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < TRUNNEL_REND_COOKIE_LEN);
-  return inp->rendezvous_cookie[idx];
+  trunnel_assert(vgc < TRUNNEL_REND_COOKIE_LEN);
+  return inp->rendezvous_cookie[vgc];
 }
 
 uint8_t
-trn_cell_rendezvous1_getconst_rendezvous_cookie(const trn_cell_rendezvous1_t *inp, size_t idx)
+trn_cell_rendezvous1_getconst_rendezvous_cookie(const trn_cell_rendezvous1_t *inp, size_t vgc)
 {
-  return trn_cell_rendezvous1_get_rendezvous_cookie((trn_cell_rendezvous1_t*)inp, idx);
+  return trn_cell_rendezvous1_get_rendezvous_cookie((trn_cell_rendezvous1_t*)inp, vgc);
 }
 int
-trn_cell_rendezvous1_set_rendezvous_cookie(trn_cell_rendezvous1_t *inp, size_t idx, uint8_t elt)
+trn_cell_rendezvous1_set_rendezvous_cookie(trn_cell_rendezvous1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < TRUNNEL_REND_COOKIE_LEN);
-  inp->rendezvous_cookie[idx] = elt;
+  trunnel_assert(vgc < TRUNNEL_REND_COOKIE_LEN);
+  inp->rendezvous_cookie[vgc] = elt;
   return 0;
 }
 
@@ -100,20 +100,20 @@ trn_cell_rendezvous1_getlen_handshake_info(const trn_cell_rendezvous1_t *inp)
 }
 
 uint8_t
-trn_cell_rendezvous1_get_handshake_info(trn_cell_rendezvous1_t *inp, size_t idx)
+trn_cell_rendezvous1_get_handshake_info(trn_cell_rendezvous1_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->handshake_info, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->handshake_info, vgc);
 }
 
 uint8_t
-trn_cell_rendezvous1_getconst_handshake_info(const trn_cell_rendezvous1_t *inp, size_t idx)
+trn_cell_rendezvous1_getconst_handshake_info(const trn_cell_rendezvous1_t *inp, size_t vgc)
 {
-  return trn_cell_rendezvous1_get_handshake_info((trn_cell_rendezvous1_t*)inp, idx);
+  return trn_cell_rendezvous1_get_handshake_info((trn_cell_rendezvous1_t*)inp, vgc);
 }
 int
-trn_cell_rendezvous1_set_handshake_info(trn_cell_rendezvous1_t *inp, size_t idx, uint8_t elt)
+trn_cell_rendezvous1_set_handshake_info(trn_cell_rendezvous1_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->handshake_info, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->handshake_info, vgc, elt);
   return 0;
 }
 int
@@ -324,22 +324,22 @@ trn_cell_rendezvous2_getlen_handshake_info(const trn_cell_rendezvous2_t *inp)
 }
 
 uint8_t
-trn_cell_rendezvous2_get_handshake_info(trn_cell_rendezvous2_t *inp, size_t idx)
+trn_cell_rendezvous2_get_handshake_info(trn_cell_rendezvous2_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < TRUNNEL_HANDSHAKE_INFO_LEN);
-  return inp->handshake_info[idx];
+  trunnel_assert(vgc < TRUNNEL_HANDSHAKE_INFO_LEN);
+  return inp->handshake_info[vgc];
 }
 
 uint8_t
-trn_cell_rendezvous2_getconst_handshake_info(const trn_cell_rendezvous2_t *inp, size_t idx)
+trn_cell_rendezvous2_getconst_handshake_info(const trn_cell_rendezvous2_t *inp, size_t vgc)
 {
-  return trn_cell_rendezvous2_get_handshake_info((trn_cell_rendezvous2_t*)inp, idx);
+  return trn_cell_rendezvous2_get_handshake_info((trn_cell_rendezvous2_t*)inp, vgc);
 }
 int
-trn_cell_rendezvous2_set_handshake_info(trn_cell_rendezvous2_t *inp, size_t idx, uint8_t elt)
+trn_cell_rendezvous2_set_handshake_info(trn_cell_rendezvous2_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < TRUNNEL_HANDSHAKE_INFO_LEN);
-  inp->handshake_info[idx] = elt;
+  trunnel_assert(vgc < TRUNNEL_HANDSHAKE_INFO_LEN);
+  inp->handshake_info[vgc] = elt;
   return 0;
 }
 

@@ -31,7 +31,7 @@ static int secp256k1_ecmult_context_is_built(const secp256k1_ecmult_context *ctx
 static void secp256k1_ecmult(const secp256k1_ecmult_context *ctx, secp256k1_gej *r, const secp256k1_gej *a, const secp256k1_scalar *na, const secp256k1_scalar *ng);
 
 
-typedef int (secp256k1_ecmult_multi_callback)(secp256k1_scalar *sc, secp256k1_gej *pt, size_t idx, void *data);
+typedef int (secp256k1_ecmult_multi_callback)(secp256k1_scalar *sc, secp256k1_gej *pt, size_t vgc, void *data);
 
 /**
  * Multi-multiply: R = inp_g_sc * G + sum_i ni * Ai.

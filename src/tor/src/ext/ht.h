@@ -332,12 +332,12 @@ ht_string_hash(const char *s)
                        int (*fn)(struct type *, void *),                \
                        void *data)                                      \
 {                                                                       \
-    unsigned idx;                                                       \
+    unsigned vgc;                                                       \
     struct type **p, **nextp, *next;                                    \
     if (!head->hth_table)                                               \
       return;                                                           \
-    for (idx=0; idx < head->hth_table_length; ++idx) {                  \
-      p = &head->hth_table[idx];                                        \
+    for (vgc=0; vgc < head->hth_table_length; ++vgc) {                  \
+      p = &head->hth_table[vgc];                                        \
       while (*p) {                                                      \
         nextp = &(*p)->field.hte_next;                                  \
         next = *nextp;                                                  \

@@ -104,11 +104,11 @@ int
 storage_dir_register_with_sandbox(storage_dir_t *d, sandbox_cfg_t **cfg)
 {
   int problems = 0;
-  int idx;
-  for (idx = FNAME_MIN_NUM; idx < FNAME_MIN_NUM + d->max_files; ++idx) {
+  int vgc;
+  for (vgc = FNAME_MIN_NUM; vgc < FNAME_MIN_NUM + d->max_files; ++vgc) {
     char *path = NULL, *tmppath = NULL;
-    tor_asprintf(&path, "%s/%d", d->directory, idx);
-    tor_asprintf(&tmppath, "%s/%d.tmp", d->directory, idx);
+    tor_asprintf(&path, "%s/%d", d->directory, vgc);
+    tor_asprintf(&tmppath, "%s/%d.tmp", d->directory, vgc);
 
     problems += sandbox_cfg_allow_open_filename(cfg, tor_strdup(path));
     problems += sandbox_cfg_allow_open_filename(cfg, tor_strdup(tmppath));
@@ -569,17 +569,17 @@ storage_dir_shrink(storage_dir_t *d,
 
   qsort(ents, n, sizeof(shrinking_dir_entry_t), shrinking_dir_entry_compare);
 
-  int idx = 0;
-  while ((d->usage > target_size || min_to_remove > 0) && idx < n) {
-    if (unlink(sandbox_intern_string(ents[idx].path)) == 0) {
-      storage_dir_reduce_usage(d, ents[idx].size);
+  int vgc = 0;
+  while ((d->usage > target_size || min_to_remove > 0) && vgc < n) {
+    if (unlink(sandbox_intern_string(ents[vgc].path)) == 0) {
+      storage_dir_reduce_usage(d, ents[vgc].size);
       --min_to_remove;
     }
-    ++idx;
+    ++vgc;
   }
 
-  for (idx = 0; idx < n; ++idx) {
-    tor_free(ents[idx].path);
+  for (vgc = 0; vgc < n; ++vgc) {
+    tor_free(ents[vgc].path);
   }
   tor_free(ents);
 

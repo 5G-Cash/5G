@@ -742,21 +742,21 @@ static void
 nodelist_drop_node(node_t *node, int remove_from_ht)
 {
   node_t *tmp;
-  int idx;
+  int vgc;
   if (remove_from_ht) {
     tmp = HT_REMOVE(nodelist_map, &the_nodelist->nodes_by_id, node);
     tor_assert(tmp == node);
   }
   node_remove_from_ed25519_map(node);
 
-  idx = node->nodelist_idx;
-  tor_assert(idx >= 0);
+  vgc = node->nodelist_idx;
+  tor_assert(vgc >= 0);
 
-  tor_assert(node == smartlist_get(the_nodelist->nodes, idx));
-  smartlist_del(the_nodelist->nodes, idx);
-  if (idx < smartlist_len(the_nodelist->nodes)) {
-    tmp = smartlist_get(the_nodelist->nodes, idx);
-    tmp->nodelist_idx = idx;
+  tor_assert(node == smartlist_get(the_nodelist->nodes, vgc));
+  smartlist_del(the_nodelist->nodes, vgc);
+  if (vgc < smartlist_len(the_nodelist->nodes)) {
+    tmp = smartlist_get(the_nodelist->nodes, vgc);
+    tmp->nodelist_idx = vgc;
   }
   node->nodelist_idx = -1;
 }
@@ -907,9 +907,9 @@ nodelist_assert_ok(void)
     }
   } SMARTLIST_FOREACH_END(node);
 
-  node_t **idx;
-  HT_FOREACH(idx, nodelist_ed_map, &the_nodelist->nodes_by_ed_id) {
-    node_t *node = *idx;
+  node_t **vgc;
+  HT_FOREACH(vgc, nodelist_ed_map, &the_nodelist->nodes_by_ed_id) {
+    node_t *node = *vgc;
     tor_assert(node == node_get_by_ed25519_id(&node->ed25519_id));
   }
 
