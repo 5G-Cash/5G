@@ -23,7 +23,7 @@ static const int FIVEGNODE_MIN_MNP_SECONDS             =  10 * 60; //PRE_ENABLE_
 static const int FIVEGNODE_EXPIRATION_SECONDS          =  65 * 60;
 static const int FIVEGNODE_WATCHDOG_MAX_SECONDS        = 120 * 60;
 static const int FIVEGNODE_NEW_START_REQUIRED_SECONDS  = 180 * 60;
-static const int FIVEGNODE_COIN_REQUIRED  = 1000; //1k COLLATERAL
+static const int FIVEGNODE_COIN_REQUIRED  = 50000; //50k COLLATERAL
 
 static const int FIVEGNODE_POSE_BAN_MAX_SCORE          = 5;
 //
