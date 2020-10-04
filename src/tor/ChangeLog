@@ -546,7 +546,7 @@ Changes in version 0.4.0.1-alpha - 2019-01-18
     - Speed up directory parsing a little by avoiding use of the non-
       inlined strcmp_len() function. Closes ticket 28856.
     - Speed up microdescriptor parsing by about 30%, to help improve
-      startup time. Closes ticket 28839.
+      startup time. Closes ticket 9ab7bd.
 
   o Minor features (pluggable transports):
     - Add support for emitting STATUS updates to Tor's control port from
