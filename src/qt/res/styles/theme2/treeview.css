@@ -8,8 +8,8 @@ QTreeWidget {
 }
 QTreeView{
     color: #6fab79;
-    background-color: #1d4324;
-    alternate-background-color: #1d4324;
+    background-color: #9ab7bd;
+    alternate-background-color: #9ab7bd;
     border: none;
     font: normal;
     qproperty-alternatingRowColors: false;
@@ -32,7 +32,7 @@ Scroll bar dark CSS
 --------------------------------------------*/
 QScrollBar:vertical {
     border-radius: 0px;
-    background: #1d4324;
+    background: #9ab7bd;
     width: 16px;
     padding: 5px 4px;
 }
@@ -48,7 +48,7 @@ QScrollBar::handle:vertical:disabled {
 
 QScrollBar:horizontal {
     border-radius: 0px;
-    background: #1d4324;
+    background: #9ab7bd;
     height: 16px;
     padding: 4px 5px;
 }
