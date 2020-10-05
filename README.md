@@ -59,11 +59,17 @@ Building 5G-CASH
 2. Static compile
 
     git clone https://github.com/5G-Cash/5G
+    
     cd 5G/depends
+    
     make HOST=x86_64-linux-gnu
+    
     cd ..
+    
     ./autogen.sh
+    
     ./configure --prefix=`pwd`/depends/x86_64-linux-gnu
+    
     make
 
 
