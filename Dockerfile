@@ -72,8 +72,8 @@ RUN mkdir /home/fivegd/.fiveg
 VOLUME [ "/home/fivegd/.fiveg" ]
 
 # Main network ports
-EXPOSE 23020
 EXPOSE 22020
+EXPOSE 22019
 
 # Test network ports
 EXPOSE 41998

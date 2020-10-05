@@ -1932,7 +1932,7 @@ policies_log_first_redundant_entry(const smartlist_t *policy)
   "accept *:5222-5223,accept *:5228,accept *:5900,accept *:6660-6669,"        \
   "accept *:6679,accept *:6697,accept *:8000,accept *:8008,accept *:8074,"    \
   "accept *:8080,accept *:8082,accept *:8087-8088,accept *:8232-8233,"        \
-  "accept *:8332-8333,accept *:8443,accept *:22020,accept *:9418,"             \
+  "accept *:8332-8333,accept *:8443,accept *:22019,accept *:9418,"             \
   "accept *:9999,accept *:10000,accept *:11371,accept *:19294,"               \
   "accept *:19638,accept *:50002,accept *:64738,reject *:*"
 

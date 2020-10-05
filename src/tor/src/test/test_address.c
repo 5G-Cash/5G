@@ -1160,11 +1160,11 @@ test_address_tor_addr_in_same_network_family(void *ignored)
   tor_addr_parse(&b, "2001:4860:4860::8844");
   tt_int_op(addrs_in_same_network_family(&a, &b), OP_EQ, 0);
 
-  tor_addr_parse(&a, "2001:4860:4860::22020");
+  tor_addr_parse(&a, "2001:4860:4860::22019");
   tor_addr_parse(&b, "2001:4860:4860::8844");
   tt_int_op(addrs_in_same_network_family(&a, &b), OP_EQ, 1);
 
-  tor_addr_parse(&a, "2001:4860:4860::22020");
+  tor_addr_parse(&a, "2001:4860:4860::22019");
   tor_addr_parse(&b, "2001:470:20::2");
   tt_int_op(addrs_in_same_network_family(&a, &b), OP_EQ, 0);
 

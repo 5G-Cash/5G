@@ -19593,7 +19593,7 @@ Changes in version 0.1.2.13 - 2007-04-24
       as hidden service directories, to make it easier to retire old
       authorities. V1 authorities should set "HSAuthoritativeDir 1"
       to continue being hidden service authorities too.
-    - Remove 22020 as a LongLivedPort, and add 6697 (IRCS).
+    - Remove 22019 as a LongLivedPort, and add 6697 (IRCS).
     - Make TrackExitHosts case-insensitive, and fix the behavior of
       ".suffix" TrackExitHosts items to avoid matching in the middle of
       an address.

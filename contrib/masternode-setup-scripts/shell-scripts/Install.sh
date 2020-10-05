@@ -52,7 +52,7 @@ cd ~/.fiveg
 echo "Setting up and enabling fail2ban..."
 sudo apt-get install fail2ban -y
 sudo ufw allow ssh
-sudo ufw allow 23020
+sudo ufw allow 22020
 sudo ufw enable
 echo "Launching fivegd..."
 cd && cd /usr/local/bin

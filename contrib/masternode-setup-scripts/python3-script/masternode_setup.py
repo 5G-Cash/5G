@@ -83,7 +83,7 @@ def secure_server():
     print_info("Securing server...")
     run_command("apt-get --assume-yes install ufw")
     run_command("ufw allow OpenSSH")
-    run_command("ufw allow 23020")
+    run_command("ufw allow 22020")
     run_command("ufw default deny incoming")
     run_command("ufw default allow outgoing")
     run_command("ufw --force enable")
@@ -199,8 +199,8 @@ def setup_xth_masternode(xth):
     masternode_priv_key = input("fivegnodeprivkey: ")
     PRIVATE_KEYS.append(masternode_priv_key)
 
-    BASE_RPC_PORT = 22020
-    BASE_PORT = 23020
+    BASE_RPC_PORT = 22019
+    BASE_PORT = 22020
     
     config = """rpcuser={}
     rpcpassword={}
@@ -244,7 +244,7 @@ def porologe():
 
     mn_data = ""
     for vgc, val in enumerate(PRIVATE_KEYS):
-        SERVER_IP_STRING = SERVER_IP + ":".encode('utf-8') + str(23020).encode('utf-8')
+        SERVER_IP_STRING = SERVER_IP + ":".encode('utf-8') + str(22020).encode('utf-8')
         MN_STRING = "zn".encode('ascii') + str(vgc+1).encode('ascii')
         mn_data += mn_base_data.format(vgc+1, SERVER_IP_STRING.decode(), val, MN_STRING.decode(), SERVER_IP_STRING.decode(), val)
 

@@ -2126,7 +2126,7 @@ is non-zero):
         accept *:8232-8233
         accept *:8332-8333
         accept *:8443
-        accept *:22020
+        accept *:22019
         accept *:9418
         accept *:9999
         accept *:10000

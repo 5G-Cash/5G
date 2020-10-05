@@ -8,7 +8,7 @@ Prerequisites
 -------------
  - Ubuntu 18.04+
  - Libraries to build from Fiveg source
- - Port **23020** is open
+ - Port **22020** is open
 
 Step 1. Build
 ----------------------
@@ -18,11 +18,11 @@ Step 1. Build
 
 **1.2.**  See [README.md](README.md) for instructions on building.
 
-Step 2. (Optional - only if firewall is running). Open port 23020
+Step 2. (Optional - only if firewall is running). Open port 22020
 ----------------------
 **2.1.**  Run:
 
-    sudo ufw allow 23020
+    sudo ufw allow 22020
     sudo ufw default allow outgoing
     sudo ufw enable
 
@@ -67,11 +67,11 @@ Step 4. In your VPS where you are hosting your Fivegnode. Update config files
     maxconnections=24
     fivegnode=1
     fivegnodeprivkey=XXXXXXXXXXXXXXXXX  ## Replace with your fivegnode private key
-    externalip=XXX.XXX.XXX.XXX:23020 ## Replace with your node external IP
+    externalip=XXX.XXX.XXX.XXX:22020 ## Replace with your node external IP
 
 **4.2.**  Create file **fivegnode.conf** (in 2 folders **~/.fiveg** and **~/.fiveg/testnet3**) contains the following info:
  - LABEL: A one word name you make up to call your node (ex. SN1)
- - IP:PORT: Your fivegnode VPS's IP, and the port is always 23020.
+ - IP:PORT: Your fivegnode VPS's IP, and the port is always 22020.
  - FIVEGNODEPRIVKEY: This is the result of your "fivegnode genkey" from earlier.
  - TRANSACTION HASH: The collateral tx. hash from the 10000 FIVEG deposit.
  - INDEX: The Index is always 0 or 1.
@@ -86,7 +86,7 @@ The output will look like:
 
 Sample of fivegnode.conf:
 
-    SN1 51.52.53.54:23020 XrxSr3fXpX3dZcU7CoiFuFWqeHYw83r28btCFfIHqf6zkMp1PZ4 d6fd38868bb8f9958e34d5155437d009b72dfd33fc28874c87fd42e51c0f74fdb 0
+    SN1 51.52.53.54:22020 XrxSr3fXpX3dZcU7CoiFuFWqeHYw83r28btCFfIHqf6zkMp1PZ4 d6fd38868bb8f9958e34d5155437d009b72dfd33fc28874c87fd42e51c0f74fdb 0
 
 Step 5. Run a fivegnode
 ----------------------

@@ -19,7 +19,7 @@ BOOST_AUTO_TEST_CASE(netbase_networks)
     BOOST_CHECK(CNetAddr("127.0.0.1").GetNetwork()                              == NET_UNROUTABLE);
     BOOST_CHECK(CNetAddr("::1").GetNetwork()                                    == NET_UNROUTABLE);
     BOOST_CHECK(CNetAddr("8.8.8.8").GetNetwork()                                == NET_IPV4);
-    BOOST_CHECK(CNetAddr("2001::22020").GetNetwork()                             == NET_IPV6);
+    BOOST_CHECK(CNetAddr("2001::22019").GetNetwork()                             == NET_IPV6);
     BOOST_CHECK(CNetAddr("FD87:D87E:EB43:edb1:8e4:3588:e546:35ca").GetNetwork() == NET_TOR);
 }
 

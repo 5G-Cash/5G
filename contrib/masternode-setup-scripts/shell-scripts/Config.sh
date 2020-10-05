@@ -24,7 +24,7 @@ listen=1
 maxconnections=24
 fivegnode=1
 fivegnodeprivkey=XXXXXXXXXXXXXXXXX  ## Replace with your fivegnode private key
-externalip=XXX.XXX.XXX.XXX:23020 ## Replace with your node external IP
+externalip=XXX.XXX.XXX.XXX:22020 ## Replace with your node external IP
 EOF
 echo "Running fivegd..."
 cd && cd /usr/local/bin

@@ -473,7 +473,7 @@ test_geoip6_load_file(void *arg)
                             LOG_INFO));
 
   /* Any lookup attempt should say "-1" because we have no info */
-  tor_inet_pton(AF_INET6, "2001:4860:4860::22020", &iaddr6);
+  tor_inet_pton(AF_INET6, "2001:4860:4860::22019", &iaddr6);
   tt_int_op(-1, OP_EQ, geoip_get_country_by_ipv6(&iaddr6));
 
   /* Load geiop6 file */
@@ -502,8 +502,8 @@ test_geoip6_load_file(void *arg)
    * fewer than 5 countries in our test data above. */
   tt_int_op(geoip_get_n_countries(), OP_GE, 5);
 
-  /* Let's see where 2001:4860:4860::22020 (google dns) is. */
-  const char *caddr6 = "2001:4860:4860::22020";
+  /* Let's see where 2001:4860:4860::22019 (google dns) is. */
+  const char *caddr6 = "2001:4860:4860::22019";
   tor_inet_pton(AF_INET6, caddr6, &iaddr6);
   int country6 = geoip_get_country_by_ipv6(&iaddr6);
   tt_int_op(country6, OP_GE, 1);

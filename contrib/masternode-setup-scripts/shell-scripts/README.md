@@ -12,7 +12,7 @@ Open your notepad or any text editor application on your pc and write this down 
 3. FIVEG ADDRESS = SZRnGyyPv1FVGgMGn7JXbuHCGbsgiBRprq
 4. FIVEGNODE GENKEY = 84qRmqujiRqJ1vepSacScUz1EuBTYoaPM3cD5n1211THemaRWms
 5. FIVEGNODE OUTPUTS = 4873d0c50c6ddc623bedcf0684dafc107809f9434b8426b728634f7c8c455615 1
-6. UNIQUE IP OF THE VPS = 201.47.23.109:23020
+6. UNIQUE IP OF THE VPS = 201.47.23.109:22020
 ```
 
 ### GETTING A VPS (STEP 1)
@@ -52,18 +52,18 @@ Note: The server will take a few minutes to deploy and will then shows as "runni
 	```
 	# Fivegnode config file
 	# Format: alias IP:port fivegnode_privatekey collateral_output_txid collateral_output_index
-	# Example: zn1 127.0.0.1:23020 7Cqyr4U7GU7qVo5TE1nrfA8XPVqh7GXBuEBPYzaWxEhiRRDLZ5c 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 1
+	# Example: zn1 127.0.0.1:22020 7Cqyr4U7GU7qVo5TE1nrfA8XPVqh7GXBuEBPYzaWxEhiRRDLZ5c 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 1
 	```
-6. UNIQUE IP OF THE VPS = 201.47.23.109:23020
-	- On line 4 add your ``1. FIVEGNODE NAME`` which is ``SN1``, next is add your ``6. UNIQUE IP OF THE VPS`` which is ``56.56.65.20`` and add the respective default port of ``encrypt`` which is ``23020``,next is add your  ``4. FIVEGNODE GENKEY`` which is ``84qRmqujiRqJ1vepSacScUz1EuBTYoaPM3cD5n1211THemaRWms``, and lastly add your ``5. FIVEGNODE OUTPUTS``which is ``4873d0c50c6ddc623bedcf0684dafc107809f9434b8426b728634f7c8c455615`` then add your ``outputidx`` which is ``1`` next to your ``5. FIVEGNODE OUTPUTS``.
+6. UNIQUE IP OF THE VPS = 201.47.23.109:22020
+	- On line 4 add your ``1. FIVEGNODE NAME`` which is ``SN1``, next is add your ``6. UNIQUE IP OF THE VPS`` which is ``56.56.65.20`` and add the respective default port of ``encrypt`` which is ``22020``,next is add your  ``4. FIVEGNODE GENKEY`` which is ``84qRmqujiRqJ1vepSacScUz1EuBTYoaPM3cD5n1211THemaRWms``, and lastly add your ``5. FIVEGNODE OUTPUTS``which is ``4873d0c50c6ddc623bedcf0684dafc107809f9434b8426b728634f7c8c455615`` then add your ``outputidx`` which is ``1`` next to your ``5. FIVEGNODE OUTPUTS``.
 
 	- It will look like this on the ``fivegnode.conf`` file
 
 	```
 	# Fivegnode config file
 	# Format: alias IP:port fivegnode_privatekey collateral_output_txid collateral_output_index
-	# Example: zn1 127.0.0.1:23020 7Cqyr4U7GU7qVo5TE1nrfA8XPVqh7GXBuEBPYzaWxEhiRRDLZ5c 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 1
-	SN1 201.47.23.109:23020 84qRmqujiRqJ1vepSacScUz1EuBTYoaPM3cD5n1211THemaRWms 4873d0c50c6ddc623bedcf0684dafc107809f9434b8426b728634f7c8c455615 1
+	# Example: zn1 127.0.0.1:22020 7Cqyr4U7GU7qVo5TE1nrfA8XPVqh7GXBuEBPYzaWxEhiRRDLZ5c 2bcd3c84c84f87eaa86e4e56834c92927a07f9e18718810b92e0d0324456a67c 1
+	SN1 201.47.23.109:22020 84qRmqujiRqJ1vepSacScUz1EuBTYoaPM3cD5n1211THemaRWms 4873d0c50c6ddc623bedcf0684dafc107809f9434b8426b728634f7c8c455615 1
 	```
 
 ### ACCESSING YOUR VPS (STEP 3)
@@ -101,7 +101,7 @@ listen=1
 maxconnections=24
 fivegnode=1
 fivegnodeprivkey=XXXXXXXXXXXXXXXXX  ## Replace with your fivegnode private key
-externalip=XXX.XXX.XXX.XXX:23020 ## Replace with your node external IP
+externalip=XXX.XXX.XXX.XXX:22020 ## Replace with your node external IP
 ```
 1. Change these following lines on the bash file named ``Config.sh`` by following steps below via ``vim``
 
@@ -112,7 +112,7 @@ then
 
 - change the ``username`` value to your own
 - change the ``password`` value to your own
-- change the ``XXX.XXX.XXX.XXX:23020`` value to your own which is located on your ``Cheat Sheet`` (e.g. 201.47.23.109:23020)
+- change the ``XXX.XXX.XXX.XXX:22020`` value to your own which is located on your ``Cheat Sheet`` (e.g. 201.47.23.109:22020)
 - change the ``yourmasternodeprivkeyhere`` value to your own which is also located on your ``Cheat Sheet`` (e.g. 84qRmqujiRqJ1vepSacScUz1EuBTYoaPM3cD5n1211THemaRWms this is your ``FIVEGNODE GENKEY``)
 	(To save and exit the editor press ``Ctrl + C`` then type ``:wq!`` then press Enter)
 
