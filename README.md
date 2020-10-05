@@ -54,7 +54,7 @@ Building 5G-CASH
 ----------------------
 1.  Clone the source:
 
-        git clone 
+        git clone https://github.com/5G-Cash/5G.git
 
 2. Static compile
 
