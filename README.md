@@ -1,5 +1,16 @@
-# Fiveg
-Fiveg Protocol (FIVEG) is a new state of the art privacy coin that uses Sigma and Dandelion++ Protocol along with TOR.
+5G-CASH integration/staging tree
+===========================
+
+What is 5G-CASH?
+----------------
+5G-CASH (VGC) is an experimental digital currency that enables instant payments to
+anyone, anywhere in the world. It uses different key features technology to operate
+with no central authority allowing everyone to operate the way they want to with new 
+state of the art privacy coin that uses Sigma and Dandelion++ Protocol along with TOR.
+
+For more information, as well as an immediately useable, binary version of
+this software, see https://fiveg.cash/download/, or read the
+[original whitepaper](https://fiveg.cash/5g-cash.pdf).
 
 
 
@@ -8,72 +19,65 @@ Fiveg Protocol (FIVEG) is a new state of the art privacy coin that uses Sigma an
     -Sigma Protocol 
     -Tor Protocol
     -Dandelion++ Protocol
-    -Proof of Work ()
-    -Proof of Stake (PoS 3.0)
-    -Masternode
+    -Proof of Work and Proof of Stake (3.0) share 55% of the block reward
+    -Masternode gets 45% of the block reward
 
-### Specifications
-| Specification | Value |
-|:-----------|:-----------|
+### Specifications and Block Rewards -----> https://discord.gg/tmQSFV9
 
-
-#### Block Rewards
-
-
-Windows Build Instructions and Notes
-==================================
-The Windows wallet is build with QTs QMAKE. See [build-windows.md]() for instructions.
-
-MACOS Build Instructions and Notes
-==================================
-The macOS wallet itself is build with QTs QMAKE. See [build-macos.md]() for instructions.
 
 Linux Build Instructions and Notes
 ==================================
 
 Dependencies
 ----------------------
-You can use the ``depscript.sh`` to automatically install Dependencies to build Fiveg or manually install them using the syntax below
+You can use the "depscript.sh" to automatically install Dependencies to build VGC or manually install them using the syntax below
 
 1.  Update packages
 
-        ``sudo apt-get update``
+        sudo apt-get update
 
 2.  Install required packages
         
-        ``sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libzmq3-dev libminizip-dev``
+        sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libzmq3-dev libminizip-dev
 
 3.  Install Berkeley DB 4.8
 
-        ``sudo add-apt-repository ppa:bitcoin/bitcoin && sudo apt-get update && sudo apt-get install libdb4.8-dev libdb4.8++-dev``
+        sudo add-apt-repository ppa:bitcoin/bitcoin && sudo apt-get update && sudo apt-get install libdb4.8-dev libdb4.8++-dev
 4.  Install QT 5
 
-        ``
-        sudo apt-get install libminiupnpc-dev && sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
-        ``
+        
+        sudo apt-get install libminiupnpc-dev && sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler    libqrencode-dev
+        
         
 
-Build
+Building 5G-CASH
 ----------------------
 1.  Clone the source:
 
         git clone 
 
-2.  Build Fiveg core:
+2. Static compile
 
-    Configure and build the headless Fiveg binaries as well as the GUI (if Qt is found).
+    git clone https://github.com/5G-Cash/5G
+    cd 5G/depends
+    make HOST=x86_64-linux-gnu
+    cd ..
+    ./autogen.sh
+    ./configure --prefix=`pwd`/depends/x86_64-linux-gnu
+    make
 
-    You can disable the GUI build by passing `--without-gui` to configure.
 
-        ```
-        ./autogen.sh
-        ./configure
-        make
-        ```
+3. Shared binary
 
-3.  It is recommended to build and run the unit tests:
+    git clone https://github.com/5G-Cash/5G
+    cd 5G
+    ./autogen.sh
+    ./configure
+    make
+    
+4.  It is recommended to build and run the unit tests:
 
-        ``make check``
+        make check
 
 
 Setting up a Fivegnode
