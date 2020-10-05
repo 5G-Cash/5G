@@ -52,11 +52,8 @@ You can use the "depscript.sh" to automatically install Dependencies to build VG
 
 Building 5G-CASH
 ----------------------
-1.  Clone the source:
 
-        git clone https://github.com/5G-Cash/5G.git
-
-2. Static compile
+1. Static compile
 
     git clone https://github.com/5G-Cash/5G
     
@@ -73,7 +70,7 @@ Building 5G-CASH
     make
 
 
-3. Shared binary
+2. Shared binary
 
     git clone https://github.com/5G-Cash/5G
     
@@ -85,7 +82,7 @@ Building 5G-CASH
     
     make
     
-4.  It is recommended to build and run the unit tests:
+3.  It is recommended to build and run the unit tests:
 
         make check
 
