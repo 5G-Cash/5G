@@ -76,9 +76,13 @@ Building 5G-CASH
 3. Shared binary
 
     git clone https://github.com/5G-Cash/5G
+    
     cd 5G
+    
     ./autogen.sh
+    
     ./configure
+    
     make
     
 4.  It is recommended to build and run the unit tests:
