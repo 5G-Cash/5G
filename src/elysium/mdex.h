@@ -39,7 +39,7 @@ class CMPMetaDEx
 private:
     int block;
     uint256 txid;
-    unsigned int idx; // index within block
+    unsigned int vgc; // index within block
     uint32_t property;
     int64_t amount_forsale;
     uint32_t desired_property;
@@ -66,26 +66,26 @@ public:
     const std::string& getAddr() const { return addr; }
 
     int getBlock() const { return block; }
-    unsigned int getIdx() const { return idx; }
+    unsigned int getIdx() const { return vgc; }
 
     int64_t getBlockTime() const;
 
     CMPMetaDEx()
-      : block(0), idx(0), property(0), amount_forsale(0), desired_property(0), amount_desired(0),
+      : block(0), vgc(0), property(0), amount_forsale(0), desired_property(0), amount_desired(0),
         amount_remaining(0), subaction(0) {}
 
     CMPMetaDEx(const std::string& addr, int b, uint32_t c, int64_t nValue, uint32_t cd, int64_t ad,
                const uint256& tx, uint32_t i, uint8_t suba)
-      : block(b), txid(tx), idx(i), property(c), amount_forsale(nValue), desired_property(cd), amount_desired(ad),
+      : block(b), txid(tx), vgc(i), property(c), amount_forsale(nValue), desired_property(cd), amount_desired(ad),
         amount_remaining(nValue), subaction(suba), addr(addr) {}
 
     CMPMetaDEx(const std::string& addr, int b, uint32_t c, int64_t nValue, uint32_t cd, int64_t ad,
                const uint256& tx, uint32_t i, uint8_t suba, int64_t ar)
-      : block(b), txid(tx), idx(i), property(c), amount_forsale(nValue), desired_property(cd), amount_desired(ad),
+      : block(b), txid(tx), vgc(i), property(c), amount_forsale(nValue), desired_property(cd), amount_desired(ad),
         amount_remaining(ar), subaction(suba), addr(addr) {}
 
     CMPMetaDEx(const CMPTransaction& tx)
-      : block(tx.block), txid(tx.txid), idx(tx.tx_idx), property(tx.property), amount_forsale(tx.nValue),
+      : block(tx.block), txid(tx.txid), vgc(tx.tx_idx), property(tx.property), amount_forsale(tx.nValue),
         desired_property(tx.desired_property), amount_desired(tx.desired_value), amount_remaining(tx.nValue),
         subaction(tx.subaction), addr(tx.sender) {}
 
@@ -110,7 +110,7 @@ struct MetaDEx_compare
 };
 
 // ---------------
-//! Set of objects sorted by block+idx
+//! Set of objects sorted by block+vgc
 typedef std::set<CMPMetaDEx, MetaDEx_compare> md_Set;
 //! Map of prices; there is a set of sorted objects for each price
 typedef std::map<rational_t, md_Set> md_PricesMap;
@@ -125,7 +125,7 @@ md_PricesMap* get_Prices(uint32_t prop);
 md_Set* get_Indexes(md_PricesMap* p, rational_t price);
 // ---------------
 
-int MetaDEx_ADD(const std::string& sender_addr, uint32_t, int64_t, int block, uint32_t property_desired, int64_t amount_desired, const uint256& txid, unsigned int idx);
+int MetaDEx_ADD(const std::string& sender_addr, uint32_t, int64_t, int block, uint32_t property_desired, int64_t amount_desired, const uint256& txid, unsigned int vgc);
 int MetaDEx_CANCEL_AT_PRICE(const uint256&, uint32_t, const std::string&, uint32_t, int64_t, uint32_t, int64_t);
 int MetaDEx_CANCEL_ALL_FOR_PAIR(const uint256&, uint32_t, const std::string&, uint32_t, uint32_t);
 int MetaDEx_CANCEL_EVERYTHING(const uint256& txid, uint32_t block, const std::string& sender_addr, unsigned char ecosystem);

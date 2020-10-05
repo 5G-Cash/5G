@@ -235,18 +235,18 @@ def porologe():
     Alias: zn{}
     IP: {}
     Private key: {}
-    Transaction ID: [10k FIVEG deposit transaction id. 'fivegnode outputs']
-    Transaction fiveg: [10k FIVEG deposit transaction fiveg. 'fivegnode outputs']
+    Transaction ID: [10k VGC deposit transaction id. 'fivegnode outputs']
+    Transaction fiveg: [10k VGC deposit transaction fiveg. 'fivegnode outputs']
     mnconf line :
     {} {} {} txhash txindex
     --------------------------------------------------
     """
 
     mn_data = ""
-    for idx, val in enumerate(PRIVATE_KEYS):
+    for vgc, val in enumerate(PRIVATE_KEYS):
         SERVER_IP_STRING = SERVER_IP + ":".encode('utf-8') + str(23020).encode('utf-8')
-        MN_STRING = "zn".encode('ascii') + str(idx+1).encode('ascii')
-        mn_data += mn_base_data.format(idx+1, SERVER_IP_STRING.decode(), val, MN_STRING.decode(), SERVER_IP_STRING.decode(), val)
+        MN_STRING = "zn".encode('ascii') + str(vgc+1).encode('ascii')
+        mn_data += mn_base_data.format(vgc+1, SERVER_IP_STRING.decode(), val, MN_STRING.decode(), SERVER_IP_STRING.decode(), val)
 
     imp = """"""
     print('')

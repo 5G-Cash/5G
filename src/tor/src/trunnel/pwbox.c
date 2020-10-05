@@ -109,20 +109,20 @@ pwbox_encoded_getlen_skey_header(const pwbox_encoded_t *inp)
 }
 
 uint8_t
-pwbox_encoded_get_skey_header(pwbox_encoded_t *inp, size_t idx)
+pwbox_encoded_get_skey_header(pwbox_encoded_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->skey_header, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->skey_header, vgc);
 }
 
 uint8_t
-pwbox_encoded_getconst_skey_header(const pwbox_encoded_t *inp, size_t idx)
+pwbox_encoded_getconst_skey_header(const pwbox_encoded_t *inp, size_t vgc)
 {
-  return pwbox_encoded_get_skey_header((pwbox_encoded_t*)inp, idx);
+  return pwbox_encoded_get_skey_header((pwbox_encoded_t*)inp, vgc);
 }
 int
-pwbox_encoded_set_skey_header(pwbox_encoded_t *inp, size_t idx, uint8_t elt)
+pwbox_encoded_set_skey_header(pwbox_encoded_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->skey_header, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->skey_header, vgc, elt);
   return 0;
 }
 int
@@ -176,22 +176,22 @@ pwbox_encoded_getlen_iv(const pwbox_encoded_t *inp)
 }
 
 uint8_t
-pwbox_encoded_get_iv(pwbox_encoded_t *inp, size_t idx)
+pwbox_encoded_get_iv(pwbox_encoded_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 16);
-  return inp->iv[idx];
+  trunnel_assert(vgc < 16);
+  return inp->iv[vgc];
 }
 
 uint8_t
-pwbox_encoded_getconst_iv(const pwbox_encoded_t *inp, size_t idx)
+pwbox_encoded_getconst_iv(const pwbox_encoded_t *inp, size_t vgc)
 {
-  return pwbox_encoded_get_iv((pwbox_encoded_t*)inp, idx);
+  return pwbox_encoded_get_iv((pwbox_encoded_t*)inp, vgc);
 }
 int
-pwbox_encoded_set_iv(pwbox_encoded_t *inp, size_t idx, uint8_t elt)
+pwbox_encoded_set_iv(pwbox_encoded_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 16);
-  inp->iv[idx] = elt;
+  trunnel_assert(vgc < 16);
+  inp->iv[vgc] = elt;
   return 0;
 }
 
@@ -212,20 +212,20 @@ pwbox_encoded_getlen_data(const pwbox_encoded_t *inp)
 }
 
 uint8_t
-pwbox_encoded_get_data(pwbox_encoded_t *inp, size_t idx)
+pwbox_encoded_get_data(pwbox_encoded_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->data, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->data, vgc);
 }
 
 uint8_t
-pwbox_encoded_getconst_data(const pwbox_encoded_t *inp, size_t idx)
+pwbox_encoded_getconst_data(const pwbox_encoded_t *inp, size_t vgc)
 {
-  return pwbox_encoded_get_data((pwbox_encoded_t*)inp, idx);
+  return pwbox_encoded_get_data((pwbox_encoded_t*)inp, vgc);
 }
 int
-pwbox_encoded_set_data(pwbox_encoded_t *inp, size_t idx, uint8_t elt)
+pwbox_encoded_set_data(pwbox_encoded_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->data, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->data, vgc, elt);
   return 0;
 }
 int
@@ -271,22 +271,22 @@ pwbox_encoded_getlen_hmac(const pwbox_encoded_t *inp)
 }
 
 uint8_t
-pwbox_encoded_get_hmac(pwbox_encoded_t *inp, size_t idx)
+pwbox_encoded_get_hmac(pwbox_encoded_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->hmac[idx];
+  trunnel_assert(vgc < 32);
+  return inp->hmac[vgc];
 }
 
 uint8_t
-pwbox_encoded_getconst_hmac(const pwbox_encoded_t *inp, size_t idx)
+pwbox_encoded_getconst_hmac(const pwbox_encoded_t *inp, size_t vgc)
 {
-  return pwbox_encoded_get_hmac((pwbox_encoded_t*)inp, idx);
+  return pwbox_encoded_get_hmac((pwbox_encoded_t*)inp, vgc);
 }
 int
-pwbox_encoded_set_hmac(pwbox_encoded_t *inp, size_t idx, uint8_t elt)
+pwbox_encoded_set_hmac(pwbox_encoded_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->hmac[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->hmac[vgc] = elt;
   return 0;
 }
 

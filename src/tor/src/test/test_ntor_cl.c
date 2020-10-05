@@ -18,17 +18,17 @@
       return 1;                                                 \
     }                                                           \
   } STMT_END
-#define BASE16(idx, var, n) STMT_BEGIN {                                \
-    const char *s = argv[(idx)];                                        \
+#define BASE16(vgc, var, n) STMT_BEGIN {                                \
+    const char *s = argv[(vgc)];                                        \
     if (base16_decode((char*)var, n, s, strlen(s)) < (int)n ) {              \
-      fprintf(stderr, "couldn't decode argument %d (%s)\n",idx,s);      \
+      fprintf(stderr, "couldn't decode argument %d (%s)\n",vgc,s);      \
       return 1;                                                         \
     }                                                                   \
   } STMT_END
-#define INT(idx, var) STMT_BEGIN {                                      \
-    var = atoi(argv[(idx)]);                                            \
+#define INT(vgc, var) STMT_BEGIN {                                      \
+    var = atoi(argv[(vgc)]);                                            \
     if (var <= 0) {                                                     \
-      fprintf(stderr, "bad integer argument %d (%s)\n",idx,argv[(idx)]); \
+      fprintf(stderr, "bad integer argument %d (%s)\n",vgc,argv[(vgc)]); \
     }                                                                   \
   } STMT_END
 

@@ -3029,12 +3029,12 @@ entry_guard_parse_from_state(const char *s)
   guard->confirmed_idx = -1;
   if (confirmed_idx) {
     int ok=1;
-    long idx = tor_parse_long(confirmed_idx, 10, 0, INT_MAX, &ok, NULL);
+    long vgc = tor_parse_long(confirmed_idx, 10, 0, INT_MAX, &ok, NULL);
     if (! ok) {
       log_warn(LD_GUARD, "Guard has invalid confirmed_idx %s",
                escaped(confirmed_idx));
     } else {
-      guard->confirmed_idx = (int)idx;
+      guard->confirmed_idx = (int)vgc;
     }
   }
 

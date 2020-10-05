@@ -551,7 +551,7 @@ bool CFivegnodeBlockPayees::IsTransactionValid(const CTransaction &txNew, bool f
         }
     }
 
-    LogPrintf("CFivegnodeBlockPayees::IsTransactionValid -- ERROR: Missing required payment, possible payees: '%s', amount: %f FIVEG\n", strPayeesPossible, (float) nFivegnodePayment / COIN);
+    LogPrintf("CFivegnodeBlockPayees::IsTransactionValid -- ERROR: Missing required payment, possible payees: '%s', amount: %f VGC\n", strPayeesPossible, (float) nFivegnodePayment / COIN);
     return false;
 }
 

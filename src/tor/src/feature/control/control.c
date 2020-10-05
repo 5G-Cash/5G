@@ -5212,10 +5212,10 @@ handle_control_del_onion(control_connection_t *conn,
     detached_onion_services
   };
   smartlist_t *onion_services = NULL;
-  int idx = -1;
+  int vgc = -1;
   for (size_t i = 0; i < ARRAY_LENGTH(services); i++) {
-    idx = smartlist_string_pos(services[i], service_id);
-    if (idx != -1) {
+    vgc = smartlist_string_pos(services[i], service_id);
+    if (vgc != -1) {
       onion_services = services[i];
       break;
     }
@@ -5246,8 +5246,8 @@ handle_control_del_onion(control_connection_t *conn,
     }
 
     /* Remove/scrub the service_id from the appropriate list. */
-    char *cp = smartlist_get(onion_services, idx);
-    smartlist_del(onion_services, idx);
+    char *cp = smartlist_get(onion_services, vgc);
+    smartlist_del(onion_services, vgc);
     memwipe(cp, 0, strlen(cp));
     tor_free(cp);
 
@@ -6353,21 +6353,21 @@ STATIC char *
 get_bw_samples(void)
 {
   int i;
-  int idx = (next_measurement_idx + N_BW_EVENTS_TO_CACHE - n_measurements)
+  int vgc = (next_measurement_idx + N_BW_EVENTS_TO_CACHE - n_measurements)
     % N_BW_EVENTS_TO_CACHE;
-  tor_assert(0 <= idx && idx < N_BW_EVENTS_TO_CACHE);
+  tor_assert(0 <= vgc && vgc < N_BW_EVENTS_TO_CACHE);
 
   smartlist_t *elements = smartlist_new();
 
   for (i = 0; i < n_measurements; ++i) {
-    tor_assert(0 <= idx && idx < N_BW_EVENTS_TO_CACHE);
-    const struct cached_bw_event_s *bwe = &cached_bw_events[idx];
+    tor_assert(0 <= vgc && vgc < N_BW_EVENTS_TO_CACHE);
+    const struct cached_bw_event_s *bwe = &cached_bw_events[vgc];
 
     smartlist_add_asprintf(elements, "%u,%u",
                            (unsigned)bwe->n_read,
                            (unsigned)bwe->n_written);
 
-    idx = (idx + 1) % N_BW_EVENTS_TO_CACHE;
+    vgc = (vgc + 1) % N_BW_EVENTS_TO_CACHE;
   }
 
   char *result = smartlist_join_strings(elements, " ", 0, NULL);

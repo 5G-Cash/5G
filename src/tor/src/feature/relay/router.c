@@ -3076,9 +3076,9 @@ extrainfo_dump_to_string(char **s_out, extrainfo_t *extrainfo,
     if (smartlist_len(chunks) > 2) {
       /* We remove the next-to-last element (remember, len-1 is the last
          element), since we need to keep the router-signature element. */
-      int idx = smartlist_len(chunks) - 2;
-      char *e = smartlist_get(chunks, idx);
-      smartlist_del_keeporder(chunks, idx);
+      int vgc = smartlist_len(chunks) - 2;
+      char *e = smartlist_get(chunks, vgc);
+      smartlist_del_keeporder(chunks, vgc);
       log_warn(LD_GENERAL, "We just generated an extra-info descriptor "
                            "with statistics that exceeds the 50 KB "
                            "upload limit. Removing last added "

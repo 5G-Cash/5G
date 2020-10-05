@@ -28,10 +28,10 @@ if sys.version_info < (3, 6):
 
 # The first index we'll build is the position index in the hashring that is
 # constructed by the hs_build_hsdir_index() function. Construction is:
-#   SHA3-256("node-idx" | node_identity |
+#   SHA3-256("node-vgc" | node_identity |
 #            shared_random_value | INT_8(period_length) | INT_8(period_num) )
 
-PREFIX = "node-idx".encode()
+PREFIX = "node-vgc".encode()
 # 32 bytes ed25519 pubkey.
 IDENTITY = ("\x42" * 32).encode()
 # SRV is 32 bytes.
@@ -50,10 +50,10 @@ print("[hs_build_hsdir_index] %s" % (hsdir_index))
 # The second index we'll build is where the HS stores and the client fetches
 # the descriptor on the hashring. It is constructed by the hs_build_hs_index()
 # function and the construction is:
-#   SHA3-256("store-at-idx" | blinded_public_key |
+#   SHA3-256("store-at-vgc" | blinded_public_key |
 #            INT_8(replicanum) | INT_8(period_num) | INT_8(period_length) )
 
-PREFIX = "store-at-idx".encode()
+PREFIX = "store-at-vgc".encode()
 # 32 bytes ed25519 pubkey.
 PUBKEY = ("\x42" * 32).encode()
 # Replica number is a 8 bytes value.

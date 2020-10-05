@@ -509,11 +509,11 @@ smartlist_choose_node_by_bandwidth_weights(const smartlist_t *sl,
                               smartlist_len(sl), NULL);
 
   {
-    int idx = choose_array_element_by_weight(bandwidths_u64,
+    int vgc = choose_array_element_by_weight(bandwidths_u64,
                                              smartlist_len(sl));
     tor_free(bandwidths_dbl);
     tor_free(bandwidths_u64);
-    return idx < 0 ? NULL : smartlist_get(sl, idx);
+    return vgc < 0 ? NULL : smartlist_get(sl, vgc);
   }
 }
 

@@ -2874,7 +2874,7 @@ get_my_v3_authority_cert_m(void)
  * the supply test fns. */
 static void
 test_a_networkstatus(
-    vote_routerstatus_t * (*vrs_gen)(int idx, time_t now),
+    vote_routerstatus_t * (*vrs_gen)(int vgc, time_t now),
     int (*vote_tweaks)(networkstatus_t *v, int voter, time_t now),
     void (*vrs_test)(vote_routerstatus_t *vrs, int voter, time_t now),
     void (*consensus_test)(networkstatus_t *con, time_t now),
@@ -2897,7 +2897,7 @@ test_a_networkstatus(
     *con_md=NULL;
   vote_routerstatus_t *vrs;
   routerstatus_t *rs;
-  int idx, n_rs, n_vrs;
+  int vgc, n_rs, n_vrs;
   char *consensus_text=NULL, *cp=NULL;
   smartlist_t *votes = smartlist_new();
 
@@ -2979,8 +2979,8 @@ test_a_networkstatus(
   if (vote_tweaks) params_tweaked += vote_tweaks(v1, 1, now);
 
   /* Check the routerstatuses. */
-  for (idx = 0; idx < n_vrs; ++idx) {
-    vrs = smartlist_get(v1->routerstatus_list, idx);
+  for (vgc = 0; vgc < n_vrs; ++vgc) {
+    vrs = smartlist_get(v1->routerstatus_list, vgc);
     tt_assert(vrs);
     vrs_test(vrs, 1, now);
   }
@@ -3002,8 +3002,8 @@ test_a_networkstatus(
 
   /* Check the routerstatuses. */
   n_vrs = smartlist_len(v2->routerstatus_list);
-  for (idx = 0; idx < n_vrs; ++idx) {
-    vrs = smartlist_get(v2->routerstatus_list, idx);
+  for (vgc = 0; vgc < n_vrs; ++vgc) {
+    vrs = smartlist_get(v2->routerstatus_list, vgc);
     tt_assert(vrs);
     vrs_test(vrs, 2, now);
   }
@@ -3084,16 +3084,16 @@ test_a_networkstatus(
   /* Check the routerstatuses. */
   n_rs = smartlist_len(con->routerstatus_list);
   tt_assert(n_rs);
-  for (idx = 0; idx < n_rs; ++idx) {
-    rs = smartlist_get(con->routerstatus_list, idx);
+  for (vgc = 0; vgc < n_rs; ++vgc) {
+    rs = smartlist_get(con->routerstatus_list, vgc);
     tt_assert(rs);
     rs_test(rs, now);
   }
 
   n_rs = smartlist_len(con_md->routerstatus_list);
   tt_assert(n_rs);
-  for (idx = 0; idx < n_rs; ++idx) {
-    rs = smartlist_get(con_md->routerstatus_list, idx);
+  for (vgc = 0; vgc < n_rs; ++vgc) {
+    rs = smartlist_get(con_md->routerstatus_list, vgc);
     tt_assert(rs);
   }
 
@@ -3449,7 +3449,7 @@ static uint32_t alternate_clip_bw = 0;
  * v3_networkstatus ones.
  */
 static vote_routerstatus_t *
-gen_routerstatus_for_umbw(int idx, time_t now)
+gen_routerstatus_for_umbw(int vgc, time_t now)
 {
   vote_routerstatus_t *vrs = NULL;
   routerstatus_t *rs;
@@ -3457,7 +3457,7 @@ gen_routerstatus_for_umbw(int idx, time_t now)
   uint32_t max_unmeasured_bw_kb = (alternate_clip_bw > 0) ?
     alternate_clip_bw : DEFAULT_MAX_UNMEASURED_BW_KB;
 
-  switch (idx) {
+  switch (vgc) {
     case 0:
       /* Generate the first routerstatus. */
       vrs = tor_malloc_zero(sizeof(vote_routerstatus_t));
@@ -3571,7 +3571,7 @@ gen_routerstatus_for_umbw(int idx, time_t now)
     tor_asprintf(&vrs->microdesc->microdesc_hash_line,
                  "m 25,26,27,28 "
                  "sha256=xyzajkldsdsajdadlsdjaslsdksdjlsdjsdaskdaaa%d\n",
-                 idx);
+                 vgc);
   }
 
  done:

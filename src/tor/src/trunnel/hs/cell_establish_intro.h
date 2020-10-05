@@ -95,19 +95,19 @@ int trn_cell_establish_intro_set_auth_key_len(trn_cell_establish_intro_t *inp, u
  * of the trn_cell_establish_intro_t in 'inp'.
  */
 size_t trn_cell_establish_intro_getlen_auth_key(const trn_cell_establish_intro_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * auth_key of the trn_cell_establish_intro_t in 'inp'.
  */
-uint8_t trn_cell_establish_intro_get_auth_key(trn_cell_establish_intro_t *inp, size_t idx);
+uint8_t trn_cell_establish_intro_get_auth_key(trn_cell_establish_intro_t *inp, size_t vgc);
 /** As trn_cell_establish_intro_get_auth_key, but take and return a
  * const pointer
  */
-uint8_t trn_cell_establish_intro_getconst_auth_key(const trn_cell_establish_intro_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t trn_cell_establish_intro_getconst_auth_key(const trn_cell_establish_intro_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * auth_key of the trn_cell_establish_intro_t in 'inp', so that it
  * will hold the value 'elt'.
  */
-int trn_cell_establish_intro_set_auth_key(trn_cell_establish_intro_t *inp, size_t idx, uint8_t elt);
+int trn_cell_establish_intro_set_auth_key(trn_cell_establish_intro_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field auth_key of
  * the trn_cell_establish_intro_t in 'inp'.
  */
@@ -150,19 +150,19 @@ const uint8_t * trn_cell_establish_intro_get_end_mac_fields(const trn_cell_estab
  * handshake_mac field of the trn_cell_establish_intro_t in 'inp'.
  */
 size_t trn_cell_establish_intro_getlen_handshake_mac(const trn_cell_establish_intro_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * handshake_mac of the trn_cell_establish_intro_t in 'inp'.
  */
-uint8_t trn_cell_establish_intro_get_handshake_mac(trn_cell_establish_intro_t *inp, size_t idx);
+uint8_t trn_cell_establish_intro_get_handshake_mac(trn_cell_establish_intro_t *inp, size_t vgc);
 /** As trn_cell_establish_intro_get_handshake_mac, but take and return
  * a const pointer
  */
-uint8_t trn_cell_establish_intro_getconst_handshake_mac(const trn_cell_establish_intro_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t trn_cell_establish_intro_getconst_handshake_mac(const trn_cell_establish_intro_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * handshake_mac of the trn_cell_establish_intro_t in 'inp', so that
  * it will hold the value 'elt'.
  */
-int trn_cell_establish_intro_set_handshake_mac(trn_cell_establish_intro_t *inp, size_t idx, uint8_t elt);
+int trn_cell_establish_intro_set_handshake_mac(trn_cell_establish_intro_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the TRUNNEL_SHA3_256_LEN-element array field
  * handshake_mac of 'inp'.
  */
@@ -187,19 +187,19 @@ int trn_cell_establish_intro_set_sig_len(trn_cell_establish_intro_t *inp, uint16
  * the trn_cell_establish_intro_t in 'inp'.
  */
 size_t trn_cell_establish_intro_getlen_sig(const trn_cell_establish_intro_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * sig of the trn_cell_establish_intro_t in 'inp'.
  */
-uint8_t trn_cell_establish_intro_get_sig(trn_cell_establish_intro_t *inp, size_t idx);
+uint8_t trn_cell_establish_intro_get_sig(trn_cell_establish_intro_t *inp, size_t vgc);
 /** As trn_cell_establish_intro_get_sig, but take and return a const
  * pointer
  */
-uint8_t trn_cell_establish_intro_getconst_sig(const trn_cell_establish_intro_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t trn_cell_establish_intro_getconst_sig(const trn_cell_establish_intro_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * sig of the trn_cell_establish_intro_t in 'inp', so that it will
  * hold the value 'elt'.
  */
-int trn_cell_establish_intro_set_sig(trn_cell_establish_intro_t *inp, size_t idx, uint8_t elt);
+int trn_cell_establish_intro_set_sig(trn_cell_establish_intro_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field sig of the
  * trn_cell_establish_intro_t in 'inp'.
  */

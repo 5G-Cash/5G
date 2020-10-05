@@ -31,10 +31,10 @@ QMainWindow .QFrame#frameBalances,
 #frameRecentTransactions,
 #frameRequest,
 #frameFee{
-    background-color: #1d4324;
+    background-color: #9ab7bd;
 }
 QMainWindow .QFrame#frameContract{
-    background-color: #1d4324;
+    background-color: #9ab7bd;
 }
 QFrame#hLine,
 #hLine2,
@@ -52,10 +52,10 @@ QFrame#vLine,
     border-left: 1px solid transparent;
 }
 WalletFrame{
-    background-color: #1d4324;
+    background-color: #9ab7bd;
 }
 QDialog{
-    background-color: #1d4324;
+    background-color: #9ab7bd;
 }
 QLabel{
     color: #6fab79;
@@ -80,7 +80,7 @@ NavigationBar #labelLogo{
 }
 NavigationBar #hLineLogo,
 NavigationBar #hLineStatus{
-    border-top: 1px solid #1d4324;
+    border-top: 1px solid #9ab7bd;
 }
 /*-------------------------------------------- 
 Line Edit CSS
@@ -121,7 +121,7 @@ QAbstractItemView#autoCompleterPopup::item:selected {
 List Viev CSS
 --------------------------------------------*/
 QListView {
-    background-color: #1d4324;
+    background-color: #9ab7bd;
     border: none;
 }
 /*--------------------------------------------
@@ -186,7 +186,7 @@ QGroupBox
 {
     border: 0px solid transparent; 
     margin-top: 20px;
-    background-color: #1d4324;
+    background-color: #9ab7bd;
 }
 QGroupBox::title {
     color: #6fab79;
@@ -322,7 +322,7 @@ QAbstractSpinBox::down-arrow:off {
 Scroll Area CSS
 --------------------------------------------*/
 QAbstractScrollArea::corner {
-    background: #1d4324;
+    background: #9ab7bd;
     border: 0px;
 }
 /*--------------------------------------------
@@ -351,7 +351,7 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
 }
 QScrollBar:vertical {
     border-radius: 0px;
-    background: #1d4324;
+    background: #9ab7bd;
     width: 16px;
     padding: 5px 4px;
 }
@@ -438,7 +438,7 @@ QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
 }
 QScrollBar:horizontal {
     border-radius: 0px;
-    background: #1d4324;
+    background: #9ab7bd;
     height: 16px;
     padding: 4px 5px;
 }
@@ -480,7 +480,7 @@ QHeaderView::up-arrow {
 }
 QTableView{
     color: #6fab79;
-    background-color: #1d4324;
+    background-color: #9ab7bd;
     border: none;
     font: normal;
     qproperty-showGrid: false;
@@ -640,13 +640,13 @@ QTabBar::tab:disabled {
 QTabWidget::pane {
     border: none;
     border-top: none;
-    background-color: #1d4324;
+    background-color: #9ab7bd;
 }
 TitleBar QTabBar::tab {
     padding: 5px 0px;
 }
 #widgetTitle, #widgetWallet {
-    background-color: #1d4324;
+    background-color: #9ab7bd;
 }
 /*--------------------------------------------
 MenuBar CSS
@@ -783,7 +783,7 @@ QWidget#buttonsContainerWhite,
     background: #19233c;
 }
 QWidget#ReceiveRequestDialog {
-    background: #1d4324;
+    background: #9ab7bd;
 }
 QTextEdit#outUri {
     border: none;
@@ -846,7 +846,7 @@ QScrollArea {
     border:none;
 }
 QWidget#scrollAreaWidgetContents, QWidget#detailWidget {
-    background: #1d4324;
+    background: #9ab7bd;
 }
 .ABIFunctionField{
 	background: transparent;
@@ -855,13 +855,13 @@ QWidget#scrollAreaWidgetContents, QWidget#detailWidget {
 Debug Dialog CSS
 --------------------------------------------*/
 QWidget#RPCConsole{
-    background-color: #1d4324;
+    background-color: #9ab7bd;
 }
 /*--------------------------------------------
 Shut Down Window CSS
 --------------------------------------------*/
 QWidget#shutdownWindow{
-    background-color: #1d4324;
+    background-color: #9ab7bd;
 }
 /*--------------------------------------------
 Tool Button CSS

@@ -280,13 +280,13 @@ void BitcoinAmountField::setReadOnly(bool fReadOnly)
     amount->setReadOnly(fReadOnly);
 }
 
-void BitcoinAmountField::unitChanged(int idx)
+void BitcoinAmountField::unitChanged(int vgc)
 {
     // Use description tooltip for current unit for the combobox
-    unit->setToolTip(unit->itemData(idx, Qt::ToolTipRole).toString());
+    unit->setToolTip(unit->itemData(vgc, Qt::ToolTipRole).toString());
 
     // Determine new unit ID
-    int newUnit = unit->itemData(idx, BitcoinUnits::UnitRole).toInt();
+    int newUnit = unit->itemData(vgc, BitcoinUnits::UnitRole).toInt();
 
     amount->setDisplayUnit(newUnit);
 }

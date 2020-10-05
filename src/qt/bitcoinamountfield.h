@@ -68,7 +68,7 @@ private:
     QValueComboBox *unit;
 
 private Q_SLOTS:
-    void unitChanged(int idx);
+    void unitChanged(int vgc);
 
 };
 

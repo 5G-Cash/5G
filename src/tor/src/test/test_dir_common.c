@@ -25,7 +25,7 @@
 void dir_common_setup_vote(networkstatus_t **vote, time_t now);
 networkstatus_t * dir_common_add_rs_and_parse(networkstatus_t *vote,
                             networkstatus_t **vote_out,
-               vote_routerstatus_t * (*vrs_gen)(int idx, time_t now),
+               vote_routerstatus_t * (*vrs_gen)(int vgc, time_t now),
                             crypto_pk_t *sign_skey, int *n_vrs,
                             time_t now, int clear_rl);
 
@@ -80,14 +80,14 @@ dir_common_authority_pk_init(authority_cert_t **cert1,
  * Generate a routerstatus for v3_networkstatus test.
  */
 vote_routerstatus_t *
-dir_common_gen_routerstatus_for_v3ns(int idx, time_t now)
+dir_common_gen_routerstatus_for_v3ns(int vgc, time_t now)
 {
   vote_routerstatus_t *vrs=NULL;
   routerstatus_t *rs = NULL;
   tor_addr_t addr_ipv6;
   char *method_list = NULL;
 
-  switch (idx) {
+  switch (vgc) {
     case 0:
       /* Generate the first routerstatus. */
       vrs = tor_malloc_zero(sizeof(vote_routerstatus_t));
@@ -170,7 +170,7 @@ dir_common_gen_routerstatus_for_v3ns(int idx, time_t now)
     tor_asprintf(&vrs->microdesc->microdesc_hash_line,
                  "m %s "
                  "sha256=xyzajkldsdsajdadlsdjaslsdksdjlsdjsdaskdaaa%d\n",
-                 method_list, idx);
+                 method_list, vgc);
   }
 
  done:
@@ -239,14 +239,14 @@ dir_common_generate_ri_from_rs(const vote_routerstatus_t *vrs)
  */
 networkstatus_t *
 dir_common_add_rs_and_parse(networkstatus_t *vote, networkstatus_t **vote_out,
-                       vote_routerstatus_t * (*vrs_gen)(int idx, time_t now),
+                       vote_routerstatus_t * (*vrs_gen)(int vgc, time_t now),
                        crypto_pk_t *sign_skey, int *n_vrs, time_t now,
                        int clear_rl)
 {
   vote_routerstatus_t *vrs;
   char *v_text=NULL;
   const char *msg=NULL;
-  int idx;
+  int vgc;
   was_router_added_t router_added = -1;
   *vote_out = NULL;
 
@@ -255,19 +255,19 @@ dir_common_add_rs_and_parse(networkstatus_t *vote, networkstatus_t **vote_out,
     routerlist_free_all();
   }
 
-  idx = 0;
+  vgc = 0;
   do {
-    vrs = vrs_gen(idx, now);
+    vrs = vrs_gen(vgc, now);
     if (vrs) {
       smartlist_add(vote->routerstatus_list, vrs);
       router_added =
         router_add_to_routerlist(dir_common_generate_ri_from_rs(vrs),
                                  &msg,0,0);
       tt_assert(router_added >= 0);
-      ++idx;
+      ++vgc;
     }
   } while (vrs);
-  *n_vrs = idx;
+  *n_vrs = vgc;
 
   /* dump the vote and try to parse it. */
   v_text = format_networkstatus_vote(sign_skey, vote);
@@ -292,7 +292,7 @@ dir_common_add_rs_and_parse(networkstatus_t *vote, networkstatus_t **vote_out,
 int
 dir_common_construct_vote_1(networkstatus_t **vote, authority_cert_t *cert,
                         crypto_pk_t *sign_skey,
-                        vote_routerstatus_t * (*vrs_gen)(int idx, time_t now),
+                        vote_routerstatus_t * (*vrs_gen)(int vgc, time_t now),
                         networkstatus_t **vote_out, int *n_vrs,
                         time_t now, int clear_rl)
 {
@@ -340,7 +340,7 @@ dir_common_construct_vote_1(networkstatus_t **vote, authority_cert_t *cert,
 int
 dir_common_construct_vote_2(networkstatus_t **vote, authority_cert_t *cert,
                         crypto_pk_t *sign_skey,
-                        vote_routerstatus_t * (*vrs_gen)(int idx, time_t now),
+                        vote_routerstatus_t * (*vrs_gen)(int vgc, time_t now),
                         networkstatus_t **vote_out, int *n_vrs,
                         time_t now, int clear_rl)
 {
@@ -391,7 +391,7 @@ dir_common_construct_vote_2(networkstatus_t **vote, authority_cert_t *cert,
 int
 dir_common_construct_vote_3(networkstatus_t **vote, authority_cert_t *cert,
                         crypto_pk_t *sign_skey,
-                        vote_routerstatus_t * (*vrs_gen)(int idx, time_t now),
+                        vote_routerstatus_t * (*vrs_gen)(int vgc, time_t now),
                         networkstatus_t **vote_out, int *n_vrs,
                         time_t now, int clear_rl)
 {

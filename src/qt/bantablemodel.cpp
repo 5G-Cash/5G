@@ -72,10 +72,10 @@ public:
         return cachedBanlist.size();
     }
 
-    CCombinedBan *index(int idx)
+    CCombinedBan *index(int vgc)
     {
-        if (idx >= 0 && idx < cachedBanlist.size())
-            return &cachedBanlist[idx];
+        if (vgc >= 0 && vgc < cachedBanlist.size())
+            return &cachedBanlist[vgc];
 
         return 0;
     }

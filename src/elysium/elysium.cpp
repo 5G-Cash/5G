@@ -682,13 +682,13 @@ static bool FillTxInputCache(const CTransaction& tx)
     return true;
 }
 
-// idx is position within the block, 0-based
-// int elysium_tx_push(const CTransaction &wtx, int nBlock, unsigned int idx)
+// vgc is position within the block, 0-based
+// int elysium_tx_push(const CTransaction &wtx, int nBlock, unsigned int vgc)
 // INPUT: bRPConly -- set to true to avoid moving funds; to be called from various RPC calls like this
 // RETURNS: 0 if parsed a MP TX
 // RETURNS: < 0 if a non-MP-TX or invalid
 // RETURNS: >0 if 1 or more payments have been made
-static int parseTransaction(bool bRPConly, const CTransaction& wtx, int nBlock, unsigned int idx, CMPTransaction& mp_tx, unsigned int nTime)
+static int parseTransaction(bool bRPConly, const CTransaction& wtx, int nBlock, unsigned int vgc, CMPTransaction& mp_tx, unsigned int nTime)
 {
     InputMode inputMode = InputMode::NORMAL;
     if (wtx.IsSigmaSpend()) {
@@ -696,7 +696,7 @@ static int parseTransaction(bool bRPConly, const CTransaction& wtx, int nBlock, 
     }
 
     assert(bRPConly == mp_tx.isRpcOnly());
-    mp_tx.Set(wtx.GetHash(), nBlock, idx, nTime);
+    mp_tx.Set(wtx.GetHash(), nBlock, vgc, nTime);
 
     // ### CLASS IDENTIFICATION AND MARKER CHECK ###
     auto elysiumClass = DeterminePacketClass(wtx, nBlock);
@@ -707,7 +707,7 @@ static int parseTransaction(bool bRPConly, const CTransaction& wtx, int nBlock, 
 
     if (!bRPConly || elysium_debug_parser_readonly) {
         PrintToLog("____________________________________________________________________________________________________________________________________\n");
-        PrintToLog("%s(block=%d, %s idx= %d); txid: %s\n", __FUNCTION__, nBlock, DateTimeStrFormat("%Y-%m-%d %H:%M:%S", nTime), idx, wtx.GetHash().GetHex());
+        PrintToLog("%s(block=%d, %s vgc= %d); txid: %s\n", __FUNCTION__, nBlock, DateTimeStrFormat("%Y-%m-%d %H:%M:%S", nTime), vgc, wtx.GetHash().GetHex());
     }
 
     // ### SENDER IDENTIFICATION ###
@@ -1036,7 +1036,7 @@ static int parseTransaction(bool bRPConly, const CTransaction& wtx, int nBlock, 
         0,
         wtx.GetHash(),
         nBlock,
-        idx,
+        vgc,
         payload.data(),
         payload.size(),
         elysiumClass,
@@ -1050,9 +1050,9 @@ static int parseTransaction(bool bRPConly, const CTransaction& wtx, int nBlock, 
 /**
  * Provides access to parseTransaction in read-only mode.
  */
-int ParseTransaction(const CTransaction& tx, int nBlock, unsigned int idx, CMPTransaction& mptx, unsigned int nTime)
+int ParseTransaction(const CTransaction& tx, int nBlock, unsigned int vgc, CMPTransaction& mptx, unsigned int nTime)
 {
-    return parseTransaction(true, tx, nBlock, idx, mptx, nTime);
+    return parseTransaction(true, tx, nBlock, vgc, mptx, nTime);
 }
 
 /**
@@ -1396,7 +1396,7 @@ int input_mp_crowdsale_string(const std::string& s)
     return 0;
 }
 
-// address, block, amount for sale, property, amount desired, property desired, subaction, idx, txid, amount remaining
+// address, block, amount for sale, property, amount desired, property desired, subaction, vgc, txid, amount remaining
 int input_mp_mdexorder_string(const std::string& s)
 {
     std::vector<std::string> vstr;
@@ -1413,12 +1413,12 @@ int input_mp_mdexorder_string(const std::string& s)
     int64_t amount_desired = boost::lexical_cast<int64_t>(vstr[i++]);
     uint32_t desired_property = boost::lexical_cast<uint32_t>(vstr[i++]);
     uint8_t subaction = boost::lexical_cast<unsigned int>(vstr[i++]); // lexical_cast can't handle char!
-    unsigned int idx = boost::lexical_cast<unsigned int>(vstr[i++]);
+    unsigned int vgc = boost::lexical_cast<unsigned int>(vstr[i++]);
     uint256 txid = uint256S(vstr[i++]);
     int64_t amount_remaining = boost::lexical_cast<int64_t>(vstr[i++]);
 
     CMPMetaDEx mdexObj(addr, block, property, amount_forsale, desired_property,
-            amount_desired, txid, idx, subaction, amount_remaining);
+            amount_desired, txid, vgc, subaction, amount_remaining);
 
     if (!MetaDEx_INSERT(mdexObj)) return -1;
 
@@ -2145,7 +2145,7 @@ int elysium_shutdown()
  *
  * @return True, if the transaction was an Elysium purchase, DEx payment or a valid Elysium transaction
  */
-bool elysium_handler_tx(const CTransaction& tx, int nBlock, unsigned int idx, const CBlockIndex* pBlockIndex)
+bool elysium_handler_tx(const CTransaction& tx, int nBlock, unsigned int vgc, const CBlockIndex* pBlockIndex)
 {
     LOCK(cs_main);
 
@@ -2167,7 +2167,7 @@ bool elysium_handler_tx(const CTransaction& tx, int nBlock, unsigned int idx, co
     mp_obj.unlockLogic();
 
     bool fFoundTx = false;
-    int pop_ret = parseTransaction(false, tx, nBlock, idx, mp_obj, nBlockTime);
+    int pop_ret = parseTransaction(false, tx, nBlock, vgc, mp_obj, nBlockTime);
 
     if (0 == pop_ret) {
         int interp_ret = txProcessor->ProcessTx(mp_obj);
@@ -2180,7 +2180,7 @@ bool elysium_handler_tx(const CTransaction& tx, int nBlock, unsigned int idx, co
         if (interp_ret != PKT_ERROR - 2) {
             bool bValid = (0 <= interp_ret);
             p_txlistdb->recordTX(tx.GetHash(), bValid, nBlock, mp_obj.getType(), mp_obj.getNewAmount());
-            p_ElysiumTXDB->RecordTransaction(tx.GetHash(), idx, interp_ret);
+            p_ElysiumTXDB->RecordTransaction(tx.GetHash(), vgc, interp_ret);
         }
         fFoundTx |= (interp_ret == 0);
     }

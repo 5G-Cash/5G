@@ -85,22 +85,22 @@ trn_cell_introduce1_getlen_legacy_key_id(const trn_cell_introduce1_t *inp)
 }
 
 uint8_t
-trn_cell_introduce1_get_legacy_key_id(trn_cell_introduce1_t *inp, size_t idx)
+trn_cell_introduce1_get_legacy_key_id(trn_cell_introduce1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < TRUNNEL_SHA1_LEN);
-  return inp->legacy_key_id[idx];
+  trunnel_assert(vgc < TRUNNEL_SHA1_LEN);
+  return inp->legacy_key_id[vgc];
 }
 
 uint8_t
-trn_cell_introduce1_getconst_legacy_key_id(const trn_cell_introduce1_t *inp, size_t idx)
+trn_cell_introduce1_getconst_legacy_key_id(const trn_cell_introduce1_t *inp, size_t vgc)
 {
-  return trn_cell_introduce1_get_legacy_key_id((trn_cell_introduce1_t*)inp, idx);
+  return trn_cell_introduce1_get_legacy_key_id((trn_cell_introduce1_t*)inp, vgc);
 }
 int
-trn_cell_introduce1_set_legacy_key_id(trn_cell_introduce1_t *inp, size_t idx, uint8_t elt)
+trn_cell_introduce1_set_legacy_key_id(trn_cell_introduce1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < TRUNNEL_SHA1_LEN);
-  inp->legacy_key_id[idx] = elt;
+  trunnel_assert(vgc < TRUNNEL_SHA1_LEN);
+  inp->legacy_key_id[vgc] = elt;
   return 0;
 }
 
@@ -147,20 +147,20 @@ trn_cell_introduce1_getlen_auth_key(const trn_cell_introduce1_t *inp)
 }
 
 uint8_t
-trn_cell_introduce1_get_auth_key(trn_cell_introduce1_t *inp, size_t idx)
+trn_cell_introduce1_get_auth_key(trn_cell_introduce1_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->auth_key, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->auth_key, vgc);
 }
 
 uint8_t
-trn_cell_introduce1_getconst_auth_key(const trn_cell_introduce1_t *inp, size_t idx)
+trn_cell_introduce1_getconst_auth_key(const trn_cell_introduce1_t *inp, size_t vgc)
 {
-  return trn_cell_introduce1_get_auth_key((trn_cell_introduce1_t*)inp, idx);
+  return trn_cell_introduce1_get_auth_key((trn_cell_introduce1_t*)inp, vgc);
 }
 int
-trn_cell_introduce1_set_auth_key(trn_cell_introduce1_t *inp, size_t idx, uint8_t elt)
+trn_cell_introduce1_set_auth_key(trn_cell_introduce1_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->auth_key, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->auth_key, vgc, elt);
   return 0;
 }
 int
@@ -237,20 +237,20 @@ trn_cell_introduce1_getlen_encrypted(const trn_cell_introduce1_t *inp)
 }
 
 uint8_t
-trn_cell_introduce1_get_encrypted(trn_cell_introduce1_t *inp, size_t idx)
+trn_cell_introduce1_get_encrypted(trn_cell_introduce1_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->encrypted, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->encrypted, vgc);
 }
 
 uint8_t
-trn_cell_introduce1_getconst_encrypted(const trn_cell_introduce1_t *inp, size_t idx)
+trn_cell_introduce1_getconst_encrypted(const trn_cell_introduce1_t *inp, size_t vgc)
 {
-  return trn_cell_introduce1_get_encrypted((trn_cell_introduce1_t*)inp, idx);
+  return trn_cell_introduce1_get_encrypted((trn_cell_introduce1_t*)inp, vgc);
 }
 int
-trn_cell_introduce1_set_encrypted(trn_cell_introduce1_t *inp, size_t idx, uint8_t elt)
+trn_cell_introduce1_set_encrypted(trn_cell_introduce1_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->encrypted, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->encrypted, vgc, elt);
   return 0;
 }
 int
@@ -739,9 +739,9 @@ trn_cell_introduce_encrypted_clear(trn_cell_introduce_encrypted_t *obj)
   TRUNNEL_DYNARRAY_CLEAR(&obj->onion_key);
   {
 
-    unsigned idx;
-    for (idx = 0; idx < TRUNNEL_DYNARRAY_LEN(&obj->nspecs); ++idx) {
-      link_specifier_free(TRUNNEL_DYNARRAY_GET(&obj->nspecs, idx));
+    unsigned vgc;
+    for (vgc = 0; vgc < TRUNNEL_DYNARRAY_LEN(&obj->nspecs); ++vgc) {
+      link_specifier_free(TRUNNEL_DYNARRAY_GET(&obj->nspecs, vgc));
     }
   }
   TRUNNEL_DYNARRAY_WIPE(&obj->nspecs);
@@ -767,22 +767,22 @@ trn_cell_introduce_encrypted_getlen_rend_cookie(const trn_cell_introduce_encrypt
 }
 
 uint8_t
-trn_cell_introduce_encrypted_get_rend_cookie(trn_cell_introduce_encrypted_t *inp, size_t idx)
+trn_cell_introduce_encrypted_get_rend_cookie(trn_cell_introduce_encrypted_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < TRUNNEL_REND_COOKIE_LEN);
-  return inp->rend_cookie[idx];
+  trunnel_assert(vgc < TRUNNEL_REND_COOKIE_LEN);
+  return inp->rend_cookie[vgc];
 }
 
 uint8_t
-trn_cell_introduce_encrypted_getconst_rend_cookie(const trn_cell_introduce_encrypted_t *inp, size_t idx)
+trn_cell_introduce_encrypted_getconst_rend_cookie(const trn_cell_introduce_encrypted_t *inp, size_t vgc)
 {
-  return trn_cell_introduce_encrypted_get_rend_cookie((trn_cell_introduce_encrypted_t*)inp, idx);
+  return trn_cell_introduce_encrypted_get_rend_cookie((trn_cell_introduce_encrypted_t*)inp, vgc);
 }
 int
-trn_cell_introduce_encrypted_set_rend_cookie(trn_cell_introduce_encrypted_t *inp, size_t idx, uint8_t elt)
+trn_cell_introduce_encrypted_set_rend_cookie(trn_cell_introduce_encrypted_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < TRUNNEL_REND_COOKIE_LEN);
-  inp->rend_cookie[idx] = elt;
+  trunnel_assert(vgc < TRUNNEL_REND_COOKIE_LEN);
+  inp->rend_cookie[vgc] = elt;
   return 0;
 }
 
@@ -852,20 +852,20 @@ trn_cell_introduce_encrypted_getlen_onion_key(const trn_cell_introduce_encrypted
 }
 
 uint8_t
-trn_cell_introduce_encrypted_get_onion_key(trn_cell_introduce_encrypted_t *inp, size_t idx)
+trn_cell_introduce_encrypted_get_onion_key(trn_cell_introduce_encrypted_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->onion_key, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->onion_key, vgc);
 }
 
 uint8_t
-trn_cell_introduce_encrypted_getconst_onion_key(const trn_cell_introduce_encrypted_t *inp, size_t idx)
+trn_cell_introduce_encrypted_getconst_onion_key(const trn_cell_introduce_encrypted_t *inp, size_t vgc)
 {
-  return trn_cell_introduce_encrypted_get_onion_key((trn_cell_introduce_encrypted_t*)inp, idx);
+  return trn_cell_introduce_encrypted_get_onion_key((trn_cell_introduce_encrypted_t*)inp, vgc);
 }
 int
-trn_cell_introduce_encrypted_set_onion_key(trn_cell_introduce_encrypted_t *inp, size_t idx, uint8_t elt)
+trn_cell_introduce_encrypted_set_onion_key(trn_cell_introduce_encrypted_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->onion_key, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->onion_key, vgc, elt);
   return 0;
 }
 int
@@ -930,28 +930,28 @@ trn_cell_introduce_encrypted_getlen_nspecs(const trn_cell_introduce_encrypted_t 
 }
 
 struct link_specifier_st *
-trn_cell_introduce_encrypted_get_nspecs(trn_cell_introduce_encrypted_t *inp, size_t idx)
+trn_cell_introduce_encrypted_get_nspecs(trn_cell_introduce_encrypted_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->nspecs, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->nspecs, vgc);
 }
 
  const struct link_specifier_st *
-trn_cell_introduce_encrypted_getconst_nspecs(const trn_cell_introduce_encrypted_t *inp, size_t idx)
+trn_cell_introduce_encrypted_getconst_nspecs(const trn_cell_introduce_encrypted_t *inp, size_t vgc)
 {
-  return trn_cell_introduce_encrypted_get_nspecs((trn_cell_introduce_encrypted_t*)inp, idx);
+  return trn_cell_introduce_encrypted_get_nspecs((trn_cell_introduce_encrypted_t*)inp, vgc);
 }
 int
-trn_cell_introduce_encrypted_set_nspecs(trn_cell_introduce_encrypted_t *inp, size_t idx, struct link_specifier_st * elt)
+trn_cell_introduce_encrypted_set_nspecs(trn_cell_introduce_encrypted_t *inp, size_t vgc, struct link_specifier_st * elt)
 {
-  link_specifier_t *oldval = TRUNNEL_DYNARRAY_GET(&inp->nspecs, idx);
+  link_specifier_t *oldval = TRUNNEL_DYNARRAY_GET(&inp->nspecs, vgc);
   if (oldval && oldval != elt)
     link_specifier_free(oldval);
-  return trn_cell_introduce_encrypted_set0_nspecs(inp, idx, elt);
+  return trn_cell_introduce_encrypted_set0_nspecs(inp, vgc, elt);
 }
 int
-trn_cell_introduce_encrypted_set0_nspecs(trn_cell_introduce_encrypted_t *inp, size_t idx, struct link_specifier_st * elt)
+trn_cell_introduce_encrypted_set0_nspecs(trn_cell_introduce_encrypted_t *inp, size_t vgc, struct link_specifier_st * elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->nspecs, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->nspecs, vgc, elt);
   return 0;
 }
 int
@@ -1005,20 +1005,20 @@ trn_cell_introduce_encrypted_getlen_pad(const trn_cell_introduce_encrypted_t *in
 }
 
 uint8_t
-trn_cell_introduce_encrypted_get_pad(trn_cell_introduce_encrypted_t *inp, size_t idx)
+trn_cell_introduce_encrypted_get_pad(trn_cell_introduce_encrypted_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->pad, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->pad, vgc);
 }
 
 uint8_t
-trn_cell_introduce_encrypted_getconst_pad(const trn_cell_introduce_encrypted_t *inp, size_t idx)
+trn_cell_introduce_encrypted_getconst_pad(const trn_cell_introduce_encrypted_t *inp, size_t vgc)
 {
-  return trn_cell_introduce_encrypted_get_pad((trn_cell_introduce_encrypted_t*)inp, idx);
+  return trn_cell_introduce_encrypted_get_pad((trn_cell_introduce_encrypted_t*)inp, vgc);
 }
 int
-trn_cell_introduce_encrypted_set_pad(trn_cell_introduce_encrypted_t *inp, size_t idx, uint8_t elt)
+trn_cell_introduce_encrypted_set_pad(trn_cell_introduce_encrypted_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->pad, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->pad, vgc, elt);
   return 0;
 }
 int
@@ -1076,9 +1076,9 @@ trn_cell_introduce_encrypted_check(const trn_cell_introduce_encrypted_t *obj)
   {
     const char *msg;
 
-    unsigned idx;
-    for (idx = 0; idx < TRUNNEL_DYNARRAY_LEN(&obj->nspecs); ++idx) {
-      if (NULL != (msg = link_specifier_check(TRUNNEL_DYNARRAY_GET(&obj->nspecs, idx))))
+    unsigned vgc;
+    for (vgc = 0; vgc < TRUNNEL_DYNARRAY_LEN(&obj->nspecs); ++vgc) {
+      if (NULL != (msg = link_specifier_check(TRUNNEL_DYNARRAY_GET(&obj->nspecs, vgc))))
         return msg;
     }
   }
@@ -1117,9 +1117,9 @@ trn_cell_introduce_encrypted_encoded_len(const trn_cell_introduce_encrypted_t *o
   /* Length of struct link_specifier nspecs[nspec] */
   {
 
-    unsigned idx;
-    for (idx = 0; idx < TRUNNEL_DYNARRAY_LEN(&obj->nspecs); ++idx) {
-      result += link_specifier_encoded_len(TRUNNEL_DYNARRAY_GET(&obj->nspecs, idx));
+    unsigned vgc;
+    for (vgc = 0; vgc < TRUNNEL_DYNARRAY_LEN(&obj->nspecs); ++vgc) {
+      result += link_specifier_encoded_len(TRUNNEL_DYNARRAY_GET(&obj->nspecs, vgc));
     }
   }
 
@@ -1202,10 +1202,10 @@ trn_cell_introduce_encrypted_encode(uint8_t *output, const size_t avail, const t
   /* Encode struct link_specifier nspecs[nspec] */
   {
 
-    unsigned idx;
-    for (idx = 0; idx < TRUNNEL_DYNARRAY_LEN(&obj->nspecs); ++idx) {
+    unsigned vgc;
+    for (vgc = 0; vgc < TRUNNEL_DYNARRAY_LEN(&obj->nspecs); ++vgc) {
       trunnel_assert(written <= avail);
-      result = link_specifier_encode(ptr, avail - written, TRUNNEL_DYNARRAY_GET(&obj->nspecs, idx));
+      result = link_specifier_encode(ptr, avail - written, TRUNNEL_DYNARRAY_GET(&obj->nspecs, vgc));
       if (result < 0)
         goto fail; /* XXXXXXX !*/
       written += result; ptr += result;
@@ -1299,8 +1299,8 @@ trn_cell_introduce_encrypted_parse_into(trn_cell_introduce_encrypted_t *obj, con
   TRUNNEL_DYNARRAY_EXPAND(link_specifier_t *, &obj->nspecs, obj->nspec, {});
   {
     link_specifier_t * elt;
-    unsigned idx;
-    for (idx = 0; idx < obj->nspec; ++idx) {
+    unsigned vgc;
+    for (vgc = 0; vgc < obj->nspec; ++vgc) {
       result = link_specifier_parse(&elt, ptr, remaining);
       if (result < 0)
         goto relay_fail;

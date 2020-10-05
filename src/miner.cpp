@@ -467,7 +467,7 @@ CBlockTemplate* BlockAssembler::CreateNewBlock(
             fivegnodePayment = GetFivegnodePayment(chainparams.GetConsensus(),false,nHeight);
             FillBlockPayments(coinbaseTx, nHeight, fivegnodePayment, pblock->txoutFivegnode, pblock->voutSuperblock);
         }
-        //Only take out idx payment if a fivegnode is actually filled in txoutfivegnode and fivegnodepayment is not 0
+        //Only take out vgc payment if a fivegnode is actually filled in txoutfivegnode and fivegnodepayment is not 0
         if(pblock->txoutFivegnode != CTxOut() && fivegnodePayment != 0)
             coinbaseTx.vout[0].nValue -= fivegnodePayment;
 

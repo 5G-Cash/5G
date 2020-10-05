@@ -1724,7 +1724,7 @@ bool AcceptToMemoryPoolWorker(
                         if (pool.mapTx.find(tx.vin[j].prevout.hash) != pool.mapTx.end())
                             return state.DoS(0, false,
                                              REJECT_NONSTANDARD, "replacement-adds-unconfirmed", false,
-                                             strprintf("replacement %s adds unconfirmed input, idx %d",
+                                             strprintf("replacement %s adds unconfirmed input, vgc %d",
                                                        hash.ToString(), j));
                     }
                 }
@@ -3695,7 +3695,7 @@ ConnectTip(CValidationState &state, const CChainParams &chainparams, CBlockIndex
 #ifdef ENABLE_ELYSIUM
         //! Elysium: new confirmed transaction notification
         if (fElysium) {
-            LogPrint("handler", "Elysium handler: new confirmed transaction [height: %d, idx: %u]\n", GetHeight(), nTxIdx);
+            LogPrint("handler", "Elysium handler: new confirmed transaction [height: %d, vgc: %u]\n", GetHeight(), nTxIdx);
             if (elysium_handler_tx(tx, GetHeight(), nTxIdx++, pindexNew)) ++nNumMetaTxs;
         }
 #endif
@@ -3766,13 +3766,13 @@ int GetInputAge(const CTxIn &txin) {
 }
 
 CAmount GetFivegnodePayment(const Consensus::Params &params, bool fMTP,int nHeight) {
-if(nHeight > Params().GetConsensus().nFivegnodePaymentsStartBlock)
-{
-    //Give 45 % to masternode
-    return GetBlockSubsidy(nHeight,params) * 0.45;
-}
-    //No reward before fivegnodepaymentsstartblock
-    return 0;
+    if(nHeight > Params().GetConsensus().nFivegnodePaymentsStartBlock)
+    {
+        //Give 45 % to masternode
+        return GetBlockSubsidy(nHeight,params) * 0.45;
+    }
+        //No reward before fivegnodepaymentsstartblock
+        return 0;
 }
 
 bool DisconnectBlocks(int blocks) {
@@ -4597,14 +4597,14 @@ bool CheckBlock(const CBlock &block, CValidationState &state,
                         instantsend.Relay(hashLocked);
                         LOCK(cs_main);
                         mapRejectedBlocks.insert(make_pair(block.GetHash(), GetTime()));
-                        return state.DoS(0, error("CheckBlock(FIVEG): transaction %s conflicts with transaction lock %s",
+                        return state.DoS(0, error("CheckBlock(VGC): transaction %s conflicts with transaction lock %s",
                                                   tx.GetHash().ToString(), hashLocked.ToString()),
                                          REJECT_INVALID, "conflict-tx-lock");
                     }
                 }
             }
         } else {
-            LogPrintf("CheckBlock(FIVEG): spork is off, skipping transaction locking checks\n");
+            LogPrintf("CheckBlock(VGC): spork is off, skipping transaction locking checks\n");
         }
 
         // Check transactions

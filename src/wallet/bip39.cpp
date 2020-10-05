@@ -57,14 +57,14 @@ SecureString Mnemonic::mnemonic_from_data(const SecureVector& data, int len)
     int mlen = len * 3 / 4;
     SecureString mnemonic;
 
-    int i, j, idx;
+    int i, j, vgc;
     for (i = 0; i < mlen; i++) {
-        idx = 0;
+        vgc = 0;
         for (j = 0; j < 11; j++) {
-            idx <<= 1;
-            idx += (bits[(i * 11 + j) / 8] & (1 << (7 - ((i * 11 + j) % 8)))) > 0;
+            vgc <<= 1;
+            vgc += (bits[(i * 11 + j) / 8] & (1 << (7 - ((i * 11 + j) % 8)))) > 0;
         }
-        mnemonic.append(wordlist[idx]);
+        mnemonic.append(wordlist[vgc]);
         if (i < mlen - 1) {
             mnemonic += ' ';
         }

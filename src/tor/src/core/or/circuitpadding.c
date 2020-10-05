@@ -151,12 +151,12 @@ circpad_state_to_string(circpad_statenum_t state)
  * Free the machineinfo at an index
  */
 static void
-circpad_circuit_machineinfo_free_idx(circuit_t *circ, int idx)
+circpad_circuit_machineinfo_free_idx(circuit_t *circ, int vgc)
 {
-  if (circ->padding_info[idx]) {
-    tor_free(circ->padding_info[idx]->histogram);
-    timer_free(circ->padding_info[idx]->padding_timer);
-    tor_free(circ->padding_info[idx]);
+  if (circ->padding_info[vgc]) {
+    tor_free(circ->padding_info[vgc]->histogram);
+    timer_free(circ->padding_info[vgc]->padding_timer);
+    tor_free(circ->padding_info[vgc]);
   }
 }
 

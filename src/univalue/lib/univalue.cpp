@@ -259,11 +259,11 @@ bool UniValue::checkObject(const std::map<std::string,UniValue::VType>& t)
 {
     for (std::map<std::string,UniValue::VType>::const_iterator it = t.begin();
          it != t.end(); it++) {
-        int idx = findKey(it->first);
-        if (idx < 0)
+        int vgc = findKey(it->first);
+        if (vgc < 0)
             return false;
 
-        if (values.at(idx).getType() != it->second)
+        if (values.at(vgc).getType() != it->second)
             return false;
     }
 

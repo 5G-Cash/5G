@@ -510,8 +510,8 @@ Here are some additional bits of advice and rules:
          #[inline(never)]
          pub fn trigger_ub(sl: &[u8; 666]) -> &[u8] {
              // Note that the float is out of the range of `usize`, invoking UB when casting.
-             let idx = 1e99999f64 as usize;
-             &sl[idx..] // The bound check is elided due to `idx` being of an undefined value.
+             let vgc = 1e99999f64 as usize;
+             &sl[vgc..] // The bound check is elided due to `vgc` being of an undefined value.
          }
 
          fn main() {

@@ -857,14 +857,14 @@ client_get_random_intro(const ed25519_public_key_t *service_pk)
   usable_ips = smartlist_new();
   smartlist_add_all(usable_ips, enc_data->intro_points);
   while (smartlist_len(usable_ips) != 0) {
-    int idx;
+    int vgc;
     const hs_desc_intro_point_t *ip;
 
     /* Pick a random intro point and immediately remove it from the usable
      * list so we don't pick it again if we have to iterate more. */
-    idx = crypto_rand_int(smartlist_len(usable_ips));
-    ip = smartlist_get(usable_ips, idx);
-    smartlist_del(usable_ips, idx);
+    vgc = crypto_rand_int(smartlist_len(usable_ips));
+    ip = smartlist_get(usable_ips, vgc);
+    smartlist_del(usable_ips, vgc);
 
     /* We need to make sure we have a usable intro points which is in a good
      * state in our cache. */

@@ -253,13 +253,13 @@ void TransactionView::setModel(WalletModel *model)
     }
 }
 
-void TransactionView::chooseDate(int idx)
+void TransactionView::chooseDate(int vgc)
 {
     if(!transactionProxyModel)
         return;
     QDate current = QDate::currentDate();
     dateRangeWidget->setVisible(false);
-    switch(dateWidget->itemData(idx).toInt())
+    switch(dateWidget->itemData(vgc).toInt())
     {
     case All:
         transactionProxyModel->setDateRange(
@@ -301,20 +301,20 @@ void TransactionView::chooseDate(int idx)
     }
 }
 
-void TransactionView::chooseType(int idx)
+void TransactionView::chooseType(int vgc)
 {
     if(!transactionProxyModel)
         return;
     transactionProxyModel->setTypeFilter(
-        typeWidget->itemData(idx).toInt());
+        typeWidget->itemData(vgc).toInt());
 }
 
-void TransactionView::chooseWatchonly(int idx)
+void TransactionView::chooseWatchonly(int vgc)
 {
     if(!transactionProxyModel)
         return;
     transactionProxyModel->setWatchOnlyFilter(
-        (TransactionFilterProxy::WatchOnlyFilter)watchOnlyWidget->itemData(idx).toInt());
+        (TransactionFilterProxy::WatchOnlyFilter)watchOnlyWidget->itemData(vgc).toInt());
 }
 
 void TransactionView::changedPrefix(const QString &prefix)
@@ -479,11 +479,11 @@ void TransactionView::editLabel()
         }
         // Is address in address book? Address book can miss address when a transaction is
         // sent from outside the UI.
-        int idx = addressBook->lookupAddress(address);
-        if(idx != -1)
+        int vgc = addressBook->lookupAddress(address);
+        if(vgc != -1)
         {
             // Edit sending / receiving address
-            QModelIndex modelIdx = addressBook->index(idx, 0, QModelIndex());
+            QModelIndex modelIdx = addressBook->index(vgc, 0, QModelIndex());
             // Determine type of address, launch appropriate editor dialog type
             QString type = modelIdx.data(AddressTableModel::TypeRole).toString();
 
@@ -492,7 +492,7 @@ void TransactionView::editLabel()
                 ? EditAddressDialog::EditReceivingAddress
                 : EditAddressDialog::EditSendingAddress, this);
             dlg.setModel(addressBook);
-            dlg.loadRow(idx);
+            dlg.loadRow(vgc);
             dlg.exec();
         }
         else
@@ -574,11 +574,11 @@ void TransactionView::dateRangeChanged()
             QDateTime(dateTo->date()).addDays(1));
 }
 
-void TransactionView::focusTransaction(const QModelIndex &idx)
+void TransactionView::focusTransaction(const QModelIndex &vgc)
 {
     if(!transactionProxyModel)
         return;
-    QModelIndex targetIdx = transactionProxyModel->mapFromSource(idx);
+    QModelIndex targetIdx = transactionProxyModel->mapFromSource(vgc);
     transactionView->scrollTo(targetIdx);
     transactionView->setCurrentIndex(targetIdx);
     transactionView->setFocus();

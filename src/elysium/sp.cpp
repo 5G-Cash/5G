@@ -500,10 +500,10 @@ int CMPSPInfo::getDenominationRemainingConfirmation(
 void CMPSPInfo::printAll() const
 {
     // print off the hard coded MSC and TMSC entries
-    for (uint32_t idx = ELYSIUM_PROPERTY_ELYSIUM; idx <= ELYSIUM_PROPERTY_TELYSIUM; idx++) {
+    for (uint32_t vgc = ELYSIUM_PROPERTY_ELYSIUM; vgc <= ELYSIUM_PROPERTY_TELYSIUM; vgc++) {
         Entry info;
-        PrintToLog("%10d => ", idx);
-        if (getSP(idx, info)) {
+        PrintToLog("%10d => ", vgc);
+        if (getSP(vgc, info)) {
             info.print();
         } else {
             PrintToLog("<Internal Error on implicit SP>\n");

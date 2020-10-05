@@ -171,7 +171,7 @@ void SendMPDialog::updateFrom()
         if (CheckFee(currentSetFromAddress, 16)) {
             ui->feeWarningLabel->setVisible(false);
         } else {
-            ui->feeWarningLabel->setText("WARNING: The sending address is low on FIVEG for transaction fees. Please topup the FIVEG balance for the sending address to send Elysium transactions.");
+            ui->feeWarningLabel->setText("WARNING: The sending address is low on VGC for transaction fees. Please topup the FIVEG balance for the sending address to send Elysium transactions.");
             ui->feeWarningLabel->setVisible(true);
         }
     }
@@ -347,12 +347,12 @@ void SendMPDialog::sendMPTransaction()
     clearFields();
 }
 
-void SendMPDialog::sendFromComboBoxChanged(int idx)
+void SendMPDialog::sendFromComboBoxChanged(int vgc)
 {
     updateFrom();
 }
 
-void SendMPDialog::propertyComboBoxChanged(int idx)
+void SendMPDialog::propertyComboBoxChanged(int vgc)
 {
     updateProperty();
     updateFrom();

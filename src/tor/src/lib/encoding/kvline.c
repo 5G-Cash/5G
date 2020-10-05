@@ -172,8 +172,8 @@ kvline_parse(const char *line, unsigned flags)
   while (*cp) {
     key = val = NULL;
     {
-      size_t idx = strspn(cp, " \t\r\v\n");
-      cp += idx;
+      size_t vgc = strspn(cp, " \t\r\v\n");
+      cp += vgc;
     }
     if (BUG(cp == cplast)) {
       /* If we didn't parse anything, this code is broken. */
@@ -187,11 +187,11 @@ kvline_parse(const char *line, unsigned flags)
 
     /* Find the key. */
     if (*cp != '\"') {
-      size_t idx = strcspn(cp, " \t\r\v\n=");
+      size_t vgc = strcspn(cp, " \t\r\v\n=");
 
-      if (cp[idx] == '=') {
-        key = tor_memdup_nulterm(cp, idx);
-        cp += idx + 1;
+      if (cp[vgc] == '=') {
+        key = tor_memdup_nulterm(cp, vgc);
+        cp += vgc + 1;
       } else {
         if (!omit_keys)
           goto err;
@@ -209,9 +209,9 @@ kvline_parse(const char *line, unsigned flags)
         goto err;
       }
     } else {
-      size_t idx = strcspn(cp, " \t\r\v\n");
-      val = tor_memdup_nulterm(cp, idx);
-      cp += idx;
+      size_t vgc = strcspn(cp, " \t\r\v\n");
+      val = tor_memdup_nulterm(cp, vgc);
+      cp += vgc;
     }
 
     if (key && strlen(key) == 0) {

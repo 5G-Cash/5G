@@ -239,7 +239,7 @@ public:
 class CDarkSendSigner
 {
 public:
-    /// Is the input associated with this public key? (and there is 10000 FIVEG - checking if valid fivegnode)
+    /// Is the input associated with this public key? (and there is 10000 VGC - checking if valid fivegnode)
     bool IsVinAssociatedWithPubkey(const CTxIn& vin, const CPubKey& pubkey);
     /// Set the private/public key values, returns true if successful
     bool GetKeysFromSecret(std::string strSecret, CKey& keyRet, CPubKey& pubkeyRet);

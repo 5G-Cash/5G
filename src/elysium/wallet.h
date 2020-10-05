@@ -108,7 +108,7 @@ private:
         PropertyId property,
         SigmaDenomination denomination,
         SigmaMintGroup group,
-        SigmaMintIndex idx,
+        SigmaMintIndex vgc,
         const SigmaPublicKey& pubKey,
         int block);
 

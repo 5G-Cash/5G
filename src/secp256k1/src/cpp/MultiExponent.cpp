@@ -18,10 +18,10 @@ typedef struct {
     secp256k1_gej *pt;
 } ecmult_multi_data;
 
-int ecmult_multi_callback(secp256k1_scalar *sc, secp256k1_gej *pt, size_t idx, void *cbdata) {
+int ecmult_multi_callback(secp256k1_scalar *sc, secp256k1_gej *pt, size_t vgc, void *cbdata) {
     ecmult_multi_data *data = (ecmult_multi_data*) cbdata;
-    *sc = data->sc[idx];
-    *pt = data->pt[idx];
+    *sc = data->sc[vgc];
+    *pt = data->pt[vgc];
     return 1;
 }
 

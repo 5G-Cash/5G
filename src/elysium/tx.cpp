@@ -82,7 +82,7 @@ void CMPTransaction::Set(
     uint64_t n,
     const uint256& t,
     int b,
-    unsigned int idx,
+    unsigned int vgc,
     unsigned char *p,
     unsigned int size,
     const boost::optional<elysium::PacketClass>& packetClass,
@@ -93,7 +93,7 @@ void CMPTransaction::Set(
     receiver = r;
     txid = t;
     block = b;
-    tx_idx = idx;
+    tx_idx = vgc;
     nValue = n;
     nNewValue = n;
     this->packetClass = packetClass;

@@ -84,19 +84,19 @@ int trn_cell_extension_fields_set_field_len(trn_cell_extension_fields_t *inp, ui
  * the trn_cell_extension_fields_t in 'inp'.
  */
 size_t trn_cell_extension_fields_getlen_field(const trn_cell_extension_fields_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * field of the trn_cell_extension_fields_t in 'inp'.
  */
-uint8_t trn_cell_extension_fields_get_field(trn_cell_extension_fields_t *inp, size_t idx);
+uint8_t trn_cell_extension_fields_get_field(trn_cell_extension_fields_t *inp, size_t vgc);
 /** As trn_cell_extension_fields_get_field, but take and return a
  * const pointer
  */
-uint8_t trn_cell_extension_fields_getconst_field(const trn_cell_extension_fields_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t trn_cell_extension_fields_getconst_field(const trn_cell_extension_fields_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * field of the trn_cell_extension_fields_t in 'inp', so that it will
  * hold the value 'elt'.
  */
-int trn_cell_extension_fields_set_field(trn_cell_extension_fields_t *inp, size_t idx, uint8_t elt);
+int trn_cell_extension_fields_set_field(trn_cell_extension_fields_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field field of the
  * trn_cell_extension_fields_t in 'inp'.
  */
@@ -163,23 +163,23 @@ int trn_cell_extension_set_num(trn_cell_extension_t *inp, uint8_t val);
  * the trn_cell_extension_t in 'inp'.
  */
 size_t trn_cell_extension_getlen_fields(const trn_cell_extension_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * fields of the trn_cell_extension_t in 'inp'.
  */
-struct trn_cell_extension_fields_st * trn_cell_extension_get_fields(trn_cell_extension_t *inp, size_t idx);
+struct trn_cell_extension_fields_st * trn_cell_extension_get_fields(trn_cell_extension_t *inp, size_t vgc);
 /** As trn_cell_extension_get_fields, but take and return a const
  * pointer
  */
- const struct trn_cell_extension_fields_st * trn_cell_extension_getconst_fields(const trn_cell_extension_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+ const struct trn_cell_extension_fields_st * trn_cell_extension_getconst_fields(const trn_cell_extension_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * fields of the trn_cell_extension_t in 'inp', so that it will hold
  * the value 'elt'. Free the previous value, if any.
  */
-int trn_cell_extension_set_fields(trn_cell_extension_t *inp, size_t idx, struct trn_cell_extension_fields_st * elt);
+int trn_cell_extension_set_fields(trn_cell_extension_t *inp, size_t vgc, struct trn_cell_extension_fields_st * elt);
 /** As trn_cell_extension_set_fields, but does not free the previous
  * value.
  */
-int trn_cell_extension_set0_fields(trn_cell_extension_t *inp, size_t idx, struct trn_cell_extension_fields_st * elt);
+int trn_cell_extension_set0_fields(trn_cell_extension_t *inp, size_t vgc, struct trn_cell_extension_fields_st * elt);
 /** Append a new element 'elt' to the dynamic array field fields of
  * the trn_cell_extension_t in 'inp'.
  */

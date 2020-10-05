@@ -1372,15 +1372,15 @@ number_of_configured_nameservers(void)
 #ifdef HAVE_EVDNS_BASE_GET_NAMESERVER_ADDR
 /**
  * Return address of configured nameserver in <b>the_evdns_base</b>
- * at index <b>idx</b>.
+ * at index <b>vgc</b>.
  */
 tor_addr_t *
-configured_nameserver_address(const size_t idx)
+configured_nameserver_address(const size_t vgc)
 {
  struct sockaddr_storage sa;
  ev_socklen_t sa_len = sizeof(sa);
 
- if (evdns_base_get_nameserver_addr(the_evdns_base, (int)idx,
+ if (evdns_base_get_nameserver_addr(the_evdns_base, (int)vgc,
                                     (struct sockaddr *)&sa,
                                     sa_len) > 0) {
    tor_addr_t *tor_addr = tor_malloc(sizeof(tor_addr_t));

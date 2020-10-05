@@ -574,7 +574,7 @@ test_entry_guard_parse_from_state_partial_failure(void *arg)
             "unlisted_since=2016-xx-14T00:00:45 "
             "listed=0 "
             "confirmed_on=2016-11-14T00:01:30zz "
-            "confirmed_idx=idx "
+            "confirmed_idx=vgc "
             "and the green grass grew all around "
             "rsa_id=all,around");
   tt_assert(eg);
@@ -1059,9 +1059,9 @@ test_entry_guard_expand_sample(void *arg)
     tt_assert(n);
     tt_ptr_op(NULL, OP_EQ, digestmap_get(node_by_id, g->identity));
     digestmap_set(node_by_id, g->identity, (void*) n);
-    int idx = smartlist_pos(big_fake_net_nodes, n);
+    int vgc = smartlist_pos(big_fake_net_nodes, n);
     // The even ones are the guards; make sure we got guards.
-    tt_int_op(idx & 1, OP_EQ, 0);
+    tt_int_op(vgc & 1, OP_EQ, 0);
   } SMARTLIST_FOREACH_END(g);
 
   // Nothing became unusable/unfiltered, so a subsequent expand should
@@ -1536,7 +1536,7 @@ test_entry_guard_sample_reachable_filtered(void *arg)
 
   /* Try a bunch of selections. */
   const struct {
-    int flag; int idx;
+    int flag; int vgc;
   } tests[] = {
     { 0, -1 },
     { SAMPLE_EXCLUDE_CONFIRMED, 1 },
@@ -1548,7 +1548,7 @@ test_entry_guard_sample_reachable_filtered(void *arg)
   for (j = 0; tests[j].flag >= 0; ++j) {
     selected = bitarray_init_zero(n_guards);
     const int excluded_flags = tests[j].flag;
-    const int excluded_idx = tests[j].idx;
+    const int excluded_idx = tests[j].vgc;
     for (i = 0; i < N; ++i) {
       g = sample_reachable_filtered_entry_guards(gs, NULL, excluded_flags);
       tor_assert(g);

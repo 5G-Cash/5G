@@ -148,19 +148,19 @@ int create2_cell_body_set_handshake_len(create2_cell_body_t *inp, uint16_t val);
  * field of the create2_cell_body_t in 'inp'.
  */
 size_t create2_cell_body_getlen_handshake_data(const create2_cell_body_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * handshake_data of the create2_cell_body_t in 'inp'.
  */
-uint8_t create2_cell_body_get_handshake_data(create2_cell_body_t *inp, size_t idx);
+uint8_t create2_cell_body_get_handshake_data(create2_cell_body_t *inp, size_t vgc);
 /** As create2_cell_body_get_handshake_data, but take and return a
  * const pointer
  */
-uint8_t create2_cell_body_getconst_handshake_data(const create2_cell_body_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t create2_cell_body_getconst_handshake_data(const create2_cell_body_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * handshake_data of the create2_cell_body_t in 'inp', so that it will
  * hold the value 'elt'.
  */
-int create2_cell_body_set_handshake_data(create2_cell_body_t *inp, size_t idx, uint8_t elt);
+int create2_cell_body_set_handshake_data(create2_cell_body_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field
  * handshake_data of the create2_cell_body_t in 'inp'.
  */
@@ -246,19 +246,19 @@ int ed25519_cert_extension_set_ext_flags(ed25519_cert_extension_t *inp, uint8_t 
  * un_signing_key field of the ed25519_cert_extension_t in 'inp'.
  */
 size_t ed25519_cert_extension_getlen_un_signing_key(const ed25519_cert_extension_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * un_signing_key of the ed25519_cert_extension_t in 'inp'.
  */
-uint8_t ed25519_cert_extension_get_un_signing_key(ed25519_cert_extension_t *inp, size_t idx);
+uint8_t ed25519_cert_extension_get_un_signing_key(ed25519_cert_extension_t *inp, size_t vgc);
 /** As ed25519_cert_extension_get_un_signing_key, but take and return
  * a const pointer
  */
-uint8_t ed25519_cert_extension_getconst_un_signing_key(const ed25519_cert_extension_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t ed25519_cert_extension_getconst_un_signing_key(const ed25519_cert_extension_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * un_signing_key of the ed25519_cert_extension_t in 'inp', so that it
  * will hold the value 'elt'.
  */
-int ed25519_cert_extension_set_un_signing_key(ed25519_cert_extension_t *inp, size_t idx, uint8_t elt);
+int ed25519_cert_extension_set_un_signing_key(ed25519_cert_extension_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field un_signing_key of
  * 'inp'.
  */
@@ -271,19 +271,19 @@ const uint8_t  * ed25519_cert_extension_getconstarray_un_signing_key(const ed255
  * field of the ed25519_cert_extension_t in 'inp'.
  */
 size_t ed25519_cert_extension_getlen_un_unparsed(const ed25519_cert_extension_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * un_unparsed of the ed25519_cert_extension_t in 'inp'.
  */
-uint8_t ed25519_cert_extension_get_un_unparsed(ed25519_cert_extension_t *inp, size_t idx);
+uint8_t ed25519_cert_extension_get_un_unparsed(ed25519_cert_extension_t *inp, size_t vgc);
 /** As ed25519_cert_extension_get_un_unparsed, but take and return a
  * const pointer
  */
-uint8_t ed25519_cert_extension_getconst_un_unparsed(const ed25519_cert_extension_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t ed25519_cert_extension_getconst_un_unparsed(const ed25519_cert_extension_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * un_unparsed of the ed25519_cert_extension_t in 'inp', so that it
  * will hold the value 'elt'.
  */
-int ed25519_cert_extension_set_un_unparsed(ed25519_cert_extension_t *inp, size_t idx, uint8_t elt);
+int ed25519_cert_extension_set_un_unparsed(ed25519_cert_extension_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field un_unparsed
  * of the ed25519_cert_extension_t in 'inp'.
  */
@@ -359,19 +359,19 @@ int extend1_cell_body_set_port(extend1_cell_body_t *inp, uint16_t val);
  * field of the extend1_cell_body_t in 'inp'.
  */
 size_t extend1_cell_body_getlen_onionskin(const extend1_cell_body_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * onionskin of the extend1_cell_body_t in 'inp'.
  */
-uint8_t extend1_cell_body_get_onionskin(extend1_cell_body_t *inp, size_t idx);
+uint8_t extend1_cell_body_get_onionskin(extend1_cell_body_t *inp, size_t vgc);
 /** As extend1_cell_body_get_onionskin, but take and return a const
  * pointer
  */
-uint8_t extend1_cell_body_getconst_onionskin(const extend1_cell_body_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t extend1_cell_body_getconst_onionskin(const extend1_cell_body_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * onionskin of the extend1_cell_body_t in 'inp', so that it will hold
  * the value 'elt'.
  */
-int extend1_cell_body_set_onionskin(extend1_cell_body_t *inp, size_t idx, uint8_t elt);
+int extend1_cell_body_set_onionskin(extend1_cell_body_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 186-element array field onionskin of
  * 'inp'.
  */
@@ -384,19 +384,19 @@ const uint8_t  * extend1_cell_body_getconstarray_onionskin(const extend1_cell_bo
  * field of the extend1_cell_body_t in 'inp'.
  */
 size_t extend1_cell_body_getlen_identity(const extend1_cell_body_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * identity of the extend1_cell_body_t in 'inp'.
  */
-uint8_t extend1_cell_body_get_identity(extend1_cell_body_t *inp, size_t idx);
+uint8_t extend1_cell_body_get_identity(extend1_cell_body_t *inp, size_t vgc);
 /** As extend1_cell_body_get_identity, but take and return a const
  * pointer
  */
-uint8_t extend1_cell_body_getconst_identity(const extend1_cell_body_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t extend1_cell_body_getconst_identity(const extend1_cell_body_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * identity of the extend1_cell_body_t in 'inp', so that it will hold
  * the value 'elt'.
  */
-int extend1_cell_body_set_identity(extend1_cell_body_t *inp, size_t idx, uint8_t elt);
+int extend1_cell_body_set_identity(extend1_cell_body_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 20-element array field identity of 'inp'.
  */
 uint8_t * extend1_cell_body_getarray_identity(extend1_cell_body_t *inp);
@@ -479,19 +479,19 @@ int link_specifier_set_un_ipv4_port(link_specifier_t *inp, uint16_t val);
  * field of the link_specifier_t in 'inp'.
  */
 size_t link_specifier_getlen_un_ipv6_addr(const link_specifier_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * un_ipv6_addr of the link_specifier_t in 'inp'.
  */
-uint8_t link_specifier_get_un_ipv6_addr(link_specifier_t *inp, size_t idx);
+uint8_t link_specifier_get_un_ipv6_addr(link_specifier_t *inp, size_t vgc);
 /** As link_specifier_get_un_ipv6_addr, but take and return a const
  * pointer
  */
-uint8_t link_specifier_getconst_un_ipv6_addr(const link_specifier_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t link_specifier_getconst_un_ipv6_addr(const link_specifier_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * un_ipv6_addr of the link_specifier_t in 'inp', so that it will hold
  * the value 'elt'.
  */
-int link_specifier_set_un_ipv6_addr(link_specifier_t *inp, size_t idx, uint8_t elt);
+int link_specifier_set_un_ipv6_addr(link_specifier_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 16-element array field un_ipv6_addr of
  * 'inp'.
  */
@@ -513,19 +513,19 @@ int link_specifier_set_un_ipv6_port(link_specifier_t *inp, uint16_t val);
  * field of the link_specifier_t in 'inp'.
  */
 size_t link_specifier_getlen_un_legacy_id(const link_specifier_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * un_legacy_id of the link_specifier_t in 'inp'.
  */
-uint8_t link_specifier_get_un_legacy_id(link_specifier_t *inp, size_t idx);
+uint8_t link_specifier_get_un_legacy_id(link_specifier_t *inp, size_t vgc);
 /** As link_specifier_get_un_legacy_id, but take and return a const
  * pointer
  */
-uint8_t link_specifier_getconst_un_legacy_id(const link_specifier_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t link_specifier_getconst_un_legacy_id(const link_specifier_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * un_legacy_id of the link_specifier_t in 'inp', so that it will hold
  * the value 'elt'.
  */
-int link_specifier_set_un_legacy_id(link_specifier_t *inp, size_t idx, uint8_t elt);
+int link_specifier_set_un_legacy_id(link_specifier_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 20-element array field un_legacy_id of
  * 'inp'.
  */
@@ -538,19 +538,19 @@ const uint8_t  * link_specifier_getconstarray_un_legacy_id(const link_specifier_
  * un_ed25519_id field of the link_specifier_t in 'inp'.
  */
 size_t link_specifier_getlen_un_ed25519_id(const link_specifier_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * un_ed25519_id of the link_specifier_t in 'inp'.
  */
-uint8_t link_specifier_get_un_ed25519_id(link_specifier_t *inp, size_t idx);
+uint8_t link_specifier_get_un_ed25519_id(link_specifier_t *inp, size_t vgc);
 /** As link_specifier_get_un_ed25519_id, but take and return a const
  * pointer
  */
-uint8_t link_specifier_getconst_un_ed25519_id(const link_specifier_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t link_specifier_getconst_un_ed25519_id(const link_specifier_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * un_ed25519_id of the link_specifier_t in 'inp', so that it will
  * hold the value 'elt'.
  */
-int link_specifier_set_un_ed25519_id(link_specifier_t *inp, size_t idx, uint8_t elt);
+int link_specifier_set_un_ed25519_id(link_specifier_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field un_ed25519_id of
  * 'inp'.
  */
@@ -563,19 +563,19 @@ const uint8_t  * link_specifier_getconstarray_un_ed25519_id(const link_specifier
  * field of the link_specifier_t in 'inp'.
  */
 size_t link_specifier_getlen_un_unrecognized(const link_specifier_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * un_unrecognized of the link_specifier_t in 'inp'.
  */
-uint8_t link_specifier_get_un_unrecognized(link_specifier_t *inp, size_t idx);
+uint8_t link_specifier_get_un_unrecognized(link_specifier_t *inp, size_t vgc);
 /** As link_specifier_get_un_unrecognized, but take and return a const
  * pointer
  */
-uint8_t link_specifier_getconst_un_unrecognized(const link_specifier_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+uint8_t link_specifier_getconst_un_unrecognized(const link_specifier_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * un_unrecognized of the link_specifier_t in 'inp', so that it will
  * hold the value 'elt'.
  */
-int link_specifier_set_un_unrecognized(link_specifier_t *inp, size_t idx, uint8_t elt);
+int link_specifier_set_un_unrecognized(link_specifier_t *inp, size_t vgc, uint8_t elt);
 /** Append a new element 'elt' to the dynamic array field
  * un_unrecognized of the link_specifier_t in 'inp'.
  */
@@ -669,19 +669,19 @@ int ed25519_cert_set_cert_key_type(ed25519_cert_t *inp, uint8_t val);
  * certified_key field of the ed25519_cert_t in 'inp'.
  */
 size_t ed25519_cert_getlen_certified_key(const ed25519_cert_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * certified_key of the ed25519_cert_t in 'inp'.
  */
-uint8_t ed25519_cert_get_certified_key(ed25519_cert_t *inp, size_t idx);
+uint8_t ed25519_cert_get_certified_key(ed25519_cert_t *inp, size_t vgc);
 /** As ed25519_cert_get_certified_key, but take and return a const
  * pointer
  */
-uint8_t ed25519_cert_getconst_certified_key(const ed25519_cert_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t ed25519_cert_getconst_certified_key(const ed25519_cert_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * certified_key of the ed25519_cert_t in 'inp', so that it will hold
  * the value 'elt'.
  */
-int ed25519_cert_set_certified_key(ed25519_cert_t *inp, size_t idx, uint8_t elt);
+int ed25519_cert_set_certified_key(ed25519_cert_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 32-element array field certified_key of
  * 'inp'.
  */
@@ -703,21 +703,21 @@ int ed25519_cert_set_n_extensions(ed25519_cert_t *inp, uint8_t val);
  * the ed25519_cert_t in 'inp'.
  */
 size_t ed25519_cert_getlen_ext(const ed25519_cert_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * ext of the ed25519_cert_t in 'inp'.
  */
-struct ed25519_cert_extension_st * ed25519_cert_get_ext(ed25519_cert_t *inp, size_t idx);
+struct ed25519_cert_extension_st * ed25519_cert_get_ext(ed25519_cert_t *inp, size_t vgc);
 /** As ed25519_cert_get_ext, but take and return a const pointer
  */
- const struct ed25519_cert_extension_st * ed25519_cert_getconst_ext(const ed25519_cert_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+ const struct ed25519_cert_extension_st * ed25519_cert_getconst_ext(const ed25519_cert_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * ext of the ed25519_cert_t in 'inp', so that it will hold the value
  * 'elt'. Free the previous value, if any.
  */
-int ed25519_cert_set_ext(ed25519_cert_t *inp, size_t idx, struct ed25519_cert_extension_st * elt);
+int ed25519_cert_set_ext(ed25519_cert_t *inp, size_t vgc, struct ed25519_cert_extension_st * elt);
 /** As ed25519_cert_set_ext, but does not free the previous value.
  */
-int ed25519_cert_set0_ext(ed25519_cert_t *inp, size_t idx, struct ed25519_cert_extension_st * elt);
+int ed25519_cert_set0_ext(ed25519_cert_t *inp, size_t vgc, struct ed25519_cert_extension_st * elt);
 /** Append a new element 'elt' to the dynamic array field ext of the
  * ed25519_cert_t in 'inp'.
  */
@@ -738,18 +738,18 @@ int ed25519_cert_setlen_ext(ed25519_cert_t *inp, size_t newlen);
  * field of the ed25519_cert_t in 'inp'.
  */
 size_t ed25519_cert_getlen_signature(const ed25519_cert_t *inp);
-/** Return the element at position 'idx' of the fixed array field
+/** Return the element at position 'vgc' of the fixed array field
  * signature of the ed25519_cert_t in 'inp'.
  */
-uint8_t ed25519_cert_get_signature(ed25519_cert_t *inp, size_t idx);
+uint8_t ed25519_cert_get_signature(ed25519_cert_t *inp, size_t vgc);
 /** As ed25519_cert_get_signature, but take and return a const pointer
  */
-uint8_t ed25519_cert_getconst_signature(const ed25519_cert_t *inp, size_t idx);
-/** Change the element at position 'idx' of the fixed array field
+uint8_t ed25519_cert_getconst_signature(const ed25519_cert_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the fixed array field
  * signature of the ed25519_cert_t in 'inp', so that it will hold the
  * value 'elt'.
  */
-int ed25519_cert_set_signature(ed25519_cert_t *inp, size_t idx, uint8_t elt);
+int ed25519_cert_set_signature(ed25519_cert_t *inp, size_t vgc, uint8_t elt);
 /** Return a pointer to the 64-element array field signature of 'inp'.
  */
 uint8_t * ed25519_cert_getarray_signature(ed25519_cert_t *inp);
@@ -805,21 +805,21 @@ int extend2_cell_body_set_n_spec(extend2_cell_body_t *inp, uint8_t val);
  * extend2_cell_body_t in 'inp'.
  */
 size_t extend2_cell_body_getlen_ls(const extend2_cell_body_t *inp);
-/** Return the element at position 'idx' of the dynamic array field ls
+/** Return the element at position 'vgc' of the dynamic array field ls
  * of the extend2_cell_body_t in 'inp'.
  */
-struct link_specifier_st * extend2_cell_body_get_ls(extend2_cell_body_t *inp, size_t idx);
+struct link_specifier_st * extend2_cell_body_get_ls(extend2_cell_body_t *inp, size_t vgc);
 /** As extend2_cell_body_get_ls, but take and return a const pointer
  */
- const struct link_specifier_st * extend2_cell_body_getconst_ls(const extend2_cell_body_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field ls
+ const struct link_specifier_st * extend2_cell_body_getconst_ls(const extend2_cell_body_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field ls
  * of the extend2_cell_body_t in 'inp', so that it will hold the value
  * 'elt'. Free the previous value, if any.
  */
-int extend2_cell_body_set_ls(extend2_cell_body_t *inp, size_t idx, struct link_specifier_st * elt);
+int extend2_cell_body_set_ls(extend2_cell_body_t *inp, size_t vgc, struct link_specifier_st * elt);
 /** As extend2_cell_body_set_ls, but does not free the previous value.
  */
-int extend2_cell_body_set0_ls(extend2_cell_body_t *inp, size_t idx, struct link_specifier_st * elt);
+int extend2_cell_body_set0_ls(extend2_cell_body_t *inp, size_t vgc, struct link_specifier_st * elt);
 /** Append a new element 'elt' to the dynamic array field ls of the
  * extend2_cell_body_t in 'inp'.
  */
@@ -903,23 +903,23 @@ int link_specifier_list_set_n_spec(link_specifier_list_t *inp, uint8_t val);
  * the link_specifier_list_t in 'inp'.
  */
 size_t link_specifier_list_getlen_spec(const link_specifier_list_t *inp);
-/** Return the element at position 'idx' of the dynamic array field
+/** Return the element at position 'vgc' of the dynamic array field
  * spec of the link_specifier_list_t in 'inp'.
  */
-struct link_specifier_st * link_specifier_list_get_spec(link_specifier_list_t *inp, size_t idx);
+struct link_specifier_st * link_specifier_list_get_spec(link_specifier_list_t *inp, size_t vgc);
 /** As link_specifier_list_get_spec, but take and return a const
  * pointer
  */
- const struct link_specifier_st * link_specifier_list_getconst_spec(const link_specifier_list_t *inp, size_t idx);
-/** Change the element at position 'idx' of the dynamic array field
+ const struct link_specifier_st * link_specifier_list_getconst_spec(const link_specifier_list_t *inp, size_t vgc);
+/** Change the element at position 'vgc' of the dynamic array field
  * spec of the link_specifier_list_t in 'inp', so that it will hold
  * the value 'elt'. Free the previous value, if any.
  */
-int link_specifier_list_set_spec(link_specifier_list_t *inp, size_t idx, struct link_specifier_st * elt);
+int link_specifier_list_set_spec(link_specifier_list_t *inp, size_t vgc, struct link_specifier_st * elt);
 /** As link_specifier_list_set_spec, but does not free the previous
  * value.
  */
-int link_specifier_list_set0_spec(link_specifier_list_t *inp, size_t idx, struct link_specifier_st * elt);
+int link_specifier_list_set0_spec(link_specifier_list_t *inp, size_t vgc, struct link_specifier_st * elt);
 /** Append a new element 'elt' to the dynamic array field spec of the
  * link_specifier_list_t in 'inp'.
  */

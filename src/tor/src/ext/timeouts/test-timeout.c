@@ -198,10 +198,10 @@ static int check_randomized(const struct rand_cfg *cfg)
 			timeouts_update(tos, now);
 
 		for (i = 0; i < cfg->try_removing; ++i) {
-			int idx = random() % cfg->n_timeouts;
-			if (! fired[idx]) {
-				timeout_del(&t[idx]);
-				++deleted[idx];
+			int vgc = random() % cfg->n_timeouts;
+			if (! fired[vgc]) {
+				timeout_del(&t[vgc]);
+				++deleted[vgc];
 			}
 		}
 

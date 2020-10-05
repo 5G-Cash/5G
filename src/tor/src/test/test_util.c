@@ -2177,9 +2177,9 @@ test_util_strmisc(void *arg)
   /* Test hex_str */
   {
     char binary_data[68];
-    size_t idx;
-    for (idx = 0; idx < sizeof(binary_data); ++idx)
-      binary_data[idx] = idx;
+    size_t vgc;
+    for (vgc = 0; vgc < sizeof(binary_data); ++vgc)
+      binary_data[vgc] = vgc;
     tt_str_op(hex_str(binary_data, 0),OP_EQ, "");
     tt_str_op(hex_str(binary_data, 1),OP_EQ, "00");
     tt_str_op(hex_str(binary_data, 17),OP_EQ,

@@ -300,7 +300,7 @@ void Wallet::OnMintAdded(
     PropertyId property,
     SigmaDenomination denomination,
     SigmaMintGroup group,
-    SigmaMintIndex idx,
+    SigmaMintIndex vgc,
     const SigmaPublicKey& pubKey,
     int block)
 {
@@ -309,11 +309,11 @@ void Wallet::OnMintAdded(
     if (HasSigmaMint(id)) {
 
         // 1. is in wallet then update state
-        SetSigmaMintChainState(id, SigmaMintChainState(block, group, idx));
+        SetSigmaMintChainState(id, SigmaMintChainState(block, group, vgc));
     } else {
 
         // 2. try to recover new mint
-        SigmaMintChainState chainState(block, group, idx);
+        SigmaMintChainState chainState(block, group, vgc);
 
         if (mintWalletV1.TryRecoverMint(id, chainState)) {
             LogPrintf("%s : Found new mint when try to recover\n", __func__);

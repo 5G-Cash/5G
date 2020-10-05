@@ -64,22 +64,22 @@ auth_challenge_cell_getlen_challenge(const auth_challenge_cell_t *inp)
 }
 
 uint8_t
-auth_challenge_cell_get_challenge(auth_challenge_cell_t *inp, size_t idx)
+auth_challenge_cell_get_challenge(auth_challenge_cell_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->challenge[idx];
+  trunnel_assert(vgc < 32);
+  return inp->challenge[vgc];
 }
 
 uint8_t
-auth_challenge_cell_getconst_challenge(const auth_challenge_cell_t *inp, size_t idx)
+auth_challenge_cell_getconst_challenge(const auth_challenge_cell_t *inp, size_t vgc)
 {
-  return auth_challenge_cell_get_challenge((auth_challenge_cell_t*)inp, idx);
+  return auth_challenge_cell_get_challenge((auth_challenge_cell_t*)inp, vgc);
 }
 int
-auth_challenge_cell_set_challenge(auth_challenge_cell_t *inp, size_t idx, uint8_t elt)
+auth_challenge_cell_set_challenge(auth_challenge_cell_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->challenge[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->challenge[vgc] = elt;
   return 0;
 }
 
@@ -111,20 +111,20 @@ auth_challenge_cell_getlen_methods(const auth_challenge_cell_t *inp)
 }
 
 uint16_t
-auth_challenge_cell_get_methods(auth_challenge_cell_t *inp, size_t idx)
+auth_challenge_cell_get_methods(auth_challenge_cell_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->methods, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->methods, vgc);
 }
 
 uint16_t
-auth_challenge_cell_getconst_methods(const auth_challenge_cell_t *inp, size_t idx)
+auth_challenge_cell_getconst_methods(const auth_challenge_cell_t *inp, size_t vgc)
 {
-  return auth_challenge_cell_get_methods((auth_challenge_cell_t*)inp, idx);
+  return auth_challenge_cell_get_methods((auth_challenge_cell_t*)inp, vgc);
 }
 int
-auth_challenge_cell_set_methods(auth_challenge_cell_t *inp, size_t idx, uint16_t elt)
+auth_challenge_cell_set_methods(auth_challenge_cell_t *inp, size_t vgc, uint16_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->methods, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->methods, vgc, elt);
   return 0;
 }
 int
@@ -244,12 +244,12 @@ auth_challenge_cell_encode(uint8_t *output, const size_t avail, const auth_chall
   /* Encode u16 methods[n_methods] */
   {
 
-    unsigned idx;
-    for (idx = 0; idx < TRUNNEL_DYNARRAY_LEN(&obj->methods); ++idx) {
+    unsigned vgc;
+    for (vgc = 0; vgc < TRUNNEL_DYNARRAY_LEN(&obj->methods); ++vgc) {
       trunnel_assert(written <= avail);
       if (avail - written < 2)
         goto truncated;
-      trunnel_set_uint16(ptr, trunnel_htons(TRUNNEL_DYNARRAY_GET(&obj->methods, idx)));
+      trunnel_set_uint16(ptr, trunnel_htons(TRUNNEL_DYNARRAY_GET(&obj->methods, vgc)));
       written += 2; ptr += 2;
     }
   }
@@ -303,8 +303,8 @@ auth_challenge_cell_parse_into(auth_challenge_cell_t *obj, const uint8_t *input,
   TRUNNEL_DYNARRAY_EXPAND(uint16_t, &obj->methods, obj->n_methods, {});
   {
     uint16_t elt;
-    unsigned idx;
-    for (idx = 0; idx < obj->n_methods; ++idx) {
+    unsigned vgc;
+    for (vgc = 0; vgc < obj->n_methods; ++vgc) {
       CHECK_REMAINING(2, truncated);
       elt = trunnel_ntohs(trunnel_get_uint16(ptr));
       remaining -= 2; ptr += 2;
@@ -430,20 +430,20 @@ certs_cell_cert_getlen_body(const certs_cell_cert_t *inp)
 }
 
 uint8_t
-certs_cell_cert_get_body(certs_cell_cert_t *inp, size_t idx)
+certs_cell_cert_get_body(certs_cell_cert_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->body, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->body, vgc);
 }
 
 uint8_t
-certs_cell_cert_getconst_body(const certs_cell_cert_t *inp, size_t idx)
+certs_cell_cert_getconst_body(const certs_cell_cert_t *inp, size_t vgc)
 {
-  return certs_cell_cert_get_body((certs_cell_cert_t*)inp, idx);
+  return certs_cell_cert_get_body((certs_cell_cert_t*)inp, vgc);
 }
 int
-certs_cell_cert_set_body(certs_cell_cert_t *inp, size_t idx, uint8_t elt)
+certs_cell_cert_set_body(certs_cell_cert_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->body, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->body, vgc, elt);
   return 0;
 }
 int
@@ -682,22 +682,22 @@ rsa_ed_crosscert_getlen_ed_key(const rsa_ed_crosscert_t *inp)
 }
 
 uint8_t
-rsa_ed_crosscert_get_ed_key(rsa_ed_crosscert_t *inp, size_t idx)
+rsa_ed_crosscert_get_ed_key(rsa_ed_crosscert_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->ed_key[idx];
+  trunnel_assert(vgc < 32);
+  return inp->ed_key[vgc];
 }
 
 uint8_t
-rsa_ed_crosscert_getconst_ed_key(const rsa_ed_crosscert_t *inp, size_t idx)
+rsa_ed_crosscert_getconst_ed_key(const rsa_ed_crosscert_t *inp, size_t vgc)
 {
-  return rsa_ed_crosscert_get_ed_key((rsa_ed_crosscert_t*)inp, idx);
+  return rsa_ed_crosscert_get_ed_key((rsa_ed_crosscert_t*)inp, vgc);
 }
 int
-rsa_ed_crosscert_set_ed_key(rsa_ed_crosscert_t *inp, size_t idx, uint8_t elt)
+rsa_ed_crosscert_set_ed_key(rsa_ed_crosscert_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->ed_key[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->ed_key[vgc] = elt;
   return 0;
 }
 
@@ -745,20 +745,20 @@ rsa_ed_crosscert_getlen_sig(const rsa_ed_crosscert_t *inp)
 }
 
 uint8_t
-rsa_ed_crosscert_get_sig(rsa_ed_crosscert_t *inp, size_t idx)
+rsa_ed_crosscert_get_sig(rsa_ed_crosscert_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->sig, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->sig, vgc);
 }
 
 uint8_t
-rsa_ed_crosscert_getconst_sig(const rsa_ed_crosscert_t *inp, size_t idx)
+rsa_ed_crosscert_getconst_sig(const rsa_ed_crosscert_t *inp, size_t vgc)
 {
-  return rsa_ed_crosscert_get_sig((rsa_ed_crosscert_t*)inp, idx);
+  return rsa_ed_crosscert_get_sig((rsa_ed_crosscert_t*)inp, vgc);
 }
 int
-rsa_ed_crosscert_set_sig(rsa_ed_crosscert_t *inp, size_t idx, uint8_t elt)
+rsa_ed_crosscert_set_sig(rsa_ed_crosscert_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->sig, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->sig, vgc, elt);
   return 0;
 }
 int
@@ -1014,22 +1014,22 @@ auth1_getlen_type(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_type(auth1_t *inp, size_t idx)
+auth1_get_type(auth1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 8);
-  return inp->type[idx];
+  trunnel_assert(vgc < 8);
+  return inp->type[vgc];
 }
 
 uint8_t
-auth1_getconst_type(const auth1_t *inp, size_t idx)
+auth1_getconst_type(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_type((auth1_t*)inp, idx);
+  return auth1_get_type((auth1_t*)inp, vgc);
 }
 int
-auth1_set_type(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_type(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 8);
-  inp->type[idx] = elt;
+  trunnel_assert(vgc < 8);
+  inp->type[vgc] = elt;
   return 0;
 }
 
@@ -1050,22 +1050,22 @@ auth1_getlen_cid(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_cid(auth1_t *inp, size_t idx)
+auth1_get_cid(auth1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->cid[idx];
+  trunnel_assert(vgc < 32);
+  return inp->cid[vgc];
 }
 
 uint8_t
-auth1_getconst_cid(const auth1_t *inp, size_t idx)
+auth1_getconst_cid(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_cid((auth1_t*)inp, idx);
+  return auth1_get_cid((auth1_t*)inp, vgc);
 }
 int
-auth1_set_cid(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_cid(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->cid[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->cid[vgc] = elt;
   return 0;
 }
 
@@ -1086,22 +1086,22 @@ auth1_getlen_sid(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_sid(auth1_t *inp, size_t idx)
+auth1_get_sid(auth1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->sid[idx];
+  trunnel_assert(vgc < 32);
+  return inp->sid[vgc];
 }
 
 uint8_t
-auth1_getconst_sid(const auth1_t *inp, size_t idx)
+auth1_getconst_sid(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_sid((auth1_t*)inp, idx);
+  return auth1_get_sid((auth1_t*)inp, vgc);
 }
 int
-auth1_set_sid(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_sid(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->sid[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->sid[vgc] = elt;
   return 0;
 }
 
@@ -1122,22 +1122,22 @@ auth1_getlen_u1_cid_ed(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_u1_cid_ed(auth1_t *inp, size_t idx)
+auth1_get_u1_cid_ed(auth1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->u1_cid_ed[idx];
+  trunnel_assert(vgc < 32);
+  return inp->u1_cid_ed[vgc];
 }
 
 uint8_t
-auth1_getconst_u1_cid_ed(const auth1_t *inp, size_t idx)
+auth1_getconst_u1_cid_ed(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_u1_cid_ed((auth1_t*)inp, idx);
+  return auth1_get_u1_cid_ed((auth1_t*)inp, vgc);
 }
 int
-auth1_set_u1_cid_ed(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_u1_cid_ed(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->u1_cid_ed[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->u1_cid_ed[vgc] = elt;
   return 0;
 }
 
@@ -1158,22 +1158,22 @@ auth1_getlen_u1_sid_ed(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_u1_sid_ed(auth1_t *inp, size_t idx)
+auth1_get_u1_sid_ed(auth1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->u1_sid_ed[idx];
+  trunnel_assert(vgc < 32);
+  return inp->u1_sid_ed[vgc];
 }
 
 uint8_t
-auth1_getconst_u1_sid_ed(const auth1_t *inp, size_t idx)
+auth1_getconst_u1_sid_ed(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_u1_sid_ed((auth1_t*)inp, idx);
+  return auth1_get_u1_sid_ed((auth1_t*)inp, vgc);
 }
 int
-auth1_set_u1_sid_ed(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_u1_sid_ed(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->u1_sid_ed[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->u1_sid_ed[vgc] = elt;
   return 0;
 }
 
@@ -1194,22 +1194,22 @@ auth1_getlen_slog(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_slog(auth1_t *inp, size_t idx)
+auth1_get_slog(auth1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->slog[idx];
+  trunnel_assert(vgc < 32);
+  return inp->slog[vgc];
 }
 
 uint8_t
-auth1_getconst_slog(const auth1_t *inp, size_t idx)
+auth1_getconst_slog(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_slog((auth1_t*)inp, idx);
+  return auth1_get_slog((auth1_t*)inp, vgc);
 }
 int
-auth1_set_slog(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_slog(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->slog[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->slog[vgc] = elt;
   return 0;
 }
 
@@ -1230,22 +1230,22 @@ auth1_getlen_clog(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_clog(auth1_t *inp, size_t idx)
+auth1_get_clog(auth1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->clog[idx];
+  trunnel_assert(vgc < 32);
+  return inp->clog[vgc];
 }
 
 uint8_t
-auth1_getconst_clog(const auth1_t *inp, size_t idx)
+auth1_getconst_clog(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_clog((auth1_t*)inp, idx);
+  return auth1_get_clog((auth1_t*)inp, vgc);
 }
 int
-auth1_set_clog(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_clog(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->clog[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->clog[vgc] = elt;
   return 0;
 }
 
@@ -1266,22 +1266,22 @@ auth1_getlen_scert(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_scert(auth1_t *inp, size_t idx)
+auth1_get_scert(auth1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->scert[idx];
+  trunnel_assert(vgc < 32);
+  return inp->scert[vgc];
 }
 
 uint8_t
-auth1_getconst_scert(const auth1_t *inp, size_t idx)
+auth1_getconst_scert(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_scert((auth1_t*)inp, idx);
+  return auth1_get_scert((auth1_t*)inp, vgc);
 }
 int
-auth1_set_scert(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_scert(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->scert[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->scert[vgc] = elt;
   return 0;
 }
 
@@ -1302,22 +1302,22 @@ auth1_getlen_tlssecrets(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_tlssecrets(auth1_t *inp, size_t idx)
+auth1_get_tlssecrets(auth1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 32);
-  return inp->tlssecrets[idx];
+  trunnel_assert(vgc < 32);
+  return inp->tlssecrets[vgc];
 }
 
 uint8_t
-auth1_getconst_tlssecrets(const auth1_t *inp, size_t idx)
+auth1_getconst_tlssecrets(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_tlssecrets((auth1_t*)inp, idx);
+  return auth1_get_tlssecrets((auth1_t*)inp, vgc);
 }
 int
-auth1_set_tlssecrets(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_tlssecrets(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 32);
-  inp->tlssecrets[idx] = elt;
+  trunnel_assert(vgc < 32);
+  inp->tlssecrets[vgc] = elt;
   return 0;
 }
 
@@ -1343,22 +1343,22 @@ auth1_getlen_rand(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_rand(auth1_t *inp, size_t idx)
+auth1_get_rand(auth1_t *inp, size_t vgc)
 {
-  trunnel_assert(idx < 24);
-  return inp->rand[idx];
+  trunnel_assert(vgc < 24);
+  return inp->rand[vgc];
 }
 
 uint8_t
-auth1_getconst_rand(const auth1_t *inp, size_t idx)
+auth1_getconst_rand(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_rand((auth1_t*)inp, idx);
+  return auth1_get_rand((auth1_t*)inp, vgc);
 }
 int
-auth1_set_rand(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_rand(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  trunnel_assert(idx < 24);
-  inp->rand[idx] = elt;
+  trunnel_assert(vgc < 24);
+  inp->rand[vgc] = elt;
   return 0;
 }
 
@@ -1384,20 +1384,20 @@ auth1_getlen_sig(const auth1_t *inp)
 }
 
 uint8_t
-auth1_get_sig(auth1_t *inp, size_t idx)
+auth1_get_sig(auth1_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->sig, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->sig, vgc);
 }
 
 uint8_t
-auth1_getconst_sig(const auth1_t *inp, size_t idx)
+auth1_getconst_sig(const auth1_t *inp, size_t vgc)
 {
-  return auth1_get_sig((auth1_t*)inp, idx);
+  return auth1_get_sig((auth1_t*)inp, vgc);
 }
 int
-auth1_set_sig(auth1_t *inp, size_t idx, uint8_t elt)
+auth1_set_sig(auth1_t *inp, size_t vgc, uint8_t elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->sig, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->sig, vgc, elt);
   return 0;
 }
 int
@@ -1787,9 +1787,9 @@ certs_cell_clear(certs_cell_t *obj)
   (void) obj;
   {
 
-    unsigned idx;
-    for (idx = 0; idx < TRUNNEL_DYNARRAY_LEN(&obj->certs); ++idx) {
-      certs_cell_cert_free(TRUNNEL_DYNARRAY_GET(&obj->certs, idx));
+    unsigned vgc;
+    for (vgc = 0; vgc < TRUNNEL_DYNARRAY_LEN(&obj->certs); ++vgc) {
+      certs_cell_cert_free(TRUNNEL_DYNARRAY_GET(&obj->certs, vgc));
     }
   }
   TRUNNEL_DYNARRAY_WIPE(&obj->certs);
@@ -1824,28 +1824,28 @@ certs_cell_getlen_certs(const certs_cell_t *inp)
 }
 
 struct certs_cell_cert_st *
-certs_cell_get_certs(certs_cell_t *inp, size_t idx)
+certs_cell_get_certs(certs_cell_t *inp, size_t vgc)
 {
-  return TRUNNEL_DYNARRAY_GET(&inp->certs, idx);
+  return TRUNNEL_DYNARRAY_GET(&inp->certs, vgc);
 }
 
  const struct certs_cell_cert_st *
-certs_cell_getconst_certs(const certs_cell_t *inp, size_t idx)
+certs_cell_getconst_certs(const certs_cell_t *inp, size_t vgc)
 {
-  return certs_cell_get_certs((certs_cell_t*)inp, idx);
+  return certs_cell_get_certs((certs_cell_t*)inp, vgc);
 }
 int
-certs_cell_set_certs(certs_cell_t *inp, size_t idx, struct certs_cell_cert_st * elt)
+certs_cell_set_certs(certs_cell_t *inp, size_t vgc, struct certs_cell_cert_st * elt)
 {
-  certs_cell_cert_t *oldval = TRUNNEL_DYNARRAY_GET(&inp->certs, idx);
+  certs_cell_cert_t *oldval = TRUNNEL_DYNARRAY_GET(&inp->certs, vgc);
   if (oldval && oldval != elt)
     certs_cell_cert_free(oldval);
-  return certs_cell_set0_certs(inp, idx, elt);
+  return certs_cell_set0_certs(inp, vgc, elt);
 }
 int
-certs_cell_set0_certs(certs_cell_t *inp, size_t idx, struct certs_cell_cert_st * elt)
+certs_cell_set0_certs(certs_cell_t *inp, size_t vgc, struct certs_cell_cert_st * elt)
 {
-  TRUNNEL_DYNARRAY_SET(&inp->certs, idx, elt);
+  TRUNNEL_DYNARRAY_SET(&inp->certs, vgc, elt);
   return 0;
 }
 int
@@ -1902,9 +1902,9 @@ certs_cell_check(const certs_cell_t *obj)
   {
     const char *msg;
 
-    unsigned idx;
-    for (idx = 0; idx < TRUNNEL_DYNARRAY_LEN(&obj->certs); ++idx) {
-      if (NULL != (msg = certs_cell_cert_check(TRUNNEL_DYNARRAY_GET(&obj->certs, idx))))
+    unsigned vgc;
+    for (vgc = 0; vgc < TRUNNEL_DYNARRAY_LEN(&obj->certs); ++vgc) {
+      if (NULL != (msg = certs_cell_cert_check(TRUNNEL_DYNARRAY_GET(&obj->certs, vgc))))
         return msg;
     }
   }
@@ -1928,9 +1928,9 @@ certs_cell_encoded_len(const certs_cell_t *obj)
   /* Length of struct certs_cell_cert certs[n_certs] */
   {
 
-    unsigned idx;
-    for (idx = 0; idx < TRUNNEL_DYNARRAY_LEN(&obj->certs); ++idx) {
-      result += certs_cell_cert_encoded_len(TRUNNEL_DYNARRAY_GET(&obj->certs, idx));
+    unsigned vgc;
+    for (vgc = 0; vgc < TRUNNEL_DYNARRAY_LEN(&obj->certs); ++vgc) {
+      result += certs_cell_cert_encoded_len(TRUNNEL_DYNARRAY_GET(&obj->certs, vgc));
     }
   }
   return result;
@@ -1970,10 +1970,10 @@ certs_cell_encode(uint8_t *output, const size_t avail, const certs_cell_t *obj)
   /* Encode struct certs_cell_cert certs[n_certs] */
   {
 
-    unsigned idx;
-    for (idx = 0; idx < TRUNNEL_DYNARRAY_LEN(&obj->certs); ++idx) {
+    unsigned vgc;
+    for (vgc = 0; vgc < TRUNNEL_DYNARRAY_LEN(&obj->certs); ++vgc) {
       trunnel_assert(written <= avail);
-      result = certs_cell_cert_encode(ptr, avail - written, TRUNNEL_DYNARRAY_GET(&obj->certs, idx));
+      result = certs_cell_cert_encode(ptr, avail - written, TRUNNEL_DYNARRAY_GET(&obj->certs, vgc));
       if (result < 0)
         goto fail; /* XXXXXXX !*/
       written += result; ptr += result;
@@ -2023,8 +2023,8 @@ certs_cell_parse_into(certs_cell_t *obj, const uint8_t *input, const size_t len_
   TRUNNEL_DYNARRAY_EXPAND(certs_cell_cert_t *, &obj->certs, obj->n_certs, {});
   {
     certs_cell_cert_t * elt;
-    unsigned idx;
-    for (idx = 0; idx < obj->n_certs; ++idx) {
+    unsigned vgc;
+    for (vgc = 0; vgc < obj->n_certs; ++vgc) {
       result = certs_cell_cert_parse(&elt, ptr, remaining);
       if (result < 0)
         goto relay_fail;

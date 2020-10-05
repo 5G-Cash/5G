@@ -579,12 +579,12 @@ static cdline_t *
 preprocess_consensus(memarea_t *area,
                      smartlist_t *cons)
 {
-  int idx;
+  int vgc;
   int dirsig_idx = -1;
-  for (idx = 0; idx < smartlist_len(cons); ++idx) {
-    cdline_t *line = smartlist_get(cons, idx);
+  for (vgc = 0; vgc < smartlist_len(cons); ++vgc) {
+    cdline_t *line = smartlist_get(cons, vgc);
     if (line_starts_with_str(line, START_OF_SIGNATURES_SECTION)) {
-      dirsig_idx = idx;
+      dirsig_idx = vgc;
       break;
     }
   }

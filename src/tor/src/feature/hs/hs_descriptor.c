@@ -1261,9 +1261,9 @@ decode_auth_type(hs_desc_encrypted_data_t *desc, const char *list)
 
   /* Validate the types that we at least know about one. */
   SMARTLIST_FOREACH_BEGIN(desc->intro_auth_types, const char *, auth) {
-    for (int idx = 0; intro_auth_types[idx].identifier; idx++) {
-      if (!strncmp(auth, intro_auth_types[idx].identifier,
-                   strlen(intro_auth_types[idx].identifier))) {
+    for (int vgc = 0; intro_auth_types[vgc].identifier; vgc++) {
+      if (!strncmp(auth, intro_auth_types[vgc].identifier,
+                   strlen(intro_auth_types[vgc].identifier))) {
         match = 1;
         break;
       }

@@ -1136,7 +1136,7 @@ hs_service_requires_uptime_circ(const smartlist_t *ports)
 /* Build hs_index which is used to find the responsible hsdirs. This index
  * value is used to select the responsible HSDir where their hsdir_index is
  * closest to this value.
- *    SHA3-256("store-at-idx" | blinded_public_key |
+ *    SHA3-256("store-at-vgc" | blinded_public_key |
  *             INT_8(replicanum) | INT_8(period_length) | INT_8(period_num) )
  *
  * hs_index_out must be large enough to receive DIGEST256_LEN bytes. */
@@ -1177,7 +1177,7 @@ hs_build_hs_index(uint64_t replica, const ed25519_public_key_t *blinded_pk,
 
 /* Build hsdir_index which is used to find the responsible hsdirs. This is the
  * index value that is compare to the hs_index when selecting an HSDir.
- *    SHA3-256("node-idx" | node_identity |
+ *    SHA3-256("node-vgc" | node_identity |
  *             shared_random_value | INT_8(period_length) | INT_8(period_num) )
  *
  * hsdir_index_out must be large enough to receive DIGEST256_LEN bytes. */
@@ -1394,7 +1394,7 @@ hs_get_responsible_hsdirs(const ed25519_public_key_t *blinded_pk,
    * parameters and the sorted list. The replica starting at value 1 is
    * defined by the specification. */
   for (int replica = 1; replica <= hs_get_hsdir_n_replicas(); replica++) {
-    int idx, start, found, n_added = 0;
+    int vgc, start, found, n_added = 0;
     uint8_t hs_index[DIGEST256_LEN] = {0};
     /* Number of node to add to the responsible dirs list depends on if we are
      * trying to fetch or store. A client always fetches. */
@@ -1404,26 +1404,26 @@ hs_get_responsible_hsdirs(const ed25519_public_key_t *blinded_pk,
     /* Get the index that we should use to select the node. */
     hs_build_hs_index(replica, blinded_pk, time_period_num, hs_index);
     /* The compare function pointer has been set correctly earlier. */
-    start = idx = smartlist_bsearch_idx(sorted_nodes, hs_index, cmp_fct,
+    start = vgc = smartlist_bsearch_idx(sorted_nodes, hs_index, cmp_fct,
                                         &found);
     /* Getting the length of the list if no member is greater than the key we
      * are looking for so start at the first element. */
-    if (idx == smartlist_len(sorted_nodes)) {
-      start = idx = 0;
+    if (vgc == smartlist_len(sorted_nodes)) {
+      start = vgc = 0;
     }
     while (n_added < n_to_add) {
-      const node_t *node = smartlist_get(sorted_nodes, idx);
+      const node_t *node = smartlist_get(sorted_nodes, vgc);
       /* If the node has already been selected which is possible between
        * replicas, the specification says to skip over. */
       if (!smartlist_contains(responsible_dirs, node->rs)) {
         smartlist_add(responsible_dirs, node->rs);
         ++n_added;
       }
-      if (++idx == smartlist_len(sorted_nodes)) {
+      if (++vgc == smartlist_len(sorted_nodes)) {
         /* Wrap if we've reached the end of the list. */
-        idx = 0;
+        vgc = 0;
       }
-      if (idx == start) {
+      if (vgc == start) {
         /* We've gone over the whole list, stop and avoid infinite loop. */
         break;
       }

@@ -693,7 +693,7 @@ test_container_digestset(void *arg)
 
 typedef struct pq_entry_t {
   const char *val;
-  int idx;
+  int vgc;
 } pq_entry_t;
 
 /** Helper: return a tristate based on comparing two pq_entry_t values. */
@@ -710,7 +710,7 @@ test_container_pqueue(void *arg)
 {
   smartlist_t *sl = smartlist_new();
   int (*cmp)(const void *, const void*);
-  const int offset = offsetof(pq_entry_t, idx);
+  const int offset = offsetof(pq_entry_t, vgc);
 #define ENTRY(s) pq_entry_t s = { #s, -1 }
   ENTRY(cows);
   ENTRY(zebras);
