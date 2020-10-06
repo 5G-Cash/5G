@@ -56,9 +56,7 @@ Building 5G-CASH
 1. Static compile
 
     git clone https://github.com/5G-Cash/5G
-    
-    PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
-    
+     
     cd 5G/depends
     
     make HOST=x86_64-linux-gnu
