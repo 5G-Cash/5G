@@ -47,6 +47,7 @@ PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %P
 cd depends
 
 make HOST=i686-w64-mingw32
+
 cd ..
 
 ./autogen.sh # not required when building from tarball
