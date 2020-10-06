@@ -40,25 +40,39 @@ For Windows 64-bit:
 To build executables for Windows 32-bit:
 ------------------
 https://github.com/5G-Cash/5G.git
+
 cd 5G
+
 PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
 cd depends
+
 make HOST=i686-w64-mingw32
 cd ..
+
 ./autogen.sh # not required when building from tarball
+
 CONFIG_SITE=$PWD/depends/i686-w64-mingw32/share/config.site ./configure --prefix=/
+
 make
 
 To build executables for Windows 64-bit:
 ------------------
 https://github.com/5G-Cash/5G.git
+
 cd 5G
+
 PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
+
 cd depends
+
 make HOST=x86_64-w64-mingw32
+
 cd ..
+
 ./autogen.sh # not required when building from tarball
+
 CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/
+
 make
 
 For further documentation on the depends system see [README.md](../depends/README.md) in the depends directory.
