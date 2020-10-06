@@ -55,7 +55,7 @@ Building 5G-CASH
 
 1. Static compile
 
-    git clone https://github.com/5G-Cash/5G
+    git clone https://github.com/5G-Cash/5G.git
      
     cd 5G/depends
     
@@ -72,7 +72,7 @@ Building 5G-CASH
 
 2. Shared binary
 
-    git clone https://github.com/5G-Cash/5G
+    git clone https://github.com/5G-Cash/5G.git
     
     cd 5G
     
