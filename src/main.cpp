@@ -2103,10 +2103,10 @@ bool ReadBlockHeaderFromDisk(CBlock &block, const CDiskBlockPos &pos) {
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params &consensusParams, int nTime) {
     bool fPremineBlock = nHeight ==2;
-    int nYearBlocksinmin = 525600;
+    int nYearBlocksinmin = 105120;
     bool phaseinitialdiff = nHeight > 2 && nHeight <= 1500;
-    bool preparationforpos = nHeight > 1500 && nHeight <= 10000;
-    bool phaseyear1 = nHeight > 10000 && nHeight <= nYearBlocksinmin;
+    bool preparationforpos = nHeight > 1500 && nHeight <= 5000;
+    bool phaseyear1 = nHeight > 5000 && nHeight <= nYearBlocksinmin;
     bool phaseyear2 = nHeight > nYearBlocksinmin && nHeight <= (nYearBlocksinmin * 2);
     bool phaseyear3 = nHeight > (nYearBlocksinmin * 2) && nHeight <= (nYearBlocksinmin * 3);
     bool phaseyear4 = nHeight > (nYearBlocksinmin * 3) && nHeight <= (nYearBlocksinmin * 4);
