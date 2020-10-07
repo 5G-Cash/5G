@@ -140,7 +140,7 @@ public:
         nFulfilledRequestExpireTime = 60*60; // fulfilled requests expire in 1 hour
 
 
-        strSporkPubKey = "042664030452c2ecf01079bcf526176638f9da98a2c20a78a606e15aa1086c1b0401ce84907471550c54e7eadbf5c7194cc43337b6d885dec6f462f486a8dff3e3";
+        strSporkPubKey = "02857cd73a35d2819c77d5baad6585626bc383b10fcfe0f5c4e6f34335a132776f";
         
         //Stake parameters
         consensus.nFirstPOSBlock = 10000;
