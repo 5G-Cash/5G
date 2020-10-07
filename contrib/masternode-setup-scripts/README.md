@@ -8,7 +8,7 @@
 Open your notepad or any text editor application on your pc and write this down as your ``Cheat Sheet``
 ```
 1. FIVEGNODE NAME = SN1
-2. COLLATERAL = 10000
+2. COLLATERAL = 50000
 3. FIVEG ADDRESS = SZRnGyyPv1FVGgMGn7JXbuHCGbsgiBRprq
 4. FIVEGNODE GENKEY = 84qRmqujiRqJ1vepSacScUz1EuBTYoaPM3cD5n1211THemaRWms
 5. FIVEGNODE OUTPUTS = 4873d0c50c6ddc623bedcf0684dafc107809f9434b8426b728634f7c8c455615 1
