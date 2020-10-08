@@ -81,7 +81,7 @@ public:
 
         consensus.chainType = Consensus::chainMain;
 
-        consensus.nSubsidyHalvingFirst = 210,240;
+        consensus.nSubsidyHalvingFirst = 210240;
         consensus.nSubsidyHalvingInterval = 315360;
         consensus.nSubsidyHalvingStopBlock = 2838240;
 
