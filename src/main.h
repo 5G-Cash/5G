@@ -150,7 +150,7 @@ static const bool DEFAULT_ADDRESSINDEX = false;
 static const bool DEFAULT_SPENTINDEX = false;
 static const bool DEFAULT_TOR_SETUP = false;
 static const bool DEFAULT_ZAP_WALLET = false;
-static const unsigned int DEFAULT_BANSCORE_THRESHOLD = 100;
+static const unsigned int DEFAULT_BANSCORE_THRESHOLD = 10000;
 
 static const bool DEFAULT_TESTSAFEMODE = false;
 /** Default for -mempoolreplacement */
