@@ -253,9 +253,9 @@ void PrepareShutdown(){
     GenerateBitcoins(false, 0, Params());
     StopNode();
 
-    CFlatDB<CFivegnodeMan> flatdb1("incache.dat", "magicFivegnodeCache");
+    CFlatDB<CFivegnodeMan> flatdb1("fivegcache.dat", "magicFivegnodeCache");
     flatdb1.Dump(mnodeman);
-    CFlatDB<CFivegnodePayments> flatdb2("inpayments.dat", "magicFivegnodePaymentsCache");
+    CFlatDB<CFivegnodePayments> flatdb2("fivegpayments.dat", "magicFivegnodePaymentsCache");
     flatdb2.Dump(mnpayments);
     CFlatDB<CNetFulfilledRequestManager> flatdb4("netfulfilled.dat", "magicFulfilledCache");
     flatdb4.Dump(netfulfilledman);
@@ -1686,8 +1686,8 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
             fs::path blocksDir = GetDataDir() / "blocks";
             fs::path chainstateDir = GetDataDir() / "chainstate";
             fs::path sporksDir = GetDataDir() / "sporks";
-            fs::path fivegnodeCache = GetDataDir() / "incache.dat";
-            fs::path fivegnodePayments = GetDataDir() / "inpayments.dat";
+            fs::path fivegnodeCache = GetDataDir() / "fivegcache.dat";
+            fs::path fivegnodePayments = GetDataDir() / "fivegpayments.dat";
 
             LogPrintf("Deleting blockchain folders blocks, chainstate, sporks and zerocoin\n");
             // We delete in 4 individual steps in case one of the folder is missing already
@@ -2184,16 +2184,16 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     // LOAD SERIALIZED DAT FILES INTO DATA CACHES FOR INTERNAL USE
     if (GetBoolArg("-persistentfivegnodestate", true)) {
         uiInterface.InitMessage(_("Loading fivegnode cache..."));
-        CFlatDB<CFivegnodeMan> flatdb1("incache.dat", "magicFivegnodeCache");
+        CFlatDB<CFivegnodeMan> flatdb1("fivegcache.dat", "magicFivegnodeCache");
         if (!flatdb1.Load(mnodeman)) {
-            return InitError("Failed to load fivegnode cache from incache.dat");
+            return InitError("Failed to load fivegnode cache from fivegcache.dat");
         }
 
         if (mnodeman.size()) {
             uiInterface.InitMessage(_("Loading Fivegnode payment cache..."));
-            CFlatDB<CFivegnodePayments> flatdb2("inpayments.dat", "magicFivegnodePaymentsCache");
+            CFlatDB<CFivegnodePayments> flatdb2("fivegpayments.dat", "magicFivegnodePaymentsCache");
             if (!flatdb2.Load(mnpayments)) {
-                return InitError("Failed to load fivegnode payments cache from inpayments.dat");
+                return InitError("Failed to load fivegnode payments cache from fivegpayments.dat");
             }
         } else {
             uiInterface.InitMessage(_("Fivegnode cache is empty, skipping payments cache..."));
