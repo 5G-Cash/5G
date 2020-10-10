@@ -49,8 +49,8 @@ For the more complex second execution method, you need to install
 
 5. Clone git repository into newly created directory and go to the right branch
    
-            git clone https://github.com/FivegXProject/Fiveg.git
-            cd Fiveg
+            git clone https://github.com/5G-Cash/5G.git
+            cd 5G
     If you are not authorized in git, configure git to always use LF and (optionally) specify your name/email. Global Windows git settings (if set)
     won't be inherited if git is invoked from Ubuntu shell.
 
@@ -75,7 +75,7 @@ For the more complex second execution method, you need to install
 2. Dependencies won't compile in a directory shared with Windows. We need to copy everything to the space private to
     WSL. Do not use .. here as it will lead you into different directory
 
-        cp -r depends ~/fiveg-depends
+        cp -r depends ~/5G-depends
 
 3. Go to depends folder and build dependencies (you may wish to build only 32-bit or 64-bit version)
 
@@ -105,14 +105,14 @@ For the more complex second execution method, you need to install
 
     Now do either step **7** OR step **8**, not both.
 
-6. Build 32-bit debug build (from the Fiveg root directory)
+6. Build 32-bit debug build (from the 5G root directory)
     
-        ./configure --prefix=$HOME/fiveg-depends/i686-w64-mingw32
+        ./configure --prefix=$HOME/5G-depends/i686-w64-mingw32
         make -j`nproc`
 
-7. Build 64-bit debug build (from the Fiveg root directory)
+7. Build 64-bit debug build (from the 5G root directory)
      
-        ./configure --prefix=$HOME/fiveg-depends/x86_64-w64-mingw32
+        ./configure --prefix=$HOME/5G-depends/x86_64-w64-mingw32
         make -j`nproc`
 
 8. After check the directory to run GUI with __fiveg-qt.exe__
@@ -120,7 +120,7 @@ For the more complex second execution method, you need to install
         C:\Users\<username>\fiveg\src\qt
 ----
 ## Second method - Ubuntu + Xming
-1. Use existing paper [build-unix](https://github.com/FivegXProject/Fiveg/blob/master/doc/build-unix.md) and
+1. Use existing paper [build-unix](https://github.com/5G-Cash/5G/blob/master/doc/build-unix.md) and
     * Install all dependencies
     * Build app
 2. Start installed Xming in Windows
@@ -129,6 +129,6 @@ For the more complex second execution method, you need to install
         export DISPLAY=localhost:0.0
 4. From Ubuntu bash window start fiveg-qt:
 
-        cd /mnt/c/Users/<username>/fiveg/src/qt
+        cd /mnt/c/Users/<username>/5G/src/qt
         ./fiveg-qt 
 
