@@ -58,7 +58,7 @@ static CBlock CreateGenesisBlock(const char *pszTimestamp, const CScript &genesi
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount &genesisReward,
         std::vector<unsigned char> extraNonce) {
-    const char *pszTimestamp = "When there is a Will there is a Way.'";
+    const char *pszTimestamp = "Third time is a charm in most cases but not here.'";
     const CScript genesisOutputScript = CScript();
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward,
                               extraNonce);
