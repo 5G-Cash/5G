@@ -85,8 +85,8 @@ public:
         consensus.nSubsidyHalvingInterval = 315360;
         consensus.nSubsidyHalvingStopBlock = 2838240;
 
-        consensus.nMajorityEnforceBlockUpgrade = 1000;
-        consensus.nMajorityRejectBlockOutdated = 1450;
+        consensus.nMajorityEnforceBlockUpgrade = 1500;
+        consensus.nMajorityRejectBlockOutdated = 1550;
         consensus.nMajorityWindow = 10800;
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         //static const int64 nInterval = nTargetTimespan / nTargetSpacing;
