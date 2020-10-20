@@ -11,8 +11,8 @@
 #include <stdint.h>
 
 // HF constants
-static const int HF_FIVEGNODE_HEIGHT = 2200;
-static const int HF_FIVEGNODE_PAYMENT_START = HF_FIVEGNODE_HEIGHT + 1; // after 2200 it starts
+static const int HF_FIVEGNODE_HEIGHT = 2350;
+static const int HF_FIVEGNODE_PAYMENT_START = HF_FIVEGNODE_HEIGHT + 1; // after 2350 it starts
 
 
 /** The maximum allowed size for a serialized block, in bytes (only for buffer size limits) */
