@@ -11,7 +11,7 @@
 #include <stdint.h>
 
 // HF constants
-static const int HF_FIVEGNODE_HEIGHT = 2350;
+static const int HF_FIVEGNODE_HEIGHT = 2500;
 static const int HF_FIVEGNODE_PAYMENT_START = HF_FIVEGNODE_HEIGHT + 1; // after 2350 it starts
 
 
