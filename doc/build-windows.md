@@ -44,7 +44,7 @@ To build executables for Windows 32-bit:
     cd depends
     make HOST=i686-w64-mingw32 
     cd ..
-    ./configure --prefix=`pwd`/depends/i686-w64-mingw32
+    ./configure --prefix=$HOME/5G/depends/i686-w64-mingw32
     make
 
 To build executables for Windows 64-bit:
@@ -53,7 +53,7 @@ To build executables for Windows 64-bit:
     cd depends
     make HOST=x86_64-w64-mingw32
     cd ..
-    ./configure --prefix=`pwd`/depends/x86_64-w64-mingw32
+    ./configure --prefix=$HOME/5G/depends/x86_64-w64-mingw32
     make
 
 
