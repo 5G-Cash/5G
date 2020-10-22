@@ -2105,8 +2105,8 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params &consensusParams, i
     bool fPremineBlock = nHeight ==2;
     int nYearBlocksinmin = 105120;
     bool phaseinitialdiff = nHeight > 2 && nHeight <= 1500;
-    bool preparationforpos = nHeight > 1500 && nHeight <= 5000;
-    bool phaseyear1 = nHeight > 5000 && nHeight <= nYearBlocksinmin;
+    bool preparationforpos = nHeight > 1500 && nHeight <= 2500;
+    bool phaseyear1 = nHeight > 2500 && nHeight <= nYearBlocksinmin;
     bool phaseyear2 = nHeight > nYearBlocksinmin && nHeight <= (nYearBlocksinmin * 2);
     bool phaseyear3 = nHeight > (nYearBlocksinmin * 2) && nHeight <= (nYearBlocksinmin * 3);
     bool phaseyear4 = nHeight > (nYearBlocksinmin * 3) && nHeight <= (nYearBlocksinmin * 4);
@@ -6671,8 +6671,8 @@ bool static ProcessMessage(CNode *pfrom, string strCommand,
             LOCK(cs_main);
             nHeight = chainActive.Height();
         }
-        //New update for masternode protocol change
-        int minPeerVersion = nHeight + 1 < chainparams.GetConsensus().nBlacklistEnableHeight ? MIN_PEER_PROTO_VERSION : MIN_PEER_PROTO_VERSION_AFTER_UPDATE;
+        //New update for block time protocol change
+        int minPeerVersion = nHeight + 1 < chainparams.GetConsensus().mBlockTimeUpgradeHeight ? MIN_PEER_PROTO_VERSION : MIN_PEER_PROTO_VERSION_AFTER_UPDATE;
         if (pfrom->nVersion < minPeerVersion) {
             // disconnect from peers older than this proto version
             // LogPrintf("peer=%d using obsolete version %i; disconnecting\n", pfrom->id, pfrom->nVersion);
