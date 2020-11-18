@@ -39,10 +39,10 @@ echo -e "Successfully installed libminiupnpc-dev\n
 echo "Successfully installed required dependencies"
 echo "Updating/Upgrading OS..."
 sudo apt update && sudo apt upgrade -y
-echo "Downloading Fiveg latest build..."
-wget -N https://github.com/FivegXProject/Fiveg/releases/download/v1.2.1/fiveg-1.2.1-x86_64-linux-gnu.tar.gz
+echo "Downloading 5G-CASH latest build..."
+wget -N https://github.com/5G-Cash/5G/releases/download/v1.2.2.0-unk/fiveg-u18-daemon.tar
 echo "Extracting build..."
-sudo tar -C /usr/local/bin -zxvf fiveg-1.2.1-x86_64-linux-gnu.tar.gz
+sudo tar -C /usr/local/bin -zxvf fiveg-u18-daemon.tar
 echo "Setting permissions..."
 cd && sudo chmod +x /usr/local/bin/fiveg*
 sudo chmod +x /usr/local/bin/tor*
@@ -59,5 +59,5 @@ cd && cd /usr/local/bin
 fivegd -daemon
 echo "Cleaning up..."
 cd && cd Fiveg/contrib/masternode-setup-scripts/shell-scripts
-rm -rf fiveg-1.2.1-x86_64-linux-gnu.tar.gz
+rm -rf fiveg-u18-daemon.tar
 echo "Fivegnode Installed Successfully!"
