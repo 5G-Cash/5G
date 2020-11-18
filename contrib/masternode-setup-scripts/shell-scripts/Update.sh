@@ -10,10 +10,10 @@ echo "Starting Fivegnode update script"
 cd && cd /usr/local/bin
 echo "Stopping fivegd..."
 fiveg-cli stop
-cd && cd Fiveg/contrib/masternode-setup-scripts/shell-scripts
-echo "Downloading Fiveg latest release update..."
-wget -N https://github.com/FivegXProject/Fiveg/releases/download/v1.2.1/fiveg-1.2.1-x86_64-linux-gnu.tar.gz
-sudo tar -c /usr/local/bin -zxvf fiveg-1.2.1-x86_64-linux-gnu.tar.gz
+cd && cd 5G/contrib/masternode-setup-scripts/shell-scripts
+echo "Downloading 5G-CASH latest release update..."
+wget -N https://github.com/5G-Cash/5G/releases/download/v1.2.2.0-unk/fiveg-u18-daemon.tar
+sudo tar -c /usr/local/bin -zxvf fiveg-u18-daemon.tar
 echo "Setting permissions..."
 cd && sudo chmod +x /usr/local/bin/fiveg*
 sudo chmod +x /usr/local/bin/tor*
@@ -21,6 +21,6 @@ echo "Launching fivegd..."
 cd && cd /usr/local/bin
 fivegd -daemon
 echo "Cleaning up..."
-cd && cd Fiveg/contrib/masternode-setup-scripts/shell-scripts
-rm -rf fiveg-1.2.1-x86_64-linux-gnu.tar.gz
+cd && cd 5G/contrib/masternode-setup-scripts/shell-scripts
+rm -rf fiveg-u18-daemon.tar
 echo "Fivegnode Updated Successfully!"
