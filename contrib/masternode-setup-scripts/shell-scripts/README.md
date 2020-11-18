@@ -8,8 +8,8 @@
 Open your notepad or any text editor application on your pc and write this down as your ``Cheat Sheet``
 ```
 1. FIVEGNODE NAME = SN1
-2. COLLATERAL = 10000
-3. FIVEG ADDRESS = SZRnGyyPv1FVGgMGn7JXbuHCGbsgiBRprq
+2. COLLATERAL = 50000
+3. FIVEG ADDRESS = 5CsW4F8BL8FyN3ut7oWgGnsUNRZpojmqib
 4. FIVEGNODE GENKEY = 84qRmqujiRqJ1vepSacScUz1EuBTYoaPM3cD5n1211THemaRWms
 5. FIVEGNODE OUTPUTS = 4873d0c50c6ddc623bedcf0684dafc107809f9434b8426b728634f7c8c455615 1
 6. UNIQUE IP OF THE VPS = 201.47.23.109:22020
@@ -33,7 +33,7 @@ Note: The server will take a few minutes to deploy and will then shows as "runni
 	```
 	- Copy the generated key from your ``debug console`` and open your ``Cheat Sheet`` then paste the generated key on ``4. FIVEGNODE GENKEY`` (84qRmqujiRqJ1vepSacScUz1EuBTYoaPM3cD5n1211THemaRWms)
 
-	- Copy your stealth address under the ``Receive`` tab (for example: SZRnGyyPv1FVGgMGn7JXbuHCGbsgiBRprq ) and paste it on your ``Cheat Sheet`` on ``3. FIVEG ADDRESS``
+	- Copy your stealth address under the ``Receive`` tab (for example: 5CsW4F8BL8FyN3ut7oWgGnsUNRZpojmqib ) and paste it on your ``Cheat Sheet`` on ``3. FIVEG ADDRESS``
 
 	- Copy the stealth address again from your ``Cheat Sheet`` under ``3. FIVEG ADDRESS`` and head over to your ``Send`` tab then paste the ``FIVEG ADDRESS`` on the ``Enter a Fiveg address`` area on the ``Send`` tab and input the ``2. FIVEGNODE COLLATERAL`` which is ``10000`` FIVEG on the ``Amount`` area then click ``Send`` and wait for ``6`` confirmations.
 
@@ -80,12 +80,12 @@ Note: The server will take a few minutes to deploy and will then shows as "runni
 ### DOWNLOADING THE SCRIPT ON YOUR VPS (STEP 4)
 On your SSH Terminal type this lines below one at a time
 ```
-git clone https://github.com/FivegXProject/Fiveg
-chmod -R 755 Fiveg
-cd Fiveg/contrib/masternode-setup-scripts/shell-scripts
+git clone https://github.com/5G-Cash/5G.git
+chmod -R 755 5G
+cd 5G/contrib/masternode-setup-scripts/shell-scripts
 ./Install.sh
 ```
-Note: The script allows you to automatically install ``Fiveg`` from the ``Fiveg`` repository.
+Note: The script allows you to automatically install ``Fiveg`` from the ``5G-CASH`` repository.
 
 #### VPS WALLET CONFIGURATION (STEP 5)
 
@@ -118,7 +118,7 @@ then
 
 2. Then open ``Config.sh`` file by typing ``./Config.sh``. 
 
-Note: It will automatically change your ``fiveg.conf`` file located on the ``fiveg`` directory inputting all the text above.
+Note: It will automatically change your ``fiveg.conf`` file located on the ``5G`` directory inputting all the text above.
 
 #### STARTING AND CHECKING YOUR FIVEGNODE (STEP 6)
 
@@ -134,21 +134,21 @@ Note: Fivegnodes that are enabled will appear on your ``Fivegnodes`` tab
 Run first the ``Sourceupdate.sh`` shell file. On your SSH Terminal type this line below
 ```
 cd
-cd Fiveg/contrib/masternode-setup-scripts/shell-scripts
+cd 5G/contrib/masternode-setup-scripts/shell-scripts
 ./Sourceupdate.sh
 ```
 
 When finish updating the source using ``Sourceupdate.sh`` then you can run the ``Update.sh`` shell file. On your SSH Terminal type this line below
 ```
 cd
-cd Fiveg/contrib/masternode-setup-scripts/shell-scripts
+cd 5G/contrib/masternode-setup-scripts/shell-scripts
 ./Update.sh
 ```
 Note: It will automatically updates your daemon
 
 
 
-if you have question regarding to the scripts feel free to head over to ``FivegX Discord Channel`` (https://discord.gg/eCBUKf)
+if you have question regarding to the scripts feel free to head over to ``5G-CASH Discord Channel`` (https://discord.gg/uXHvyBT)
 
 
 # GREAT JOB! YOU CONFIGURED YOUR FIVEGNODE.
