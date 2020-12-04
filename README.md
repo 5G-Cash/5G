@@ -3,7 +3,7 @@
 
 What is 5G-CASH?
 ----------------
-5G-CASH (VGC) is an experimental digital currency that enables instant payments to
+5G-CASH (VGC) is a digital currency that enables instant payments to
 anyone, anywhere in the world. It uses different key features technology to operate
 with no central authority allowing everyone to operate the way they want to with new 
 state of the art privacy coin that uses Sigma and Dandelion++ Protocol along with TOR.
