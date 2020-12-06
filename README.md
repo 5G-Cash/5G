@@ -6,7 +6,8 @@ What is 5G-CASH?
 5G-CASH (VGC) is a digital currency that enables instant payments to anyone, anywhere in the world. It uses different key features technology to operate with no central authority allowing everyone to operate the way they want to with this hybrid privacy coin that using Sigma and Dandelion++ Protocol along with TOR to remain anonymous.
 
 Why 5G-CASH is a Hybrid Project?
-Because it uses POW to allow miners to compete with hashing power but also insentivate holders to mint their balances with POS v3.0 to earn the same reward amount and once holders allocate the necessary coins they can run Masternodes to easily support the consensus to secure the Network.
+-------------------------------
+Because it uses POW to allow miners to compete with hashing power but also incentivate holders to mint their balances with POS v3.0 to earn the same reward amount and once holders allocate the necessary coins they can run Masternodes to easily support the consensus to secure the Network.
 
 For more information, as well as an immediately useable, binary version of
 this software, see https://fiveg.cash/download/, or read the
