@@ -35,7 +35,7 @@ Note: The server will take a few minutes to deploy and will then shows as "runni
 
 	- Copy your stealth address under the ``Receive`` tab (for example: SZRnGyyPv1FVGgMGn7JXbuHCGbsgiBRprq ) and paste it on your ``Cheat Sheet`` on ``3. FIVEG ADDRESS``
 
-	- Copy the stealth address again from your ``Cheat Sheet`` under ``3. FIVEG ADDRESS`` and head over to your ``Send`` tab then paste the ``FIVEG ADDRESS`` on the ``Enter a Fiveg address`` area on the ``Send`` tab and input the ``2. FIVEGNODE COLLATERAL`` which is ``10000`` FIVEG on the ``Amount`` area then click ``Send`` and wait for ``6`` confirmations.
+	- Copy the stealth address again from your ``Cheat Sheet`` under ``3. FIVEG ADDRESS`` and head over to your ``Send`` tab then paste the ``FIVEG ADDRESS`` on the ``Enter a Fiveg address`` area on the ``Send`` tab and input the ``2. FIVEGNODE COLLATERAL`` which is ``50000`` FIVEG on the ``Amount`` area then click ``Send`` and wait for ``6`` confirmations.
 
 	- Then click go to your Transactions tab and right click the transaction when you send the ``FIVEGNODE COLLATERAL`` then click ``Copy transaction ID`` when a windows pops-up and head over to your ``debug console`` then type ``fivegnode outputs`` then press ``enter`` copy the ``txhash`` and paste it on your ``Cheat Sheet`` under ``5. FIVEGNODE OUTPUTS`` ( 4873d0c50c6ddc623bedcf0684dafc107809f9434b8426b728634f7c8c455615 ) and also don't forget to copy the ``outputidx`` ( 1 ) and paste it next to the ``txhash``.
 
