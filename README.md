@@ -11,7 +11,7 @@ Because it uses POW to allow miners to compete with hashing power but also incen
 
 For more information, as well as an immediately useable, binary version of
 this software, see https://fiveg.cash/download/, or read the
-[original whitepaper](https://fiveg.cash/5g-cash.pdf).
+[original whitepaper](https://fiveg.cash/wp-content/uploads/2021/03/Whitepaper.pdf).
 
 
 
