@@ -80,12 +80,12 @@ Note: The server will take a few minutes to deploy and will then shows as "runni
 ### DOWNLOADING THE SCRIPT ON YOUR VPS (STEP 4)
 On your SSH Terminal type this lines below one at a time
 ```
-git clone https://github.com/FivegXProject/Fiveg
-chmod -R 755 Fiveg
-cd Fiveg/contrib/masternode-setup-scripts/shell-scripts
+git clone https://github.com/5G-Cash/5G.git
+chmod -R 755 5G
+cd 5G/contrib/masternode-setup-scripts/shell-scripts
 ./Install.sh
 ```
-Note: The script allows you to automatically install ``Fiveg`` from the ``Fiveg`` repository.
+Note: The script allows you to automatically install ``Fiveg`` from the ``5G`` repository.
 
 #### VPS WALLET CONFIGURATION (STEP 5)
 
@@ -134,21 +134,22 @@ Note: Fivegnodes that are enabled will appear on your ``Fivegnodes`` tab
 Run first the ``Sourceupdate.sh`` shell file. On your SSH Terminal type this line below
 ```
 cd
-cd Fiveg/contrib/masternode-setup-scripts/shell-scripts
+cd 5G/contrib/masternode-setup-scripts/shell-scripts
 ./Sourceupdate.sh
 ```
 
 When finish updating the source using ``Sourceupdate.sh`` then you can run the ``Update.sh`` shell file. On your SSH Terminal type this line below
 ```
 cd
-cd Fiveg/contrib/masternode-setup-scripts/shell-scripts
+cd 5G/contrib/masternode-setup-scripts/shell-scripts
 ./Update.sh
 ```
 Note: It will automatically updates your daemon
 
 
 
-if you have question regarding to the scripts feel free to head over to ``FivegX Discord Channel`` (https://discord.gg/eCBUKf)
+if you have question regarding to the scripts feel free to head over to Discord (https://discord.com/invite/uXHvyBT)
+
 
 
 # GREAT JOB! YOU CONFIGURED YOUR FIVEGNODE.
