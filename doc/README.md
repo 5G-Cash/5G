@@ -3,7 +3,7 @@ Fiveg Core 0.1.1.x
 
 Setup
 ---------------------
-[Fiveg Core] (https://fivegx.org/get-fiveg/) is the original Fiveg client and it builds the backbone of the network. However, it downloads and stores the entire history of Fiveg transactions (which is currently several hundreds MBs); depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
+[Fiveg Core] 5G is the original Fiveg client and it builds the backbone of the network. However, it downloads and stores the entire history of Fiveg transactions (which is currently several hundreds MBs); depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
 
 Running
 ---------------------
