@@ -6,11 +6,11 @@
 *.tar.gz
 
 *.exe
-src/shroud
-src/shroudd
-src/shroud-cli
-src/shroud-tx
-src/qt/test/test_shroud-qt
+src/fiveg
+src/fivegd
+src/fiveg-cli
+src/fiveg-tx
+src/qt/test/test_sfiveg-qt
 indexnap/*
 # autoreconf
 Makefile.in
@@ -82,12 +82,12 @@ src/tor/src/or
 *.qm
 /Makefile
 /src/Makefile
-shroud-qt
-Shroud-Qt.app
+fiveg-qt
+Fiveg-Qt.app
 
 # Unit-tests
 Makefile.test
-shroud-qt_test
+fiveg-qt_test
 
 # Resources cpp
 qrc_*.cpp
@@ -104,7 +104,7 @@ build
 *.gcno
 *.gcda
 /*.info
-test_shroud.coverage/
+test_fiveg.coverage/
 total.coverage/
 coverage_percent.txt
 
@@ -132,41 +132,36 @@ qa/pull-tester/run-bitcoind-for-test.sh
 qa/pull-tester/tests_config.py
 
 # Qt Creator project files
-shroud.config
-shroud.creator
-shroud.creator.user
-shroud.files
-shroud.includes
+fiveg.config
+fiveg.creator
+fiveg.creator.user
+fiveg.files
+fiveg.includes
 
 src/qt/libshroudqt.a.VnsPXG
 
 binaries/
-
-shroudbinaries/
-
-shroudbins.zip
-
 .vs/ProjectSettings.json
 
-.vs/Shroud/v16/.suo
+.vs/5G-CASH/v16/.suo
 
-.vs/Shroud/v16/Browse.VC.db
+.vs/5G-CASH/v16/Browse.VC.db
 
-.vs/Shroud/v16/ipch/AutoPCH/3979e7b9dd54e5d4/YESCRYPTCOMMON.ipch
+.vs/5G-CASH/v16/ipch/AutoPCH/3979e7b9dd54e5d4/YESCRYPTCOMMON.ipch
 
-.vs/Shroud/v16/ipch/AutoPCH/915659d44193312e/HASH.ipch
+.vs/5G-CASH/v16/ipch/AutoPCH/915659d44193312e/HASH.ipch
 
-.vs/Shroud/v16/ipch/AutoPCH/b03cd4ea22cac1ef/YESPOWER.ipch
+.vs/5G-CASH/v16/ipch/AutoPCH/b03cd4ea22cac1ef/YESPOWER.ipch
 
-.vs/Shroud/v16/ipch/AutoPCH/bcab455a2d50d441/YESCRYPT-R16V2.ipch
+.vs/5G-CASH/v16/ipch/AutoPCH/bcab455a2d50d441/YESCRYPT-R16V2.ipch
 
-.vs/Shroud/v16/ipch/AutoPCH/ccf04fa93d251463/CHAINPARAMS.ipch
+.vs/5G-CASH/v16/ipch/AutoPCH/ccf04fa93d251463/CHAINPARAMS.ipch
 
-.vs/Shroud/v16/ipch/AutoPCH/d3dcd0027e199c2f/MAIN.ipch
+.vs/5G-CASH/v16/ipch/AutoPCH/d3dcd0027e199c2f/MAIN.ipch
 
-.vs/Shroud/v16/ipch/AutoPCH/e0e8d8554a7f6a0d/BLOCK.ipch
+.vs/5G-CASH/v16/ipch/AutoPCH/e0e8d8554a7f6a0d/BLOCK.ipch
 
-.vs/Shroud/v16/ipch/AutoPCH/e300051ce80a5f1f/PHC.ipch
+.vs/5G-CASH/v16/ipch/AutoPCH/e300051ce80a5f1f/PHC.ipch
 
 .vs/slnx.sqlite
 
