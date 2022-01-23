@@ -8,6 +8,7 @@
 
 #include "crypto/ripemd160.h"
 #include "crypto/sha256.h"
+#include "crypto/sha512.h"
 #include "crypto/verushash/verus_hash.h"
 #include "crypto/keccak.h"
 #include "crypto/sph_types.h"
@@ -15,6 +16,7 @@
 #include "prevector.h"
 #include "serialize.h"
 #include "uint256.h"
+#include "arith_uint256.h"
 #include "version.h"
 
 #include <vector>
@@ -69,13 +71,60 @@ public:
     }
 };
 
+class CHash512
+{
+private:
+    CSHA512 sha;
+
+ public:
+    static const size_t OUTPUT_SIZE = CSHA512::OUTPUT_SIZE;
+
+     void Finalize(unsigned char hash[OUTPUT_SIZE])
+    {
+        unsigned char buf[CSHA512::OUTPUT_SIZE];
+        sha.Finalize(buf);
+        sha.Reset().Write(buf, CSHA512::OUTPUT_SIZE).Finalize(hash);
+    }
+
+     CHash512& Write(const unsigned char* data, size_t len)
+    {
+        sha.Write(data, len);
+        return *this;
+    }
+
+     CHash512& Reset()
+    {
+        sha.Reset();
+        return *this;
+    }
+};
+
+
+ /** Compute the 512-bit hash of an object. */
+template <typename T1>
+inline uint512 Hash512(const T1 pbegin, const T1 pend)
+{
+    static const unsigned char pblank[1] = {};
+    uint512 result;
+    CHash512().Write(pbegin == pend ? pblank : (const unsigned char*)&pbegin[0], (pend - pbegin) * sizeof(pbegin[0])).Finalize((unsigned char*)&result);
+    return result;
+}
+template <typename T1, typename T2>
+inline uint512 Hash512(const T1 p1begin, const T1 p1end, const T2 p2begin, const T2 p2end)
+{
+    static const unsigned char pblank[1] = {};
+    uint512 result;
+    CHash512().Write(p1begin == p1end ? pblank : (const unsigned char*)&p1begin[0], (p1end - p1begin) * sizeof(p1begin[0])).Write(p2begin == p2end ? pblank : (const unsigned char*)&p2begin[0], (p2end - p2begin) * sizeof(p2begin[0])).Finalize((unsigned char*)&result);
+    return result;
+}
+
 /** Compute the 256-bit hash of an object. */
 template<typename T1>
 inline uint256 Hash(const T1 pbegin, const T1 pend)
 {
     static const unsigned char pblank[1] = {};
     uint256 result;
-    CHash256().Write(pbegin == pend ? pblank : (const unsigned char*)&(*pbegin), (pend - pbegin) * sizeof(*pbegin))
+    CHash256().Write(pbegin == pend ? pblank : (const unsigned char*)&pbegin[0], (pend - pbegin) * sizeof(pbegin[0]))
               .Finalize((unsigned char*)&result);
     return result;
 }
@@ -136,17 +185,15 @@ class CHashWriter
 private:
     CHash256 ctx;
 
-    const int nType;
-    const int nVersion;
 public:
+    int nType;
+    int nVersion;
 
     CHashWriter(int nTypeIn, int nVersionIn) : nType(nTypeIn), nVersion(nVersionIn) {}
 
-    int GetType() const { return nType; }
-    int GetVersion() const { return nVersion; }
-
-    void write(const char *pch, size_t size) {
+    CHashWriter& write(const char *pch, size_t size) {
         ctx.Write((const unsigned char*)pch, size);
+        return (*this);
     }
 
     // invalidates the object
@@ -156,115 +203,114 @@ public:
         return result;
     }
 
-    CHashWriter &Reset()
-    {
-        ctx.Reset();
-        return *this;
+    arith_uint256 GetArith256Hash() {
+        uint256 result;
+        ctx.Finalize((unsigned char*)&result);
+        return UintToArith256(result);
     }
 
     template<typename T>
     CHashWriter& operator<<(const T& obj) {
         // Serialize to this stream
-        ::Serialize(*this, obj);
+        ::Serialize(*this, obj, nType, nVersion);
         return (*this);
     }
 };
 
-template <typename SERIALIZABLE>
-uint256 GetHash(const SERIALIZABLE &obj)
+/** Compute the 256-bit hash of an object's serialization. */
+template<typename T>
+uint256 SerializeHash(const T& obj, int nType=SER_GETHASH, int nVersion=PROTOCOL_VERSION)
 {
-    CHashWriter hw(SER_GETHASH, PROTOCOL_VERSION);
-    hw << obj;
-    return hw.GetHash();
+    CHashWriter ss(nType, nVersion);
+    ss << obj;
+    return ss.GetHash();
 }
 
-/** A writer stream (for serialization) that computes a 256-bit hash. */
-class CHashWriterSHA256
+unsigned int MurmurHash3(unsigned int nHashSeed, const std::vector<unsigned char>& vDataToHash);
+
+void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned char data[32], unsigned char output[64]);
+
+/** SipHash-2-4 */
+class CSipHasher
 {
 private:
-    CSHA256 ctx;
-
-    const int nType;
-    const int nVersion;
-public:
-
-    CHashWriterSHA256(int nTypeIn, int nVersionIn) : nType(nTypeIn), nVersion(nVersionIn) {}
-
-    int GetType() const { return nType; }
-    int GetVersion() const { return nVersion; }
-
-    void write(const char *pch, size_t size) {
-        ctx.Write((const unsigned char*)pch, size);
-    }
-
-    // invalidates the object
-    uint256 GetHash() {
-        uint256 result;
-        ctx.Finalize((unsigned char*)&result);
-        return result;
-    }
-
-    CHashWriterSHA256 &Reset()
-    {
-        ctx.Reset();
-        return *this;
-    }
-
-    template<typename T>
-    CHashWriterSHA256& operator<<(const T& obj) {
-        // Serialize to this stream
-        ::Serialize(*this, obj);
-        return (*this);
-    }
-};
-
-const unsigned char BLAKE2Bpersonal[crypto_generichash_blake2b_PERSONALBYTES]={'V','e','r','u','s','D','e','f','a','u','l','t','H','a','s','h'};
-
-/** A writer stream (for serialization) that computes a 256-bit BLAKE2b hash. */
-class CBLAKE2bWriter
-{
-private:
-    crypto_generichash_blake2b_state state;
+    uint64_t v[4];
+    uint64_t tmp;
+    int count;
 
 public:
-    int nType;
-    int nVersion;
-
-    CBLAKE2bWriter(int nTypeIn, 
-                   int nVersionIn,
-                   const unsigned char *personal=BLAKE2Bpersonal) : 
-                   nType(nTypeIn), nVersion(nVersionIn)
-    {
-        assert(crypto_generichash_blake2b_init_salt_personal(
-            &state,
-            NULL, 0, // No key.
-            32,
-            NULL,    // No salt.
-            personal) == 0);
-    }
-
-    int GetType() const { return nType; }
-    int GetVersion() const { return nVersion; }
-
-    CBLAKE2bWriter& write(const char *pch, size_t size) {
-        crypto_generichash_blake2b_update(&state, (const unsigned char*)pch, size);
-        return (*this);
-    }
-
-    // invalidates the object
-    uint256 GetHash() {
-        uint256 result;
-        crypto_generichash_blake2b_final(&state, (unsigned char*)&result, 32);
-        return result;
-    }
-
-    template<typename T>
-    CBLAKE2bWriter& operator<<(const T& obj) {
-        // Serialize to this stream
-        ::Serialize(*this, obj);
-        return (*this);
-    }
+    /** Construct a SipHash calculator initialized with 128-bit key (k0, k1) */
+    CSipHasher(uint64_t k0, uint64_t k1);
+    /** Hash a 64-bit integer worth of data
+     *  It is treated as if this was the little-endian interpretation of 8 bytes.
+     *  This function can only be used when a multiple of 8 bytes have been written so far.
+     */
+    CSipHasher& Write(uint64_t data);
+    /** Hash arbitrary bytes. */
+    CSipHasher& Write(const unsigned char* data, size_t size);
+    /** Compute the 64-bit SipHash-2-4 of the data written so far. The object remains untouched. */
+    uint64_t Finalize() const;
 };
+
+/** Optimized SipHash-2-4 implementation for uint256.
+ *
+ *  It is identical to:
+ *    SipHasher(k0, k1)
+ *      .Write(val.GetUint64(0))
+ *      .Write(val.GetUint64(1))
+ *      .Write(val.GetUint64(2))
+ *      .Write(val.GetUint64(3))
+ *      .Finalize()
+ */
+uint64_t SipHashUint256(uint64_t k0, uint64_t k1, const uint256& val);
+
+// const unsigned char BLAKE2Bpersonal[crypto_generichash_blake2b_PERSONALBYTES]={'V','e','r','u','s','D','e','f','a','u','l','t','H','a','s','h'};
+
+// /** A writer stream (for serialization) that computes a 256-bit BLAKE2b hash. */
+// class CBLAKE2bWriter
+// {
+// private:
+//     crypto_generichash_blake2b_state state;
+
+// public:
+//     int nType;
+//     int nVersion;
+
+//     CBLAKE2bWriter(int nTypeIn, 
+//                    int nVersionIn,
+//                    const unsigned char *personal=BLAKE2Bpersonal) : 
+//                    nType(nTypeIn), nVersion(nVersionIn)
+//     {
+//         assert(crypto_generichash_blake2b_init_salt_personal(
+//             &state,
+//             NULL, 0, // No key.
+//             32,
+//             NULL,    // No salt.
+//             personal) == 0);
+//     }
+
+//     int GetType() const { return nType; }
+//     int GetVersion() const { return nVersion; }
+
+//     CBLAKE2bWriter& write(const char *pch, size_t size) {
+//         crypto_generichash_blake2b_update(&state, (const unsigned char*)pch, size);
+//         return (*this);
+//     }
+
+//     // invalidates the object
+//     uint256 GetHash() {
+//         uint256 result;
+//         crypto_generichash_blake2b_final(&state, (unsigned char*)&result, 32);
+//         return result;
+//     }
+
+//     template<typename T>
+//     CBLAKE2bWriter& operator<<(const T& obj) {
+//         // Serialize to this stream
+//         ::Serialize(*this, obj);
+//         return (*this);
+//     }
+// };
 
 /** A writer stream (for serialization) that computes a 256-bit Verus hash. */
 class CVerusHashWriter
@@ -297,7 +343,7 @@ public:
     template<typename T>
     CVerusHashWriter& operator<<(const T& obj) {
         // Serialize to this stream
-        ::Serialize(*this, obj);
+        ::Serialize(*this, obj, nType, nVersion);
         return (*this);
     }
 };
@@ -415,15 +461,6 @@ public:
     }
 };
 
-/** Compute the 256-bit hash of an object's serialization. */
-template<typename T>
-uint256 SerializeHash(const T& obj, int nType=SER_GETHASH, int nVersion=PROTOCOL_VERSION)
-{
-    CHashWriter ss(nType, nVersion);
-    ss << obj;
-    return ss.GetHash();
-}
-
 /** Compute the 256-bit Verus hash of an object's serialization. */
 template<typename T>
 uint256 SerializeVerusHash(const T& obj, int nType=SER_GETHASH, int nVersion=PROTOCOL_VERSION)
@@ -456,18 +493,5 @@ uint256 SerializeVerusHashV2b(const T& obj, int solutionVersion=SOLUTION_VERUSHH
 unsigned int MurmurHash3(unsigned int nHashSeed, const std::vector<unsigned char>& vDataToHash);
 
 void BIP32Hash(const ChainCode &chainCode, unsigned int nChild, unsigned char header, const unsigned char data[32], unsigned char output[64]);
-
-
-/** Optimized SipHash-2-4 implementation for uint256.
- *
- *  It is identical to:
- *    SipHasher(k0, k1)
- *      .Write(val.GetUint64(0))
- *      .Write(val.GetUint64(1))
- *      .Write(val.GetUint64(2))
- *      .Write(val.GetUint64(3))
- *      .Finalize()
- */
-uint64_t SipHashUint256(uint64_t k0, uint64_t k1, const uint256& val);
 
 #endif // BITCOIN_HASH_H
