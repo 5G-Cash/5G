@@ -252,6 +252,10 @@ BITCOIN_CORE_H = \
   zerocoin_params.h \
   fs.h \
   addresstype.h \
+  crypto/sph_keccak.c \
+  crypto/sph_keccak.h \
+  crypto/keccak.c \
+  crypto/keccak.h \
   crypto/verushash/haraka.h \
   crypto/verushash/verus_clhash.h \
   crypto/verushash/verus_hash.h
@@ -310,6 +314,10 @@ libbitcoin_server_a_SOURCES = \
   zerocoin.cpp \
   sigma.cpp \
   coin_containers.cpp \
+  crypto/sph_keccak.c \
+  crypto/sph_keccak.h \
+  crypto/keccak.c \
+  crypto/keccak.h \
   crypto/verushash/haraka.h \
   crypto/verushash/verus_clhash.h \
   crypto/verushash/verus_hash.h \
@@ -429,7 +437,11 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/verushash/haraka.h \
   crypto/verushash/haraka.c \
   crypto/verushash/verus_clhash.h \
-  crypto/verushash/verus_clhash.cpp
+  crypto/verushash/verus_clhash.cpp \
+  crypto/sph_keccak.c \
+  crypto/sph_keccak.h \
+  crypto/keccak.c \
+  crypto/keccak.h 
 
 # consensus: shared between all executables that validate any consensus rules.
 libbitcoin_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(PIC_FLAGS)
@@ -493,7 +505,11 @@ libbitcoin_common_a_SOURCES = \
   crypto/verushash/haraka.h \
   crypto/verushash/verus_clhash.h \
   crypto/verushash/verus_hash.h \
-  crypto/verushash/verus_hash.cpp
+  crypto/verushash/verus_hash.cpp \
+  crypto/sph_keccak.c \
+  crypto/sph_keccak.h \
+  crypto/keccak.c \
+  crypto/keccak.h \
   $(BITCOIN_CORE_H)
 
 # util: shared between all executables.
