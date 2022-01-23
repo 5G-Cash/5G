@@ -31,19 +31,19 @@ Wallet::Wallet(const std::string& walletFile) : walletFile(walletFile)
     LOCK(cs_main);
 
     {
-        auto h = std::bind(&Wallet::OnMintAdded, this, _1, _2, _3, _4, _5, _6);
+        auto h = std::bind(&Wallet::OnMintAdded, this, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4, boost::placeholders::_5, boost::placeholders::_6);
         eventConnections.emplace_front(sigmaDb->MintAdded.connect(h));
     }
     {
-        auto h = std::bind(&Wallet::OnMintRemoved, this, _1, _2, _3);
+        auto h = std::bind(&Wallet::OnMintRemoved, this, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3);
         eventConnections.emplace_front(sigmaDb->MintRemoved.connect(h));
     }
     {
-        auto h = std::bind(&Wallet::OnSpendAdded, this, _1, _2, _3, _4);
+        auto h = std::bind(&Wallet::OnSpendAdded, this, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4);
         eventConnections.emplace_front(sigmaDb->SpendAdded.connect(h));
     }
     {
-        auto h = std::bind(&Wallet::OnSpendRemoved, this, _1, _2, _3);
+        auto h = std::bind(&Wallet::OnSpendRemoved, this, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3);
         eventConnections.emplace_front(sigmaDb->SpendRemoved.connect(h));
     }
 }

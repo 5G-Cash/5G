@@ -31,7 +31,7 @@ CoinSpend::CoinSpend(
     GroupElement gs = (params->get_g() * coinSerialNumber).inverse();
     std::vector<GroupElement> C_;
     C_.reserve(anonymity_set.size());
-    std::size_t coinIndex;
+    std::size_t coinIndex = 0;
     bool indexFound = false;
 
     for (std::size_t j = 0; j < anonymity_set.size(); ++j) {
