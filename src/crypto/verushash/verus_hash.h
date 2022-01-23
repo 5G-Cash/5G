@@ -15,12 +15,11 @@ This provides the PoW hash function for 5GCash, enabling CPU mining.
 #include <vector>
 
 #include "uint256.h"
-#include "crypto/verus_clhash.h"
+#include "crypto/verushash/verus_clhash.h"
 
 extern "C" 
 {
-#include "crypto/haraka.h"
-#include "crypto/haraka_portable.h"
+#include "crypto/verushash/haraka.h"
 }
 
 class CVerusHash
