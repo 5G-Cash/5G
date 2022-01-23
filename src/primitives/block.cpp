@@ -21,6 +21,10 @@
 #include <string>
 #include "crypto/x16Rv2/hash_algos.h"
 
+static const uint32_t MAINNET_X16RT_ACTIVATIONTIME = 2000000000;
+static const uint32_t TESTNET_X16RT_ACTIVATIONTIME = 1634101200;
+static const uint32_t REGTEST_X16RT_ACTIVATIONTIME = 1629951212;
+
 uint256 CBlockHeader::GetHash() const {
 
     return HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
