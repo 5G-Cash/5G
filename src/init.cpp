@@ -16,6 +16,7 @@
 #include "chainparams.h"
 #include "checkpoints.h"
 #include "compat/sanity.h"
+#include "crypto/common.h"
 #include "consensus/validation.h"
 #include "fs.h"
 #include "httpserver.h"
@@ -1424,6 +1425,22 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     // Initialize elliptic curve code
     ECC_Start();
     globalVerifyHandle.reset(new ECCVerifyHandle());
+
+    // set the hash algorithm to use for this chain
+    // initialize VerusHash
+    CVerusHash::init();
+    CVerusHashV2::init();
+    CBlockHeader::SetVerusV2Hash();
+    if (Params().IsMain()) {
+        // Mainnet
+        // CConstVerusSolutionVector::activationHeight.SetActivationHeight(CActivationHeight::SOLUTION_VERUSV7, 1787000);
+    } else if (Params().IsTestnet()) {
+        // Testnet
+        CConstVerusSolutionVector::activationHeight.SetActivationHeight(CActivationHeight::SOLUTION_VERUSV7, 1);
+    } else {
+        // Regtest
+        CConstVerusSolutionVector::activationHeight.SetActivationHeight(CActivationHeight::SOLUTION_VERUSV7, 1);
+    }
 
     // Sanity check
     if (!InitSanityCheck())

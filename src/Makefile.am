@@ -195,6 +195,7 @@ BITCOIN_CORE_H = \
   policy/policy.h \
   policy/rbf.h \
   primitives/zerocoin.h \
+  primitives/solutiondata.h \
   fixed.h \
   pos.h \
   pow.h \
@@ -251,7 +252,10 @@ BITCOIN_CORE_H = \
   coin_containers.h \
   zerocoin_params.h \
   fs.h \
-  addresstype.h
+  addresstype.h \
+  crypto/verushash/haraka.h \
+  crypto/verushash/verus_clhash.h \
+  crypto/verushash/verus_hash.h
 
 obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
@@ -307,6 +311,11 @@ libbitcoin_server_a_SOURCES = \
   zerocoin.cpp \
   sigma.cpp \
   coin_containers.cpp \
+  crypto/verushash/haraka.h \
+  crypto/verushash/verus_clhash.h \
+  crypto/verushash/verus_hash.h \
+  crypto/verushash/verus_hash.cpp \
+  primitives/solutiondata.cpp \
   $(BITCOIN_CORE_H)
 
 if ENABLE_CLIENTAPI
@@ -418,7 +427,11 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/x16Rv2/sponge.cpp \
   crypto/x16Rv2/sph_sha2.c \
   crypto/x16Rv2/gost_streebog.c \
-  crypto/sha512.h
+  crypto/sha512.h \
+  crypto/verushash/haraka.h \
+  crypto/verushash/haraka.c \
+  crypto/verushash/verus_clhash.h \
+  crypto/verushash/verus_clhash.cpp
 
 # consensus: shared between all executables that validate any consensus rules.
 libbitcoin_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(PIC_FLAGS)
@@ -479,6 +492,11 @@ libbitcoin_common_a_SOURCES = \
   script/sign.cpp \
   script/standard.cpp \
   spork.cpp \
+  crypto/verushash/haraka.h \
+  crypto/verushash/verus_clhash.h \
+  crypto/verushash/verus_hash.h \
+  crypto/verushash/verus_hash.cpp \
+  primitives/solutiondata.cpp \
   $(BITCOIN_CORE_H)
 
 # util: shared between all executables.
