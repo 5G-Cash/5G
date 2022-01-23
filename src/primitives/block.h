@@ -21,6 +21,16 @@ class CSigmaTxInfo;
 
 } // namespace sigma.
 
+class BlockNetwork
+{
+public:
+    BlockNetwork();
+    bool fOnRegtest;
+    bool fOnTestnet;
+    void SetNetwork(const std::string& network);
+};
+
+extern BlockNetwork bNetwork;
 
 /** Nodes collect new transactions into a block, hash them into a hash tree,
  * and scan through nonce values to make the block's hash satisfy proof-of-work

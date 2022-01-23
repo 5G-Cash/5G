@@ -21,19 +21,66 @@
 #include <string>
 #include "crypto/x16Rv2/hash_algos.h"
 
-static const uint32_t MAINNET_X16RT_ACTIVATIONTIME = 2000000000;
-static const uint32_t TESTNET_X16RT_ACTIVATIONTIME = 1634101200;
-static const uint32_t REGTEST_X16RT_ACTIVATIONTIME = 1629951212;
+/* TODO: Change these values */
+static const uint32_t MAINNET_VERUSHASH_ACTIVATIONTIME = 2000000000;
+static const uint32_t TESTNET_VERUSHASH_ACTIVATIONTIME = 1634101200;
+static const uint32_t REGTEST_VERUSHASH_ACTIVATIONTIME = 1629951212;
+
+BlockNetwork bNetwork = BlockNetwork();
+
+BlockNetwork::BlockNetwork()
+{
+    fOnTestnet = false;
+    fOnRegtest = false;
+}
+void BlockNetwork::SetNetwork(const std::string& net)
+{
+    if (net == "test") {
+        fOnTestnet = true;
+    } else if (net == "regtest") {
+        fOnRegtest = true;
+    }
+}
 
 uint256 CBlockHeader::GetHash() const {
+    // uint256 thash;
+    // uint32_t nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
 
+    // if (bNetwork.fOnTestnet) nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
+    // else if (bNetwork.fOnRegtest) nTimeToUse = REGTEST_VERUSHASH_ACTIVATIONTIME;
+    // else nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
+
+    // if (nTime > nTimeToUse) {
+    //     // Verushash enabled
+    //     thash = HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
+    // }
+    // else {
+    //     // X16V2
+    //     thash = HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
+    // }
+
+    // return thash;
     return HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
-
 }
 
 uint256 CBlockHeader::GetPoWHash() const {
-        //Changed hash algo to Yescrypt
-    return HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
+    uint256 thash;
+    uint32_t nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
+
+    if (bNetwork.fOnTestnet) nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
+    else if (bNetwork.fOnRegtest) nTimeToUse = REGTEST_VERUSHASH_ACTIVATIONTIME;
+    else nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
+
+    if (nTime > nTimeToUse) {
+        // Verushash enabled
+        thash = HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
+    }
+    else {
+        // X16V2
+        thash = HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
+    }
+
+    return thash;
 }
 
 std::string CBlock::ToString() const {

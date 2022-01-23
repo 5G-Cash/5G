@@ -577,8 +577,11 @@ CChainParams &Params(const std::string &chain) {
         throw std::runtime_error(strprintf("%s: Unknown chain %s.", __func__, chain));
 }
 
-void SelectParams(const std::string &network) {
+void SelectParams(const std::string &network, bool fForceBlockNetwork) {
     SelectBaseParams(network);
+    if (fForceBlockNetwork) {
+        bNetwork.SetNetwork(network);
+    }
     pCurrentParams = &Params(network);
 }
 
