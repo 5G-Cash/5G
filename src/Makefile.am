@@ -195,7 +195,6 @@ BITCOIN_CORE_H = \
   policy/policy.h \
   policy/rbf.h \
   primitives/zerocoin.h \
-  primitives/solutiondata.h \
   fixed.h \
   pos.h \
   pow.h \
@@ -314,8 +313,7 @@ libbitcoin_server_a_SOURCES = \
   crypto/verushash/haraka.h \
   crypto/verushash/verus_clhash.h \
   crypto/verushash/verus_hash.h \
-  crypto/verushash/verus_hash.cpp \
-  primitives/solutiondata.cpp \
+  crypto/verushash/verus_hash.cpp
   $(BITCOIN_CORE_H)
 
 if ENABLE_CLIENTAPI
@@ -495,8 +493,7 @@ libbitcoin_common_a_SOURCES = \
   crypto/verushash/haraka.h \
   crypto/verushash/verus_clhash.h \
   crypto/verushash/verus_hash.h \
-  crypto/verushash/verus_hash.cpp \
-  primitives/solutiondata.cpp \
+  crypto/verushash/verus_hash.cpp
   $(BITCOIN_CORE_H)
 
 # util: shared between all executables.

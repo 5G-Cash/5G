@@ -12,6 +12,7 @@
 #include "primitives/transaction.h"
 #include "serialize.h"
 #include "uint256.h"
+#include "arith_uint256.h"
 #include "definition.h"
 #include "zerocoin_params.h"
 
@@ -48,7 +49,6 @@ inline int GetZerocoinChainID()
 class CBlockHeader
 {
 public:
-    // header
     int32_t nVersion;
     uint256 hashPrevBlock;
     uint256 hashMerkleRoot;
@@ -125,6 +125,9 @@ public:
     {
         return (isComputed <= 0);
     }
+
+    uint256 GetVerusHash() const;
+    static void SetVerusHash();
 
     void SetPoWHash(uint256 hash) const
     {}

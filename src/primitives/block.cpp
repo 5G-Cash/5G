@@ -42,6 +42,11 @@ void BlockNetwork::SetNetwork(const std::string& net)
     }
 }
 
+uint256 CBlockHeader::GetVerusHash() const
+{
+    return SerializeVerusHash(*this);
+}
+
 uint256 CBlockHeader::GetHash() const {
     // uint256 thash;
     // uint32_t nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
@@ -73,7 +78,7 @@ uint256 CBlockHeader::GetPoWHash() const {
 
     if (nTime > nTimeToUse) {
         // Verushash enabled
-        thash = HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
+        thash = GetVerusHash();
     }
     else {
         // X16V2
