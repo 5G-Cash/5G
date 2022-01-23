@@ -321,7 +321,7 @@ libbitcoin_server_a_SOURCES = \
   crypto/verushash/haraka.h \
   crypto/verushash/verus_clhash.h \
   crypto/verushash/verus_hash.h \
-  crypto/verushash/verus_hash.cpp
+  crypto/verushash/verus_hash.cpp \
   $(BITCOIN_CORE_H)
 
 if ENABLE_CLIENTAPI
