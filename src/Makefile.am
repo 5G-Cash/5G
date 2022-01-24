@@ -564,8 +564,8 @@ libbitcoin_util_a_SOURCES = \
   libzerocoin/Zerocoin.h \
   $(BITCOIN_CORE_H)
 
-libsigma_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) -Werror
-libsigma_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS) -Werror
+libsigma_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libsigma_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
 libsigma_a_SOURCES = \
   sigma/r1_proof.h \
   sigma/r1_proof_generator.h \
