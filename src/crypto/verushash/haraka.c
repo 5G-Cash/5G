@@ -40,7 +40,7 @@ __m128i _mm_aesenc_si128 (__m128i a, __m128i RoundKey)
 #endif
 
 #include <stdio.h>
-#include "crypto/haraka.h"
+#include "crypto/verushash/haraka.h"
 
 u128 rc[40];
 u128 rc0[40] = {0};
