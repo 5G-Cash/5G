@@ -257,7 +257,6 @@ BITCOIN_CORE_H = \
   crypto/keccak.c \
   crypto/keccak.h \
   crypto/verushash/haraka.h \
-  crypto/verushash/verus_clhash.h \
   crypto/verushash/verus_hash.h
 
 obj/build.h: FORCE
@@ -319,7 +318,6 @@ libbitcoin_server_a_SOURCES = \
   crypto/keccak.c \
   crypto/keccak.h \
   crypto/verushash/haraka.h \
-  crypto/verushash/verus_clhash.h \
   crypto/verushash/verus_hash.h \
   crypto/verushash/verus_hash.cpp \
   $(BITCOIN_CORE_H)
@@ -436,8 +434,6 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/sha512.h \
   crypto/verushash/haraka.h \
   crypto/verushash/haraka.c \
-  crypto/verushash/verus_clhash.h \
-  crypto/verushash/verus_clhash.cpp \
   crypto/sph_keccak.c \
   crypto/sph_keccak.h \
   crypto/keccak.c \
@@ -503,7 +499,6 @@ libbitcoin_common_a_SOURCES = \
   script/standard.cpp \
   spork.cpp \
   crypto/verushash/haraka.h \
-  crypto/verushash/verus_clhash.h \
   crypto/verushash/verus_hash.h \
   crypto/verushash/verus_hash.cpp \
   crypto/sph_keccak.c \
