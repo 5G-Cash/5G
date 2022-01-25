@@ -30,7 +30,7 @@ namespace libzerocoin {
 
 class ParallelTasks {
 private:
-    vector<boost::unique_future<void>> tasks;
+    vector<boost::future<void>> tasks;
 
 public:
     ParallelTasks(int n=0);
