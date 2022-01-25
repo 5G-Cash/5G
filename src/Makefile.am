@@ -453,6 +453,9 @@ libbitcoin_consensus_a_SOURCES = \
   hash.cpp \
   flat-database.h \
   hash.h \
+  crypto/verushash/haraka.h \
+  crypto/verushash/verus_hash.h \
+  crypto/verushash/verus_hash.cpp \
   prevector.h \
   crypto/scrypt.h \
   primitives/block.h \
@@ -531,6 +534,9 @@ libbitcoin_util_a_SOURCES = \
   utiltime.cpp \
   crypto/scrypt.cpp \
   primitives/block.cpp \
+  crypto/verushash/haraka.h \
+  crypto/verushash/verus_hash.h \
+  crypto/verushash/verus_hash.cpp \
   libzerocoin/bitcoin_bignum/allocators.h \
   libzerocoin/bitcoin_bignum/bignum.h \
   libzerocoin/bitcoin_bignum/compat.h \

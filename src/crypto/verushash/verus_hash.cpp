@@ -49,7 +49,7 @@ void CVerusHash::Hash(void *result, const void *data, size_t _len)
 
 void CVerusHash::init()
 {
-    haraka512Function = &haraka512_zero;
+    haraka512Function = &haraka512_port_zero;
 }
 
 CVerusHash &CVerusHash::Write(const unsigned char *data, size_t _len)
