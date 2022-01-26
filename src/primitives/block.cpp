@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <string>
 #include "crypto/x16Rv2/hash_algos.h"
+#include <inttypes.h>
 
 /* TODO: Change these values */
 static const uint32_t MAINNET_VERUSHASH_ACTIVATIONTIME = 2000000000;
@@ -72,9 +73,15 @@ uint256 CBlockHeader::GetPoWHash() const {
     uint256 thash;
     uint32_t nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
 
-    if (bNetwork.fOnTestnet) nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
-    else if (bNetwork.fOnRegtest) nTimeToUse = REGTEST_VERUSHASH_ACTIVATIONTIME;
-    else nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
+    if (bNetwork.fOnTestnet) {
+        nTimeToUse = TESTNET_VERUSHASH_ACTIVATIONTIME;
+    }
+    else if (bNetwork.fOnRegtest) {
+        nTimeToUse = REGTEST_VERUSHASH_ACTIVATIONTIME;
+    }
+    else { 
+        nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
+    }
 
     if (nTime > nTimeToUse) {
         // Verushash enabled

@@ -135,7 +135,7 @@ CChainParams& Params(const std::string& chain);
  * Sets the params returned by Params() to those for the given BIP70 chain name.
  * @throws std::runtime_error when the chain is not supported.
  */
-void SelectParams(const std::string& chain, bool fForceBlockNetwork = false);
+void SelectParams(const std::string& chain, bool fForceBlockNetwork = true);
 
 /**
  * Allows modifying the BIP9 regtest parameters.
