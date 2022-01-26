@@ -10,7 +10,7 @@ src/fiveg
 src/fivegd
 src/fiveg-cli
 src/fiveg-tx
-src/qt/test/test_sfiveg-qt
+src/qt/test/test_fiveg-qt
 indexnap/*
 # autoreconf
 Makefile.in
