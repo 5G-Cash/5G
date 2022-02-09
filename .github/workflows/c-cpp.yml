@@ -94,7 +94,7 @@ jobs:
 
       - name: Install packages
         run: |
-          sudo chmod -R a+rwx 5G
+          sudo chmod -R a+rwx /root/5G/
           sudo apt-get update
           sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libzmq3-dev libminizip-dev bsdmainutils curl ca-certificates ccache python3 rsync git procps bison
           sudo apt-get install ${{ matrix.packages }}
