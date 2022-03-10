@@ -24,7 +24,7 @@
 
 /* TODO: Change these values */
 static const uint32_t MAINNET_VERUSHASH_ACTIVATIONTIME = 2000000000;
-static const uint32_t TESTNET_VERUSHASH_ACTIVATIONTIME = 1634101200;
+static const uint32_t TESTNET_VERUSHASH_ACTIVATIONTIME = 1646956800;
 static const uint32_t REGTEST_VERUSHASH_ACTIVATIONTIME = 1629951212;
 
 BlockNetwork bNetwork = BlockNetwork();
