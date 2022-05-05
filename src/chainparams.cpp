@@ -338,7 +338,10 @@ public:
         nDefaultPort = 41998;
         nPruneAfterHeight = 1000;
         
-
+        /** btzc: testnet params
+         *nTime: 1595736000;
+         *nNonce: 77257;
+         */
         std::vector<unsigned char> extraNonce(4);
         extraNonce[0] = 0x66;
         extraNonce[1] = 0x69;
@@ -346,19 +349,19 @@ public:
         extraNonce[3] = 0x24;
          
         //TESTNET Genesis
-        genesis = CreateGenesisBlock(ZC_GENESIS_BLOCK_TIME, 2046200, 0x1e00ffff, 2, 0 * COIN, extraNonce);
-        consensus.hashGenesisBlock = genesis.GetHash();       
-        assert(consensus.hashGenesisBlock == uint256S("0x000000b3cf5064a01dcdc8931f5bae3cc38c6af1aec07f4459903e9eebae986a"));
-        assert(genesis.hashMerkleRoot == uint256S("0x9ad9f892d158cf38d7e39dfaf2e63cfa62322993f7831aec160f0adb7a668c82"));
+        genesis = CreateGenesisBlock(1595736000, 77257, 504365040, 2, 0 * COIN, extraNonce);
+        consensus.hashGenesisBlock = genesis.GetHash();      
+        assert(consensus.hashGenesisBlock == uint256S("00000ce56f7bb26baaf999bc1ce81eca94084bf750749fef017098b66b724497"));
+        assert(genesis.hashMerkleRoot == uint256S("33deeb88f7b72bbf6523fb8c8aa569c2ec886dfeeb320e07a21079a6f9e8ec53"));
+        
         //vFixedSeeds.clear();
         //vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
         // fiveg test seeds
-        // vSeeds.push_back(CDNSSeedData("test1.fivegx.org", "test1.fivegx.org", false));
+        vSeeds.push_back(CDNSSeedData("testnet.fiveg.cash", "testnet.fiveg.cash"));
 
         // Single trusted IPs incase of seeder failure / downtime
-        vSeeds.push_back(CDNSSeedData("", ""));
-        vSeeds.push_back(CDNSSeedData("", "")); 
+        vSeeds.push_back(CDNSSeedData("trusted.fiveg.cash", "trusted.fiveg.cash"));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector < unsigned char > (1, 65);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector < unsigned char > (1, 178);
@@ -480,17 +483,23 @@ public:
         nDefaultPort = 40998;
         nPruneAfterHeight = 1000;
 
+        /** btzc: Regtest params
+         *nTime: 1595736000;
+         *nNonce: 938106;
+         */
         std::vector<unsigned char> extraNonce(4);
         extraNonce[0] = 0xd3;
         extraNonce[1] = 0xcf;
         extraNonce[2] = 0x25;
         extraNonce[3] = 0xa2;
+        
          
         // REGTEST Genesis
-        genesis = CreateGenesisBlock(ZC_GENESIS_BLOCK_TIME, 2046200, 0x1e00ffff, 2, 0 * COIN, extraNonce);
+        genesis = CreateGenesisBlock(1595736000, 938106, 504365040, 2, 0 * COIN, extraNonce);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000000b3cf5064a01dcdc8931f5bae3cc38c6af1aec07f4459903e9eebae986a"));
-        assert(genesis.hashMerkleRoot == uint256S("0x9ad9f892d158cf38d7e39dfaf2e63cfa62322993f7831aec160f0adb7a668c82"));
+        assert(consensus.hashGenesisBlock == uint256S("00000ca81a17de1776064aeec899d11b2687a12fc8857c49ae4ad5b98227a25e"));
+        assert(genesis.hashMerkleRoot == uint256S("4ee426bd884f20764d214d038c7aa626936ffa1b72496cdae293ec1968969b8a"));        
+        
         //Disable consecutive checks
         nConsecutivePoWHeight = INT_MAX;
         nMaxPoWBlocks = 101;
