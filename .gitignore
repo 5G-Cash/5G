@@ -141,6 +141,8 @@ fiveg.includes
 src/qt/libshroudqt.a.VnsPXG
 
 binaries/
+fivegbinaries/
+fivegbins.zip
 .vs/ProjectSettings.json
 
 .vs/5G-CASH/v16/.suo
