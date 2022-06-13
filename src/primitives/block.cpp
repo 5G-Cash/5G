@@ -88,7 +88,7 @@ uint256 CBlockHeader::GetPoWHash() const {
         thash = GetVerusHash();
     }
     else {
-        // X16V2
+        // X16RV2
         thash = HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
     }
 
