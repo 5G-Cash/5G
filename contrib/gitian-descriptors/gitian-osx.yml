@@ -34,7 +34,7 @@ packages:
 - "python3-pip"
 - "fonts-tuffy"
 remotes:
-- "url": "https://github.com/FivegXProject/Fiveg"
+- "url": "https://github.com/5G-Cash/5G"
   "dir": "Fiveg"
 files:
 - "MacOSX10.11.sdk.tar.gz"
