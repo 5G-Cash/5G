@@ -23,13 +23,13 @@ def setup():
         programs += ['lxc', 'debootstrap']
     subprocess.check_call(['sudo', 'apt-get', 'install', '-qq'] + programs)
     if not os.path.isdir('gitian.sigs-fiveg-fiveg'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/FivegXProject/gitian.sigs-fiveg'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/5G-Cash/5G/gitian.sigs-fiveg'])
     if not os.path.isdir('fiveg-detached-sigs'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/FivegXProject/Fiveg-detached-sigs'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/5G-Cash/5G/Fiveg-detached-sigs'])
     if not os.path.isdir('gitian-builder'):
         subprocess.check_call(['git', 'clone', 'https://github.com/devrandom/gitian-builder.git'])
     if not os.path.isdir('Fiveg'):
-        subprocess.check_call(['git', 'clone', 'https://github.com/FivegXProject/Fiveg'])
+        subprocess.check_call(['git', 'clone', 'https://github.com/5G-Cash/5G/Fiveg'])
     os.chdir('gitian-builder')
     make_image_prog = ['bin/make-base-vm', '--suite', 'bionic', '--arch', 'amd64']
     if args.docker:
