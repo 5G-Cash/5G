@@ -61,7 +61,7 @@ uint256 CBlockHeader::GetHash() const {
     //     thash = HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
     // }
     // else {
-    //     // X16V2
+    //     // X16RV2
     //     thash = HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
     // }
 
