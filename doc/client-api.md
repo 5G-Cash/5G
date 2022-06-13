@@ -51,7 +51,7 @@ You can then eg. generate blocks using `./fiveg-cli generate 10`, and you should
 
    To use the examples for the replier, please first download and setup the `fiveg-client` repo.
     You will need Node.js installed.
-        `git clone https://github.com/FivegXProject/Fiveg-client`
+        `git clone https://github.com/5G-Cash/5G/Fiveg-client`
         `npm install`
 
 #### Using fiveg-client examples
@@ -69,7 +69,7 @@ You can then eg. generate blocks using `./fiveg-cli generate 10`, and you should
     - Use the following command:
         `await $daemon.send(null, '{TYPE}', '{METHOD_NAME}', {JSON_ARGS})`
 
-   refer to https://github.com/FivegXProject/Fiveg/tree/client-api/src/client-api for data formats.
+   refer to https://github.com/5G-Cash/5G/tree/client-api/src/client-api for data formats.
 
 ### Settings
   As in Qt with `QSettings`, the client adds a level to the settings hierarchy in `fivegd`. The following is the current hierarchy, in descending order of importance:
