@@ -23,7 +23,7 @@ packages:
 - "python"
 - "rename"
 remotes:
-- "url": "https://github.com/FivegXProject/Fiveg"
+- "url": "https://github.com/5G-Cash/5G"
   "dir": "Fiveg"
 files: []
 script: |
