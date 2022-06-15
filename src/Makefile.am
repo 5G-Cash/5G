@@ -433,7 +433,7 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/x16Rv2/gost_streebog.c \
   crypto/sha512.h \
   crypto/verushash/haraka.h \
-  crypto/verushash/haraka.c \
+  crypto/verushash/haraka.c 
  
 
 # consensus: shared between all executables that validate any consensus rules.
