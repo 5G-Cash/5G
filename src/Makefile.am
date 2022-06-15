@@ -434,10 +434,7 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/sha512.h \
   crypto/verushash/haraka.h \
   crypto/verushash/haraka.c \
-  crypto/sph_keccak.c \
-  crypto/sph_keccak.h \
-  crypto/keccak.c \
-  crypto/keccak.h 
+ 
 
 # consensus: shared between all executables that validate any consensus rules.
 libbitcoin_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(PIC_FLAGS)
