@@ -90,7 +90,7 @@ def make_rsa_key(e=65537):
     pBuf = ctypes.c_char_p(ctypes.addressof(buf))
     n = crypt.i2d_RSAPublicKey(rsa, ctypes.byref(pBuf))
     s = buf.raw[:n]
-    digest = hashlib.sha1(s).digest()
+    digest = hashlib.sha256(s).digest()
     return (rsa,pem,digest)
 
 def makeEdSigningKeyCert(sk_master, pk_master, pk_signing, date,
@@ -236,7 +236,7 @@ class OnDemandKeys(object):
 
         signed_part = body[:end_of_sig+1]
 
-        digest = hashlib.sha1(signed_part).digest()
+        digest = hashlib.sha256(signed_part).digest()
         assert len(digest) == 20
 
         rsasig = rsa_sign(digest, self.rsa_id)
@@ -283,7 +283,7 @@ def signdesc(body, args_out=None):
 
     signed_part = body[:end_of_sig+1]
 
-    digest = hashlib.sha1(signed_part).digest()
+    digest = hashlib.sha256(signed_part).digest()
     assert len(digest) == 20
 
     buf = ctypes.create_string_buffer(1024)
