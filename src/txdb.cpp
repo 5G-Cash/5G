@@ -352,8 +352,12 @@ bool CBlockTreeDB::LoadBlockIndexGuts(boost::function<CBlockIndex*(const uint256
                 pindexNew->nStakeModifier = diskindex.nStakeModifier;
                 pindexNew->vchBlockSig    = diskindex.vchBlockSig; // qtum
 
-                if (pindexNew->nNonce != 0 && !CheckProofOfWork(pindexNew->GetBlockHash(), pindexNew->nBits, consensusParams))
-                        return error("LoadBlockIndex(): CheckProofOfWork failed: %s", pindexNew->ToString());
+                // Disable PoW Sanity check while loading block index from disk.
+                // While it is technically feasible to verify the PoW, doing so takes several minutes as it
+                // requires recomputing every PoW hash during every wallet startup.
+                // We opt instead to simply trust the data that is on your local disk.
+                // if (pindexNew->nNonce != 0 && !CheckProofOfWork(pindexNew->GetBlockPoWHash(), pindexNew->nBits, consensusParams))
+                //         return error("LoadBlockIndex(): CheckProofOfWork failed: %s", pindexNew->ToString());
 
                 pcursor->Next();
             } else {

@@ -544,6 +544,19 @@ public:
         return block.GetHash();
     }
 
+    uint256 GetBlockPoWHash() const
+    {
+        CBlockHeader    block;
+        block.nVersion       = nVersion;
+        block.hashPrevBlock  = hashPrev;
+        block.hashMerkleRoot = hashMerkleRoot;
+        block.nTime          = nTime;
+        block.nBits          = nBits;
+        block.nNonce         = nNonce;
+
+        return block.GetPoWHash();
+    }
+
     std::string ToString() const
     {
         std::string str = "CDiskBlockIndex(";

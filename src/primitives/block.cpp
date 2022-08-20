@@ -49,23 +49,6 @@ uint256 CBlockHeader::GetVerusHash() const
 }
 
 uint256 CBlockHeader::GetHash() const {
-    // uint256 thash;
-    // uint32_t nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
-
-    // if (bNetwork.fOnTestnet) nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
-    // else if (bNetwork.fOnRegtest) nTimeToUse = REGTEST_VERUSHASH_ACTIVATIONTIME;
-    // else nTimeToUse = MAINNET_VERUSHASH_ACTIVATIONTIME;
-
-    // if (nTime > nTimeToUse) {
-    //     // Verushash enabled
-    //     thash = HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
-    // }
-    // else {
-    //     // X16RV2
-    //     thash = HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
-    // }
-
-    // return thash;
     return HashX16RV2(BEGIN(nVersion), END(nNonce), hashPrevBlock);
 }
 
@@ -98,8 +81,9 @@ uint256 CBlockHeader::GetPoWHash() const {
 std::string CBlock::ToString() const {
     std::stringstream s;
     s << strprintf(
-            "CBlock(hash=%s, ver=0x%08x, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%u)\n",
+            "CBlock(hash=%s, powHash=%s, ver=0x%08x, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%u)\n",
             GetHash().ToString(),
+            GetPoWHash().ToString(),
             nVersion,
             hashPrevBlock.ToString(),
             hashMerkleRoot.ToString(),
