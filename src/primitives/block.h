@@ -56,7 +56,6 @@ public:
     uint32_t nBits;
     uint32_t nNonce;
     std::vector<unsigned char> vchBlockSig;//Proof Of Stake Block signature
-    std::vector<unsigned char> nSolution;
 
     static const int CURRENT_VERSION = 2;
 
@@ -83,7 +82,6 @@ public:
         READWRITE(nTime);
         READWRITE(nBits);
         READWRITE(nNonce);
-        READWRITE(nSolution);
         if(nNonce == 0)
             READWRITE(vchBlockSig);
     }
@@ -110,7 +108,6 @@ public:
         nNonce = 0;
         isComputed = -1;
         powHash.SetNull();
-        nSolution.clear();
         vchBlockSig.clear();
     }
 
@@ -222,7 +219,6 @@ public:
         block.nTime          = nTime;
         block.nBits          = nBits;
         block.nNonce         = nNonce;
-        block.nSolution      = nSolution;
         if(block.nNonce == 0)
             block.vchBlockSig    = vchBlockSig;
         return block;

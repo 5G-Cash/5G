@@ -7,6 +7,7 @@
 #include "chainparams.h"
 #include "consensus/merkle.h"
 #include "consensus/consensus.h"
+#include "uint256.h"
 #include "zerocoin_params.h"
 
 #include "tinyformat.h"
