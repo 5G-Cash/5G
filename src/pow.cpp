@@ -48,19 +48,7 @@ unsigned int DarkGravityWave(const CBlockIndex* pindexLast, const CBlockHeader *
     
     // Regtest
     if (params.fPowAllowMinDifficultyBlocks && params.fPowNoRetargeting) {
-        // Special difficulty rule:
-        // If the new block's timestamp is more than 2 * 1 minutes
-        // then allow mining of a min-difficulty block.
-        if (pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing * 2)
-            return bnPowLimit.GetCompact();
-        else {
-            // Return the last non-special-min-difficulty-rules-block
-            const CBlockIndex *pindex = pindexLast;
-            while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0 &&
-                   pindex->nBits == bnPowLimit.GetCompact())
-                pindex = pindex->pprev;
-            return pindex->nBits;
-        }
+        return bnPowLimit.GetCompact();
     }
 
     unsigned int nCountBlocks = 0;
