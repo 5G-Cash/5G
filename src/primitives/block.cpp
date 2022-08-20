@@ -20,7 +20,6 @@
 #include <algorithm>
 #include <string>
 #include "crypto/x16Rv2/hash_algos.h"
-#include <inttypes.h>
 
 /* TODO: Change these values */
 static const uint32_t MAINNET_VERUSHASH_ACTIVATIONTIME = 2000000000;

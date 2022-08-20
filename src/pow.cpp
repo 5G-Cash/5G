@@ -34,7 +34,7 @@ double GetDifficultyHelper(unsigned int nBits) {
     return dDiff;
 }
 
-unsigned int DarkGravityWave(const CBlockIndex* pindexLast, const Consensus::Params& params, bool fProofOfStake) {
+unsigned int DarkGravityWave(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params, bool fProofOfStake) {
     /* current difficulty formula, veil - DarkGravity v3, written by Evan Duffield - evan@dash.org */
     const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
 
@@ -46,6 +46,23 @@ unsigned int DarkGravityWave(const CBlockIndex* pindexLast, const Consensus::Par
         return bnPowLimit.GetCompact();
     }
     
+    // Regtest
+    if (params.fPowAllowMinDifficultyBlocks && params.fPowNoRetargeting) {
+        // Special difficulty rule:
+        // If the new block's timestamp is more than 2 * 1 minutes
+        // then allow mining of a min-difficulty block.
+        if (pblock->GetBlockTime() > pindexLast->GetBlockTime() + params.nPowTargetSpacing * 2)
+            return bnPowLimit.GetCompact();
+        else {
+            // Return the last non-special-min-difficulty-rules-block
+            const CBlockIndex *pindex = pindexLast;
+            while (pindex->pprev && pindex->nHeight % params.DifficultyAdjustmentInterval() != 0 &&
+                   pindex->nBits == bnPowLimit.GetCompact())
+                pindex = pindex->pprev;
+            return pindex->nBits;
+        }
+    }
+
     unsigned int nCountBlocks = 0;
     while (nCountBlocks < params.nDgwPastBlocks) {
         // Ran out of blocks, return pow limit
@@ -95,14 +112,8 @@ unsigned int DarkGravityWave(const CBlockIndex* pindexLast, const Consensus::Par
 // Fiveg GetNextWorkRequired
 unsigned int GetNextWorkRequired(const CBlockIndex *pindexLast, const CBlockHeader *pblock, const Consensus::Params &params,bool fProofOfStake) {
     assert(pindexLast != nullptr);
-
-    // Special rule for regtest: we never retarget.
-    if (params.fPowNoRetargeting) {
-        return pindexLast->nBits;
-    }
-
-    return DarkGravityWave(pindexLast, params,fProofOfStake);
-
+    assert(pblock != nullptr);
+    return DarkGravityWave(pindexLast, pblock, params,fProofOfStake);
 }
 
 unsigned int CalculateNextWorkRequired(const CBlockIndex *pindexLast, int64_t nFirstBlockTime, const Consensus::Params &params) {
