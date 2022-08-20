@@ -284,6 +284,7 @@ public:
         consensus.nStakeTimestampMask = 0xf; // 15
         consensus.nPowTargetTimespan = 5 * 60; // 5 minutes between retargets
         consensus.nPowTargetSpacing = 1 * 60; // 1 minute blocks
+        consensus.nDgwPastBlocks = 30; // number of blocks to average in Dark Gravity Wave
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 1512; // 75% for testchains
@@ -376,6 +377,8 @@ public:
         fRequireStandard = false;
         fMineBlocksOnDemand = false;
         fTestnetToBeDeprecatedFieldRPC = true;
+        nConsecutivePoWHeight = 40000;
+        nMaxPoWBlocks = 1000;
 
         checkpointData = (CCheckpointData) {
                 boost::assign::map_list_of
@@ -441,6 +444,7 @@ public:
         consensus.nPowTargetTimespan = 60 * 60 * 1000; // 60 minutes between retargets
         consensus.nPowTargetSpacing = 1; // 10 minute blocks
         consensus.fPowAllowMinDifficultyBlocks = true;
+        consensus.nDgwPastBlocks = 30; // number of blocks to average in Dark Gravity Wave
         consensus.fPowNoRetargeting = true;
         consensus.nFivegnodePaymentsStartBlock = 120;
         consensus.nRuleChangeActivationThreshold = 108; // 75% for testchains
