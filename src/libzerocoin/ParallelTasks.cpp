@@ -101,9 +101,9 @@ public:
     }
 
     // Post a task to the thread pool and return a future to wait for its completion
-    boost::future<void> PostTask(function<void()> task) {
+    boost::unique_future<void> PostTask(function<void()> task) {
         boost::packaged_task<void> packagedTask(std::move(task));
-        boost::future<void> ret = packagedTask.get_future();
+        boost::unique_future<void> ret = packagedTask.get_future();
 
         taskQueueMutex.lock();
 
@@ -125,7 +125,7 @@ public:
 
 static class ParallelOpThreadPool {
 public:
-    boost::future<void> PostTask(function<void()> task) {
+    boost::unique_future<void> PostTask(function<void()> task) {
         task();
         boost::promise<void> promise;
         promise.set_value();
@@ -146,7 +146,7 @@ void ParallelTasks::Add(function<void()> task) {
 }
 
 void ParallelTasks::Wait() {
-    for (boost::future<void> &f: tasks)
+    for (boost::unique_future<void> &f: tasks)
         f.get();
 }
 

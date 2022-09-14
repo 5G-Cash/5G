@@ -126,7 +126,7 @@ public:
         return (isComputed <= 0);
     }
 
-    uint256 GetVerusHash() const;
+    uint256 GetVerusHashV2() const;
     static void SetVerusHash();
 
     void SetPoWHash(uint256 hash) const
