@@ -5171,7 +5171,7 @@ bool ProcessNewBlock(CValidationState &state, const CChainParams &chainparams, C
 }
 
 bool TestBlockValidity(CValidationState &state, const CChainParams &chainparams, const CBlock &block,
-                       CBlockIndex *pindexPrev, bool fCheckPoW, bool fCheckMerkleRoot) {
+                       CBlockIndex *pindexPrev, bool fCheckPOW, bool fCheckMerkleRoot) {
     AssertLockHeld(cs_main);
     assert(pindexPrev && pindexPrev == chainActive.Tip());
     if (fCheckpointsEnabled && !CheckIndexAgainstCheckpoint(pindexPrev, state, chainparams, block.GetPoWHash()))
@@ -5186,7 +5186,7 @@ bool TestBlockValidity(CValidationState &state, const CChainParams &chainparams,
     if (!ContextualCheckBlockHeader(block, state, chainparams.GetConsensus(), pindexPrev, GetAdjustedTime()))
         return error("%s: Consensus::ContextualCheckBlockHeader: %s", __func__, FormatStateMessage(state));
 //    std::cout << "TestBlockValidity->CheckBlock() nHeight=" << indexDummy.nHeight << std::endl;
-    if (!CheckBlock(block, state, chainparams.GetConsensus(), fCheckPoW, fCheckMerkleRoot, indexDummy.nHeight, false))
+    if (!CheckBlock(block, state, chainparams.GetConsensus(), fCheckPOW, fCheckMerkleRoot, indexDummy.nHeight, false))
         return error("%s: Consensus::CheckBlock: %s", __func__, FormatStateMessage(state));
     if (!ContextualCheckBlock(block, state, pindexPrev))
         return error("%s: Consensus::ContextualCheckBlock: %s", __func__, FormatStateMessage(state));
