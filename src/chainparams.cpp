@@ -330,8 +330,8 @@ public:
 
         nPoolMaxTransactions = 3;
         nFulfilledRequestExpireTime = 5*60; // fulfilled requests expire in 5 minutes
-        strSporkPubKey = "03b3b271157c91c39955ddbbf57812ef0d9c1cd0d833e288a272e867a0f68bfda4";
-        strFivegnodePaymentsPubKey = "02437021e4f4e9f2860065938de5b23380b37b373f13cc7c2f7b55ad9fdaa41a63";
+        strSporkPubKey = "0296257b9dee06560469836d4ef3c90da266811a9cc6a75ead3551697d0febe187";
+        //strFivegnodePaymentsPubKey = "02437021e4f4e9f2860065938de5b23380b37b373f13cc7c2f7b55ad9fdaa41a63";
 
         pchMessageStart[0] = 0xa5;
         pchMessageStart[1] = 0x92;
