@@ -101,7 +101,7 @@ def all_ts_files(suffix=''):
         filepath = os.path.join(LOCALE_DIR, filename)
         yield(filename, filepath)
 
-FIX_RE = re.compile(b'[\x00-\x0b\x0c\x0e-\x1f]')
+FIX_RE = re.compile(b'[\x00-\x09\x0b\x0c\x0e-\x1f]')
 def remove_invalid_characters(s):
     '''Remove invalid characters from translation string'''
     return FIX_RE.sub(b'', s)
