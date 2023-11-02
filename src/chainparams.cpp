@@ -85,13 +85,13 @@ public:
         consensus.nSubsidyHalvingInterval = 315360;
         consensus.nSubsidyHalvingStopBlock = 2838240;
 
-        consensus.nMajorityEnforceBlockUpgrade = 10081;
-        consensus.nMajorityRejectBlockOutdated = 10260;
+        consensus.nMajorityEnforceBlockUpgrade = 32081;
+        consensus.nMajorityRejectBlockOutdated = 32260;
         consensus.nMajorityWindow = 10800;
         consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         //static const int64 nInterval = nTargetTimespan / nTargetSpacing;
-        consensus.nPowTargetTimespan = 20 * 60; // 20 minutes between retargets 
-        consensus.nPowTargetSpacing = 10 * 60; // alternate PoW/PoS every five minutes
+        consensus.nPowTargetTimespan = 10 * 60; // 10 minutes between retargets 
+        consensus.nPowTargetSpacing = 120; // alternate PoW/PoS every 2 minutes
         consensus.nDgwPastBlocks = 30; // number of blocks to average in Dark Gravity Wave
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
@@ -150,7 +150,7 @@ public:
         consensus.nDisableZCoinClientCheckTime = 1591139261; //Date and time (GMT): Tuesday, June 2, 2020 11:07:41 PM
         consensus.nBlacklistEnableHeight = 1;
         consensus.nBlockLimitUpgradeHeight = 1;
-        consensus.mBlockTimeUpgradeHeight = 2500;
+        consensus.mBlockTimeUpgradeHeight = 32081;
         /**
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
