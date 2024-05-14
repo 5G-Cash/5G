@@ -13,7 +13,7 @@ from crontab import CronTab
 SERVER_IP = urlopen('http://ip.42.pl/raw').read()
 # BOOTSTRAP_URL = 
 #Change this to match your coin releases
-GITHUB_REPO = 'FivegXProject/Fiveg'
+GITHUB_REPO = 'https://github.com/5G-Cash/5G'
 BINARY_PREFIX = 'fiveg-'
 BINARY_SUFFIX='-x86_64-linux-gnu.tar.gz'
 
@@ -60,7 +60,7 @@ def print_welcome():
     print("")
     print("")
     print("")
-    print_info("FivegXProject masternode installer v1.0")
+    print_info("5G-CASH Masternode Installer v1.0")
     print("")
     print("")
     print("")
@@ -93,7 +93,7 @@ def checkdaemon():
 
 # Helper functions for automating updating and installing daemon
 def getlatestrelease():
-    r = requests.get(url='https://api.github.com/repos/FivegXProject/Fiveg/releases/latest')
+    r = requests.get(url='https://api.github.com/repos/5G-Cash/5G/releases/latest')
     data = json.loads(r.text)['assets']
     for x in range(len(data)):
         if 'x86_64-linux-gnu.tar.gz' in data[x]['browser_download_url']:
@@ -174,7 +174,7 @@ def setup_first_masternode():
     #make inital dirs and logs required
     run_command('su - mn1 -c "mkdir /home/mn1/.fiveg"')
     run_command('su - mn1 -c "touch /home/mn1/.fiveg/fiveg.conf"')
-    run_command('su - mn1 -c "touch /home/mn1/.fiveg/exodus.log"')
+    #run_command('su - mn1 -c "touch /home/mn1/.fiveg/exodus.log"')
     run_command('su - mn1 -c "touch /home/mn1/.fiveg/debug.log"')
     f = open('/home/mn1/.fiveg/fiveg.conf', 'w')
     f.write(config)
@@ -235,8 +235,8 @@ def porologe():
     Alias: zn{}
     IP: {}
     Private key: {}
-    Transaction ID: [10k VGC deposit transaction id. 'fivegnode outputs']
-    Transaction fiveg: [10k VGC deposit transaction fiveg. 'fivegnode outputs']
+    Transaction ID: [50k VGC deposit transaction id. 'fivegnode outputs']
+    Transaction fiveg: [50k VGC deposit transaction fiveg. 'fivegnode outputs']
     mnconf line :
     {} {} {} txhash txindex
     --------------------------------------------------
@@ -255,7 +255,7 @@ def porologe():
     \tWait until masternode is fully synced. To check the progress login the 
     \tmasternode account (su mn1, where 1 is the number of the masternode) and run
     \tthe 'fiveg-cli getinfo' to get actual block number. Go to
-    \t the explorer website to check the latest block number. After the
+    \tthe explorer website to check the latest block number. After the
     \tsyncronization is done add your masternodes to your desktop wallet.
     Datas:""" + mn_data)
      print_info("That's all we are done setting up your masternode")
