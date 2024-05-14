@@ -184,7 +184,7 @@ def notify():
     irc_nick = irc_username
 
     # establish connection
-    irc_sock = ssl.wrap_socket(socket.socket(socket.AF_INET, socket.SOCK_STREAM))
+    irc_sock = ssl.TLSVersion.TLSv1_3.wrap_socket(socket.socket(socket.AF_INET, socket.SOCK_STREAM))
     irc_sock.connect((socket.gethostbyname(server), int(port)))
     irc_sock.send('NICK {0}\r\nUSER {0} * 0 :{0}\r\n'.format(irc_username).encode())
     irc_sock.send('JOIN #{0}\r\n'.format(channel).encode())

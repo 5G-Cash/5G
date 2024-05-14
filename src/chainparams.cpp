@@ -330,8 +330,8 @@ public:
 
         nPoolMaxTransactions = 3;
         nFulfilledRequestExpireTime = 5*60; // fulfilled requests expire in 5 minutes
-        strSporkPubKey = "04c034bd223c7fc5a0a2c0e737b5e1beabfea1aca6e1f29840723cc78c8bd71871bd12b40d897154ea6b42b428479d6e1ec7ce29f257a5d7abc8dfe4df2b7fd641";
-        strFivegnodePaymentsPubKey = "04c034bd223c7fc5a0a2c0e737b5e1beabfea1aca6e1f29840723cc78c8bd71871bd12b40d897154ea6b42b428479d6e1ec7ce29f257a5d7abc8dfe4df2b7fd641";
+        strSporkPubKey = "0296257b9dee06560469836d4ef3c90da266811a9cc6a75ead3551697d0febe187";
+        //strFivegnodePaymentsPubKey = "02437021e4f4e9f2860065938de5b23380b37b373f13cc7c2f7b55ad9fdaa41a63";
 
         pchMessageStart[0] = 0xa5;
         pchMessageStart[1] = 0x92;
@@ -363,7 +363,7 @@ public:
         vSeeds.push_back(CDNSSeedData("testnet.fiveg.cash", "testnet.fiveg.cash"));
 
         // Single trusted IPs incase of seeder failure / downtime
-        vSeeds.push_back(CDNSSeedData("trusted.fiveg.cash", "trusted.fiveg.cash"));
+        vSeeds.push_back(CDNSSeedData("testnet2.fiveg.cash", "testnet2.fiveg.cash"));
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector < unsigned char > (1, 65);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector < unsigned char > (1, 178);
