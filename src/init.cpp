@@ -1427,7 +1427,7 @@ bool AppInit2(boost::thread_group &threadGroup, CScheduler &scheduler) {
     globalVerifyHandle.reset(new ECCVerifyHandle());
 
     // initialize VerusHash
-    CVerusHash::init();
+    CVerusHashV2::init();
 
     // Sanity check
     if (!InitSanityCheck())

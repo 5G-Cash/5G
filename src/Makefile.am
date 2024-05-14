@@ -5,6 +5,8 @@
 DIST_SUBDIRS = secp256k1 univalue tor
 SUBDIRS = tor
 
+PLATFORM_VARIANT = x86-64
+
 AM_LDFLAGS = $(PTHREAD_CFLAGS) $(LIBTOOL_LDFLAGS) $(HARDENED_LDFLAGS)
 AM_CXXFLAGS = $(HARDENED_CXXFLAGS)
 AM_CPPFLAGS = $(HARDENED_CPPFLAGS)
@@ -89,6 +91,8 @@ LIBBITCOIN_CONSENSUS=libbitcoin_consensus.a
 LIBBITCOIN_CLI=libbitcoin_cli.a
 LIBBITCOIN_UTIL=libbitcoin_util.a
 LIBBITCOIN_CRYPTO=crypto/libbitcoin_crypto.a
+LIBFIVEG_CRYPTO=crypto/libfiveg_crypto.a
+LIBFIVEG_PORTABLE_CRYPTO=crypto/libfiveg_portable_crypto.a
 LIBBITCOINQT=qt/libfivegqt.a
 LIBSECP256K1=secp256k1/libsecp256k1.la
 
@@ -113,6 +117,8 @@ $(LIBSECP256K1): $(wildcard secp256k1/src/*) $(wildcard secp256k1/include/*)
 # But to build the less dependent modules first, we manually select their order here:
 EXTRA_LIBRARIES += \
   $(LIBBITCOIN_CRYPTO) \
+  $(LIBFIVEG_CRYPTO) \
+  $(LIBFIVEG_PORTABLE_CRYPTO) \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_CONSENSUS) \
@@ -257,7 +263,9 @@ BITCOIN_CORE_H = \
   crypto/keccak.c \
   crypto/keccak.h \
   crypto/verushash/haraka.h \
-  crypto/verushash/verus_hash.h
+  crypto/verushash/haraka_portable.h \
+  crypto/verushash/verus_hash.h \
+  crypto/verushash/verus_clhash.h
 
 obj/build.h: FORCE
 	@$(MKDIR_P) $(builddir)/obj
@@ -317,9 +325,6 @@ libbitcoin_server_a_SOURCES = \
   crypto/sph_keccak.h \
   crypto/keccak.c \
   crypto/keccak.h \
-  crypto/verushash/haraka.h \
-  crypto/verushash/verus_hash.h \
-  crypto/verushash/verus_hash.cpp \
   $(BITCOIN_CORE_H)
 
 if ENABLE_CLIENTAPI
@@ -433,8 +438,30 @@ crypto_libbitcoin_crypto_a_SOURCES = \
   crypto/x16Rv2/gost_streebog.c \
   crypto/sha512.h \
   crypto/verushash/haraka.h \
-  crypto/verushash/haraka.c 
- 
+  crypto/verushash/haraka_portable.h \
+  crypto/verushash/verus_hash.h \
+  crypto/verushash/verus_hash.cpp
+
+# 5GCash hash specific library - optimized
+crypto_libfiveg_crypto_a_CPPFLAGS = -O3 -mpclmul -msse4 -msse4.1 -msse4.2 -mssse3 -mavx -maes -g -funroll-loops -fomit-frame-pointer -fPIC $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+crypto_libfiveg_crypto_a_CXXFLAGS = -O3 -Wint-conversion -mpclmul -msse4 -msse4.1 -msse4.2 -mssse3 -mavx -maes -g -funroll-loops -fomit-frame-pointer -fPIC $(AM_CXXFLAGS)
+
+crypto_libfiveg_crypto_a_SOURCES = \
+  crypto/verushash/haraka.h \
+  crypto/verushash/haraka.c \
+  crypto/verushash/verus_clhash.h \
+  crypto/verushash/verus_clhash.cpp
+
+# 5GCash hash specific library - portable
+crypto_libfiveg_portable_crypto_a_CPPFLAGS = -O3 -march=$(PLATFORM_VARIANT) -g -funroll-loops -fomit-frame-pointer -fPIC $(AM_CPPFLAGS) -w $(BITCOIN_INCLUDES)
+crypto_libfiveg_portable_crypto_a_CXXFLAGS = -O3 -Wint-conversion -march=$(PLATFORM_VARIANT) -g -funroll-loops -fomit-frame-pointer -fPIC $(AM_CXXFLAGS)
+
+crypto_libfiveg_portable_crypto_a_SOURCES = \
+  crypto/verushash/haraka_portable.h \
+  crypto/verushash/haraka_portable.c \
+  crypto/verushash/verus_clhash.h \
+  crypto/verushash/verus_clhash_portable.cpp
+
 
 # consensus: shared between all executables that validate any consensus rules.
 libbitcoin_consensus_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(PIC_FLAGS)
@@ -450,9 +477,6 @@ libbitcoin_consensus_a_SOURCES = \
   hash.cpp \
   flat-database.h \
   hash.h \
-  crypto/verushash/haraka.h \
-  crypto/verushash/verus_hash.h \
-  crypto/verushash/verus_hash.cpp \
   prevector.h \
   crypto/scrypt.h \
   primitives/block.h \
@@ -499,6 +523,8 @@ libbitcoin_common_a_SOURCES = \
   script/standard.cpp \
   spork.cpp \
   crypto/verushash/haraka.h \
+  crypto/verushash/haraka_portable.h \
+  crypto/verushash/verus_clhash.h \
   crypto/verushash/verus_hash.h \
   crypto/verushash/verus_hash.cpp \
   crypto/sph_keccak.c \
@@ -525,15 +551,13 @@ libbitcoin_util_a_SOURCES = \
   rpc/protocol.cpp \
   support/cleanse.cpp \
   sync.cpp \
+  uint256.cpp \
   util.cpp \
   utilmoneystr.cpp \
   utilstrencodings.cpp \
   utiltime.cpp \
   crypto/scrypt.cpp \
   primitives/block.cpp \
-  crypto/verushash/haraka.h \
-  crypto/verushash/verus_hash.h \
-  crypto/verushash/verus_hash.cpp \
   libzerocoin/bitcoin_bignum/allocators.h \
   libzerocoin/bitcoin_bignum/bignum.h \
   libzerocoin/bitcoin_bignum/compat.h \
@@ -625,6 +649,8 @@ fivegd_LDADD = \
   $(LIBBITCOIN_ZMQ) \
   $(LIBBITCOIN_CONSENSUS) \
   $(LIBBITCOIN_CRYPTO) \
+  $(LIBFIVEG_CRYPTO) \
+  $(LIBFIVEG_PORTABLE_CRYPTO) \
   $(LIBLEVELDB) \
   $(LIBMEMENV) \
   $(LIBSECP256K1)
@@ -653,7 +679,9 @@ fiveg_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
-  $(LIBBITCOIN_CRYPTO)
+  $(LIBBITCOIN_CRYPTO) \
+  $(LIBFIVEG_CRYPTO) \
+  $(LIBFIVEG_PORTABLE_CRYPTO)
 
 fiveg_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 if ENABLE_CLIENTAPI
@@ -676,6 +704,8 @@ fiveg_tx_LDADD = \
   $(LIBBITCOIN_UTIL) \
   $(LIBBITCOIN_CONSENSUS) \
   $(LIBBITCOIN_CRYPTO) \
+  $(LIBFIVEG_CRYPTO) \
+  $(LIBFIVEG_PORTABLE_CRYPTO) \
   $(LIBSECP256K1)
 
 fiveg_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
