@@ -111,6 +111,7 @@ CZMQReplierInterface* CZMQReplierInterface::Create()
 
 CZMQPublisherInterface::CZMQPublisherInterface()
 {
+    worker = nullptr;
 }
 
 bool CZMQPublisherInterface::StartWorker()
@@ -129,8 +130,13 @@ CZMQPublisherInterface::~CZMQPublisherInterface()
         delete *i;
     }
 
-    //destroy worker
-    worker->interrupt();
+    // destroy worker
+    if (worker) {
+        worker->interrupt();
+        worker->join();
+        delete worker;
+        worker = nullptr;
+    }
 }
 
 CZMQPublisherInterface* CZMQPublisherInterface::Create()

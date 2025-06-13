@@ -10,6 +10,11 @@
 #include "client-api/protocol.h"
 
 //*********** threads waiting for responses ***********//
+CZMQAbstractReplier::CZMQAbstractReplier()
+{
+    worker = nullptr;
+}
+
 void* CZMQOpenReplier::Thread()
 {
     LogPrintf("ZMQ: IN REQREP_ZMQ_open\n");
@@ -200,9 +205,9 @@ bool CZMQAbstractReplier::Initialize()
 void CZMQAbstractReplier::Shutdown()
 {
     LogPrintf("shutting down replier..\n");
-    if (pcontext) // prematurely end context in order to let threads run out
+    if (pcontext) // allow worker thread to exit cleanly
     {
-        pcontext = 0;
+        // context will be destroyed after thread shutdown
     }
 
     KEEPALIVE = 0; // end infinite loop in thread 
@@ -221,6 +226,16 @@ void CZMQAbstractReplier::Shutdown()
     LogPrintf("closed psocket\n");
 
     zmq_ctx_destroy(pcontext);
+    pcontext = 0;
 
     LogPrintf("replier shutdown\n");
+}
+
+CZMQAbstractReplier::~CZMQAbstractReplier()
+{
+    if (worker) {
+        worker->join();
+        delete worker;
+        worker = nullptr;
+    }
 }

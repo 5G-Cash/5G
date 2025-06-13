@@ -1,5 +1,5 @@
 # This is a Dockerfile for fivegd.
-FROM debian:bionic
+FROM debian:bookworm
 
 # Install required system packages
 RUN apt-get update && apt-get install -y \
@@ -12,9 +12,8 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libtool \
     libzmq3-dev \
+    openjdk-17-jdk \
     make \
-    openjdk-8-jdk \
-    pkg-config \
     zlib1g-dev
 
 # Install Berkeley DB 4.8
@@ -63,6 +62,7 @@ RUN apt-get remove -y \
     libssl-dev \
     libtool \
     libzmq3-dev \
+    openjdk-17-jdk \
     make
 
 # Start Fiveg Daemon

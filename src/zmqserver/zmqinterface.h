@@ -21,7 +21,7 @@ public:
 
 protected:
     std::list<CZMQAbstract*> notifiers;
-    boost::thread* worker;
+    boost::thread* worker = nullptr;
 };
 
 
