@@ -16,9 +16,12 @@ protected:
     int KEEPALIVE = 1;
     int rc;
     zmq_msg_t request;
-    boost::thread* worker;
+    boost::thread* worker = nullptr;
 
 public:
+    CZMQAbstractReplier();
+    virtual ~CZMQAbstractReplier();
+
     // Initialization
     bool Initialize();
     void Shutdown();

@@ -1,21 +1,22 @@
 PACKAGE=qt
-$(package)_version=5.6.1
-$(package)_download_path=http://download.qt.io/official_releases/qt/5.6/$($(package)_version)/submodules
-$(package)_suffix=opensource-src-$($(package)_version).tar.gz
-$(package)_file_name=qtbase-$($(package)_suffix)
-$(package)_sha256_hash=0ac67cf8d66d52b995f96c31c4b48117a1afb3db99eaa93e20ccd8f7f55f7fde
+$(package)_version=5.15.2
+$(package)_download_path=https://deb.debian.org/debian/pool/main/q
+$(package)_download_file=qtbase-opensource-src/qtbase-opensource-src_$($(package)_version)+dfsg.orig.tar.xz
+$(package)_suffix=opensource-src_$($(package)_version).orig.tar.xz
+$(package)_file_name=qtbase-opensource-src_$($(package)_version)+dfsg.orig.tar.xz
+$(package)_sha256_hash=9ed5e0ab96a04daec5383a5e642d0308ca8246359a4c857a73a5c58d806237bb
 $(package)_dependencies=openssl
 $(package)_linux_dependencies=freetype fontconfig libxcb libX11 xproto libXext
 $(package)_build_subdir=qtbase
 $(package)_qt_libs=corelib network widgets gui plugins testlib
 $(package)_patches=mac-qmake.conf mingw-uuidof.patch pidlist_absolute.patch fix-xcb-include-order.patch fix_qt_pkgconfig.patch
 
-$(package)_qttranslations_file_name=qttranslations-$($(package)_suffix)
-$(package)_qttranslations_sha256_hash=dcc1534d247babca1840cb6d0a000671801a341ea352d0535474f86adadaf028
+$(package)_qttranslations_file_name=qttranslations-opensource-src/qttranslations-opensource-src_$($(package)_version).orig.tar.xz
+$(package)_qttranslations_sha256_hash=d5788e86257b21d5323f1efd94376a213e091d1e5e03b45a95dd052b5f570db8
 
 
-$(package)_qttools_file_name=qttools-$($(package)_suffix)
-$(package)_qttools_sha256_hash=e0f845de28c31230dfa428f0190ccb3b91d1fc02481b1f064698ae4ef8376aa1
+$(package)_qttools_file_name=qttools-opensource-src/qttools-opensource-src_$($(package)_version).orig.tar.xz
+$(package)_qttools_sha256_hash=c189d0ce1ff7c739db9a3ace52ac3e24cb8fd6dbf234e49f075249b38f43c1cc
 
 $(package)_extra_sources  = $($(package)_qttranslations_file_name)
 $(package)_extra_sources += $($(package)_qttools_file_name)

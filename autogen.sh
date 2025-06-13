@@ -15,6 +15,6 @@ which autoreconf >/dev/null || \
   (echo "configuration failed, please install autoconf first" && exit 1)
 autoreconf --install --force --warnings=all
 
-(cd "${srcdir}/src/secp256k1" && ./autogen.sh)
-(cd "${srcdir}/src/tor" && ./autogen.sh)
+(cd "${srcdir}/src/secp256k1" && sh autogen.sh)
+(cd "${srcdir}/src/tor" && sh autogen.sh)
 

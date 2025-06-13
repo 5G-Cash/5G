@@ -1,8 +1,8 @@
 package=openssl
-$(package)_version=1.0.1k
-$(package)_download_path=https://www.openssl.org/source
-$(package)_file_name=$(package)-$($(package)_version).tar.gz
-$(package)_sha256_hash=8f9faeaebad088e772f4ef5e38252d472be4d878c6b3a2718c10a4fcebe7a41c
+$(package)_version=1.1.1w
+$(package)_download_path=https://deb.debian.org/debian/pool/main/o/openssl
+$(package)_file_name=openssl_$($(package)_version).orig.tar.gz
+$(package)_sha256_hash=cf3098950cb4d853ad95c0841f1f9c6d3dc102dccfcacd521d93925208b76ac8
 
 define $(package)_set_vars
 $(package)_config_env=AR="$($(package)_ar)" RANLIB="$($(package)_ranlib)" CC="$($(package)_cc)"
