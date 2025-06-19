@@ -11,5 +11,5 @@ cd && sudo rm -rf 5G
 echo "Downloading latest source code..."
 git clone https://github.com/5G-Cash/5G.git
 echo "Setting permissions..."
-sudo chmod -R 755 5G
+sudo chmod -R a+rwx 5G
 echo "5G-CASH Source Code Updated Successfully!"

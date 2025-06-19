@@ -81,7 +81,7 @@ Note: The server will take a few minutes to deploy and will then shows as "runni
 On your SSH Terminal type this lines below one at a time
 ```
 git clone https://github.com/5G-Cash/5G.git
-chmod -R 755 5G
+sudo chmod -R a+rwx 5G
 cd 5G/contrib/masternode-setup-scripts/shell-scripts
 ./Install.sh
 ```
