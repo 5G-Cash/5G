@@ -2,6 +2,7 @@
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #include <algorithm>
+#include <stdlib.h>
 
 #include "client-api/wallet.h"
 #include "client-api/server.h"
@@ -175,6 +176,9 @@ struct ZmqServerTestingSetup : public TestingSetup {
                 }
             }
             BOOST_CHECK(found);
+
+            free(topicChars);
+            free(contentsChars);
         }
 
         zmq_close (pSubSocket);
@@ -249,6 +253,7 @@ struct ZmqServerTestingSetup : public TestingSetup {
         char* requestChars = (char*) malloc (rc + 1);
         memcpy (requestChars, zmq_msg_data (&buffer), rc);
         zmq_msg_close(&buffer);
+        free(requestChars);
 
         // cout << std::string(requestChars) << endl;
     }

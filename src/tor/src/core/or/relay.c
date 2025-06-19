@@ -1487,7 +1487,7 @@ connection_edge_process_relay_cell(cell_t *cell, circuit_t *circ,
     }
   }
 
-  /* Tell circpad that we've recieved a recognized cell */
+  /* Tell circpad that we've received a recognized cell */
   circpad_deliver_recognized_relay_cell_events(circ, rh.command, layer_hint);
 
   /* either conn is NULL, in which case we've got a control cell, or else

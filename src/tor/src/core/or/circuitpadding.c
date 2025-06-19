@@ -2161,7 +2161,7 @@ circpad_circ_responder_machine_init(void)
      serialize this into the consensus or the torrc */
 
   /* We transition to the burst state on padding receive and on non-padding
-   * recieve */
+   * receive */
   circ_responder_machine->states[CIRCPAD_STATE_START].
       next_state[CIRCPAD_EVENT_PADDING_RECV] = CIRCPAD_STATE_BURST;
   circ_responder_machine->states[CIRCPAD_STATE_START].
