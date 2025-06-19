@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
     bsdmainutils \
     curl \
     g++ \
-    libboost-all-dev \
     libevent-dev \
     libssl-dev \
     libtool \
@@ -16,6 +15,12 @@ RUN apt-get update && apt-get install -y \
     openjdk-8-jdk \
     pkg-config \
     zlib1g-dev
+
+# Build Boost 1.88.0 from source
+RUN curl -L https://sourceforge.net/projects/boost/files/boost/1.88.0/boost_1_88_0.tar.bz2/download -o /tmp/boost.tar.bz2 && \
+    mkdir /tmp/boost && tar -xjf /tmp/boost.tar.bz2 -C /tmp/boost --strip-components=1 && \
+    cd /tmp/boost && ./bootstrap.sh && ./b2 -d0 -j$(nproc) install && \
+    cd / && rm -rf /tmp/boost /tmp/boost.tar.bz2
 
 # Install Berkeley DB 4.8
 RUN curl -L http://download.oracle.com/berkeley-db/db-4.8.30.tar.gz | tar -xz -C /tmp && \
@@ -58,7 +63,6 @@ RUN apt-get remove -y \
     bsdmainutils \
     curl \
     g++ \
-    libboost-all-dev \
     libevent-dev \
     libssl-dev \
     libtool \

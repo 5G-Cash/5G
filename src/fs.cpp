@@ -208,15 +208,6 @@ void ofstream::close()
 }
 #else // __GLIBCXX__
 
-static_assert(sizeof(*fs::path().BOOST_FILESYSTEM_C_STR) == sizeof(wchar_t),
-    "Warning: This build is using boost::filesystem ofstream and ifstream "
-    "implementations which will fail to open paths containing multibyte "
-    "characters. You should delete this static_assert to ignore this warning, "
-    "or switch to a different C++ standard library like the Microsoft C++ "
-    "Standard Library (where boost uses non-standard extensions to construct "
-    "stream objects with wide filenames), or the GNU libstdc++ library (where "
-    "a more complicated workaround has been implemented above).");
-
 #endif // __GLIBCXX__
 #endif // WIN32
 
