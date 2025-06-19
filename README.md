@@ -7,7 +7,7 @@ What is 5G-CASH?
 
 Why 5G-CASH is a Hybrid Project?
 -------------------------------
-Because it uses POW to allow miners to compete with hashing power but also incentivate holders to mint their balances with POS v3.0 to earn the same reward amount and once holders allocate the necessary coins they can run Masternodes to easily support the consensus to secure the Network.
+Because it uses POW to allow miners to compete with hashing power but also incentivize holders to mint their balances with POS v3.0 to earn the same reward amount and once holders allocate the necessary coins they can run Masternodes to easily support the consensus to secure the Network.
 
 For more information, read the
 [original whitepaper](https://fiveg.cash/wp-content/uploads/2021/09/5G-CASH-Whitepaper.pdf).
@@ -54,7 +54,8 @@ Building 5G-CASH
 ----------------------
 ### 1. Static compile
     git clone https://github.com/5G-Cash/5G.git
-    chmod -R +rwx 5G 
+    # Ensure the source tree is writable for subsequent builds
+    ./set_permissions.sh 5G
     cd 5G/depends
     make HOST=x86_64-linux-gnu
     cd ..
@@ -65,7 +66,8 @@ Building 5G-CASH
 
 #### 2. Shared binary
     git clone https://github.com/5G-Cash/5G.git
-    chmod -R +rwx 5G
+    # Ensure the source tree is writable for subsequent builds
+    ./set_permissions.sh 5G
     cd 5G
     ./autogen.sh
     ./configure
