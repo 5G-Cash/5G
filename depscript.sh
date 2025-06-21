@@ -5,7 +5,7 @@ echo "Updating the machine..."
 sudo apt-get update
 echo "Machine successfully updated"
 echo "Installing required packages.."
-sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libzmq3-dev libminizip-dev -y
+sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libzmq3-dev libminizip-dev 
 echo -e "Successfully installed build-essential\n
 		 Successfully installed libtool\n
 		 Successfully installed autotools-dev\n
