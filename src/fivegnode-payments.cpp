@@ -148,14 +148,8 @@ bool IsBlockPayeeValid(const CTransaction &txNew, int nBlockHeight, CAmount bloc
     if (mnpayments.IsTransactionValid(txNew, nBlockHeight, false)) {
         LogPrint("mnpayments", "IsBlockPayeeValid -- Valid fivegnode payment at height %d: %s", nBlockHeight, txNew.ToString());
         return true;
-    } else {
-        if(sporkManager.IsSporkActive(SPORK_8_FIVEGNODE_PAYMENT_ENFORCEMENT)){
-            return false;
-        } else {
-            LogPrintf("FivegNode payment enforcement is disabled, accepting block\n");
-            return true;
-        }
     }
+    return false;
 }
 
 void FillBlockPayments(CMutableTransaction &txNew, int nBlockHeight, CAmount fivegnodePayment, CTxOut &txoutFivegnodeRet, std::vector <CTxOut> &voutSuperblockRet) {
