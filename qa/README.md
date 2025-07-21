@@ -7,19 +7,20 @@ tests locally.
 
 Test dependencies
 =================
-Before running the tests, the following must be installed.
+Before running the tests, install the Python dependencies.
 
 Unix
 ----
-The python3-zmq library is required. On Ubuntu or Debian it can be installed via:
+Run:
 ```
-sudo apt-get install python3-zmq
+sudo apt-get install python3 python3-pip
+pip3 install -r qa/requirements.txt
 ```
 
 OS X
 ------
 ```
-pip3 install pyzmq
+pip3 install -r qa/requirements.txt
 ```
 
 Running tests

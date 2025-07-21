@@ -35,8 +35,8 @@ CCriticalSection cs_mapFivegnodePaymentVotes;
 bool IsBlockValueValid(const CBlock &block, int nBlockHeight, CAmount blockReward, std::string &strErrorRet) {
     strErrorRet = "";
 
-    bool isBlockRewardValueMet = (block.vtx[0].GetValueOut() <= blockReward);
-    if (fDebug) LogPrintf("block.vtx[0].GetValueOut() %lld <= blockReward %lld\n", block.vtx[0].GetValueOut(), blockReward);
+    bool isBlockRewardValueMet = (block.vtx[0].GetValueOut() == blockReward);
+    if (fDebug) LogPrintf("block.vtx[0].GetValueOut() %lld == blockReward %lld\n", block.vtx[0].GetValueOut(), blockReward);
 
     // we are still using budgets, but we have no data about them anymore,
     // all we know is predefined budget cycle and window
@@ -148,14 +148,9 @@ bool IsBlockPayeeValid(const CTransaction &txNew, int nBlockHeight, CAmount bloc
     if (mnpayments.IsTransactionValid(txNew, nBlockHeight, false)) {
         LogPrint("mnpayments", "IsBlockPayeeValid -- Valid fivegnode payment at height %d: %s", nBlockHeight, txNew.ToString());
         return true;
-    } else {
-        if(sporkManager.IsSporkActive(SPORK_8_FIVEGNODE_PAYMENT_ENFORCEMENT)){
-            return false;
-        } else {
-            LogPrintf("FivegNode payment enforcement is disabled, accepting block\n");
-            return true;
-        }
     }
+
+    return false;
 }
 
 void FillBlockPayments(CMutableTransaction &txNew, int nBlockHeight, CAmount fivegnodePayment, CTxOut &txoutFivegnodeRet, std::vector <CTxOut> &voutSuperblockRet) {
