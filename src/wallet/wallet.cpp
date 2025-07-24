@@ -2017,7 +2017,7 @@ void CWalletTx::GetAmounts(list <COutputEntry> &listReceived,
 
         if (txout.scriptPubKey.IsZerocoinMint() || txout.scriptPubKey.IsSigmaMint()) {
             address = CNoDestination();
-        } else if (!ExtractDestination(txout.scriptPubKey, address) && !txout.scriptPubKey.IsUnspendable()) {
+        } else if (!ExtractDestination(txout.scriptPubKey, address) && !txout.IsUnspendable()) {
             LogPrintf("CWalletTx::GetAmounts: Unknown transaction type found, txid %s\n",
                       this->GetHash().ToString());
             address = CNoDestination();
