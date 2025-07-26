@@ -105,6 +105,28 @@ UniValue block(Type type, const UniValue& data, const UniValue& auth, bool fHelp
     return getblockObj;
 }
 
+UniValue blockhash(Type type, const UniValue& data, const UniValue& auth, bool fHelp){
+
+    UniValue getblockObj(UniValue::VOBJ);
+    int index;
+
+    try{
+        index = find_value(data, "index").get_int();
+    }catch (const std::exception& e){
+        throw JSONAPIError(API_WRONG_TYPE_CALLED, "wrong key passed/value type for method");
+    }
+
+    LOCK(cs_main);
+    if (index < 0 || index > chainActive.Height())
+        throw JSONAPIError(API_INVALID_PARAMETER, "Block height out of range");
+
+    std::string blockhash = chainActive[index]->GetBlockHash().GetHex();
+
+    StateBlock(getblockObj, blockhash);
+
+    return getblockObj;
+}
+
 UniValue rebroadcast(Type type, const UniValue& data, const UniValue& auth, bool fHelp){
 
     UniValue ret(UniValue::VOBJ);
@@ -153,6 +175,7 @@ static const CAPICommand commands[] =
   //  --------------------- ------------       ----------------          -------- --------------   --------
     { "blockchain",         "blockchain",      &blockchain,              true,      false,           false  },
     { "blockchain",         "block",           &block,                   true,      false,           false  },
+    { "blockchain",         "blockhash",       &blockhash,               true,      false,           false  },
     { "blockchain",         "rebroadcast",     &rebroadcast,             true,      false,           false  },
     { "blockchain",         "transaction",     &transaction,             true,      false,           false  }
     

@@ -454,6 +454,8 @@ UniValue StateBlock(UniValue& ret, std::string blockhash){
         LogPrintf("can't read block from disk.\n");
     }
 
+    ret.push_back(Pair("type", block.IsProofOfStake() ? "PoS" : "PoW"));
+
     UniValue transactions(UniValue::VOBJ);
     BOOST_FOREACH(const CTransaction&tx, block.vtx)
     {

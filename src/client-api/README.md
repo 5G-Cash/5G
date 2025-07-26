@@ -39,6 +39,7 @@ A function with one or more operations.
 | [backup](#backup)                 | Creates a zip file from wallet.dat and the `persistent/` folder, and stores in the filepath specified, as `index_backup-{TIMESTAMP}.zip`.  | 🔐 | – |  – |
 | [balance](#balance)               | Coin balance of a number of different categories. | 🔐 | – | – |
 | [block](#block)                   | All transaction information from, and including, the blockHash parameter passed. | 🔐 | – | – |
+| [blockhash](#blockhash)           | Same as `block` but queried by block height. | 🔐 | – | – |
 | [blockchain](#blockchain)         | Information related to chain sync status and tip. | 🔐 | – | – |
 | [listMints](#listmints)           | Returns a list of unspent Sigma mints.  | 🔐 | 🔐 | – |
 | [lockWallet](#lockwallet)         | Lock core wallet, should it be encrypted.  | 🔐 | – | – |
@@ -208,8 +209,9 @@ OPTIONAL: not a necessary parameter to pass.
 *Returns:*
 ```
     data: {
+        type: STRING("PoS"|"PoW"),
         [STRING | "MINT"]: (address)
-            { 
+            {
                 txids: 
                     {
                         STRING: (txid)
@@ -354,6 +356,24 @@ OPTIONAL: not a necessary parameter to pass.
             },
         ...
         },
+    meta: {
+        status: 200
+    }
+```
+
+### `blockhash`
+`get`:
+```
+    data: {
+        index: INT
+    }
+```
+*Returns:*
+```
+    data: {
+        type: STRING("PoS"|"PoW"),
+        addresses: { ... }
+    },
     meta: {
         status: 200
     }
