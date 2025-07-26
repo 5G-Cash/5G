@@ -178,7 +178,7 @@ void CActiveFivegnode::ManageStateInitial() {
             // We have some peers, let's try to find our local address from one of them
             BOOST_FOREACH(CNode * pnode, vNodes)
             {
-                if (pnode->fSuccessfullyConnected && pnode->addr.IsIPv4()) {
+                if (pnode->fSuccessfullyConnected) {
                     fFoundLocal = GetLocal(service, &pnode->addr) && CFivegnode::IsValidNetAddr(service);
                     if (fFoundLocal) break;
                 }
@@ -188,7 +188,7 @@ void CActiveFivegnode::ManageStateInitial() {
 
     if (!fFoundLocal) {
         ChangeState(ACTIVE_FIVEGNODE_NOT_CAPABLE);
-        strNotCapableReason = "Can't detect valid external address. Please consider using the externalip configuration option if problem persists. Make sure to use IPv4 address only.";
+        strNotCapableReason = "Can't detect valid external address. Please consider using the externalip configuration option if problem persists. Make sure your address is reachable.";
         LogPrintf("CActiveFivegnode::ManageStateInitial -- %s: %s\n", GetStateString(), strNotCapableReason);
         return;
     }
