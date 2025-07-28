@@ -150,7 +150,8 @@ bool CheckProofOfStake(CBlockIndex* pindexPrev, const CTransaction& tx, unsigned
 
     unsigned int nTime = pindexPrev->GetBlockTime();
 
-    if (!CheckStakeKernelHash(pindexPrev, nBits, nTime, new CCoins(txPrev, pindexPrev->nHeight), txin.prevout, nBlockTime, fDebug))
+    CCoins coins(txPrev, pindexPrev->nHeight);
+    if (!CheckStakeKernelHash(pindexPrev, nBits, nTime, &coins, txin.prevout, nBlockTime, fDebug))
        return state.Invalid(false, REJECT_INVALID,"CheckProofOfStake() : INFO: check kernel failed on coinstake %s", tx.GetHash().ToString()); // may occur during initial download or if behind on block chain sync
     return true;
 }
@@ -203,16 +204,19 @@ bool CheckKernel(CBlockIndex* pindexPrev, unsigned int nBits, uint32_t nTime, co
             return false;
         }
 
-        return CheckStakeKernelHash(pindexPrev, nBits, *pBlockTime, new CCoins(txPrev, pindexPrev->nHeight), prevout, nTime);
+        CCoins coins(txPrev, pindexPrev->nHeight);
+        return CheckStakeKernelHash(pindexPrev, nBits, *pBlockTime, &coins, prevout, nTime);
     } else {
         //found in cache
         const CStakeCache& stake = it->second;
-        if (CheckStakeKernelHash(pindexPrev, nBits,nTime, new CCoins(stake.txPrev, pindexPrev->nHeight), prevout, *pBlockTime)) {
+        CCoins stakeCoins(stake.txPrev, pindexPrev->nHeight);
+        if (CheckStakeKernelHash(pindexPrev, nBits,nTime, &stakeCoins, prevout, *pBlockTime)) {
             // Cache could potentially cause false positive stakes in the event of deep reorgs, so check without cache also
             return CheckKernel(pindexPrev, nBits, nTime, prevout);
         }
         // LogPrintf("CheckKernel()::CheckStakeKernelHash(): pBlockTime=%u, nTime=%u\n", *pBlockTime, nTime);
-        return CheckStakeKernelHash(pindexPrev, nBits, *pBlockTime, new CCoins(stake.txPrev, pindexPrev->nHeight), prevout, nTime);
+        CCoins stakeCoins2(stake.txPrev, pindexPrev->nHeight);
+        return CheckStakeKernelHash(pindexPrev, nBits, *pBlockTime, &stakeCoins2, prevout, nTime);
     }
 }
 
