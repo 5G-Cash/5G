@@ -44,6 +44,8 @@ public:
         dst.balance += value;
         return true;
     }
+
+    uint256 GetHash() const;
 };
 
 class EVM {
