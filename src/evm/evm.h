@@ -4,10 +4,10 @@
 #include <map>
 #include <vector>
 
-#include "primitives/transaction.h"
-#include "serialize.h"
-#include "uint256.h"
-#include "amount.h"
+#include "../primitives/transaction.h"
+#include "../serialize.h"
+#include "../uint256.h"
+#include "../amount.h"
 
 struct EVMAccount {
     uint64_t nonce;
