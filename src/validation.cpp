@@ -39,6 +39,7 @@
 
 // Global EVM state used for experimental execution
 static EVMState g_evmState;
+extern CBlockTreeDB* pblocktree;
 
 static bool IsEVMTransaction(const CTransaction& tx, CEVMTransaction& evmTx)
 {
@@ -47,7 +48,8 @@ static bool IsEVMTransaction(const CTransaction& tx, CEVMTransaction& evmTx)
     std::vector<unsigned char> script(tx.vout[0].scriptPubKey.begin(), tx.vout[0].scriptPubKey.end());
     if (script.empty() || script[0] != OP_RETURN)
         return false;
-    CDataStream ss(script.begin() + 1, script.end(), SER_NETWORK, 0);
+    std::vector<unsigned char> payload(script.begin() + 1, script.end());
+    CDataStream ss(payload, SER_NETWORK, 0);
     try {
         ss >> evmTx;
         return true;
@@ -64,6 +66,10 @@ bool ProcessEVMTransaction(const CTransaction& tx)
     EVM engine;
     CAmount gasUsed;
     std::vector<unsigned char> out;
-    return engine.Execute(evmTx, g_evmState, gasUsed, out);
+    if (!engine.Execute(evmTx, g_evmState, gasUsed, out))
+        return false;
+    pblocktree->WriteEVMAccount(evmTx.to, g_evmState.GetOrCreate(evmTx.to));
+    pblocktree->WriteEVMReceipt(tx.GetHash(), out);
+    return true;
 }
 
