@@ -10,6 +10,7 @@
 #include "dbwrapper.h"
 #include "chain.h"
 #include "spentindex.h"
+#include "evm/evm.h"
 
 #include <map>
 #include <string>
@@ -135,6 +136,11 @@ public:
     int GetBlockIndexVersion(uint256 const & blockHash);
     bool AddTotalSupply(CAmount const & supply);
     bool ReadTotalSupply(CAmount & supply);
+    // EVM account/receipt persistence
+    bool ReadEVMAccount(const uint160& address, EVMAccount& account);
+    bool WriteEVMAccount(const uint160& address, const EVMAccount& account);
+    bool ReadEVMReceipt(const uint256& txid, std::vector<unsigned char>& receipt);
+    bool WriteEVMReceipt(const uint256& txid, const std::vector<unsigned char>& receipt);
 };
 
 

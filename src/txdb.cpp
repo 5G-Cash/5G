@@ -12,6 +12,7 @@
 #include "main.h"
 #include "consensus/consensus.h"
 #include "base58.h"
+#include "evm/evm.h"
 
 #include <stdint.h>
 
@@ -33,6 +34,8 @@ static const char DB_FLAG = 'F';
 static const char DB_REINDEX_FLAG = 'R';
 static const char DB_LAST_BLOCK = 'l';
 static const char DB_TOTAL_SUPPLY = 'S';
+static const char DB_EVM_ACCOUNT = 'm';
+static const char DB_EVM_RECEIPT = 'r';
 
 
 CCoinsViewDB::CCoinsViewDB(size_t nCacheSize, bool fMemory, bool fWipe) : db(GetDataDir() / "chainstate", nCacheSize, fMemory, fWipe, true)
@@ -416,6 +419,26 @@ bool CBlockTreeDB::ReadTotalSupply(CAmount & supply)
         return true;
     }
     return false;
+}
+
+bool CBlockTreeDB::ReadEVMAccount(const uint160& address, EVMAccount& account)
+{
+    return Read(std::make_pair(DB_EVM_ACCOUNT, address), account);
+}
+
+bool CBlockTreeDB::WriteEVMAccount(const uint160& address, const EVMAccount& account)
+{
+    return Write(std::make_pair(DB_EVM_ACCOUNT, address), account);
+}
+
+bool CBlockTreeDB::ReadEVMReceipt(const uint256& txid, std::vector<unsigned char>& receipt)
+{
+    return Read(std::make_pair(DB_EVM_RECEIPT, txid), receipt);
+}
+
+bool CBlockTreeDB::WriteEVMReceipt(const uint256& txid, const std::vector<unsigned char>& receipt)
+{
+    return Write(std::make_pair(DB_EVM_RECEIPT, txid), receipt);
 }
 
 /******************************************************************************/

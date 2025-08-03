@@ -33,6 +33,37 @@
 #include "utilstrencodings.h"
 #include "validationinterface.h"
 #include "versionbits.h"
+#include "evm/evm.h"
 
 
+
+// Global EVM state used for experimental execution
+static EVMState g_evmState;
+
+static bool IsEVMTransaction(const CTransaction& tx, CEVMTransaction& evmTx)
+{
+    if (tx.vout.empty() || !tx.vout[0].scriptPubKey.IsUnspendable())
+        return false;
+    std::vector<unsigned char> script(tx.vout[0].scriptPubKey.begin(), tx.vout[0].scriptPubKey.end());
+    if (script.empty() || script[0] != OP_RETURN)
+        return false;
+    CDataStream ss(script.begin() + 1, script.end(), SER_NETWORK, 0);
+    try {
+        ss >> evmTx;
+        return true;
+    } catch (const std::exception&) {
+        return false;
+    }
+}
+
+bool ProcessEVMTransaction(const CTransaction& tx)
+{
+    CEVMTransaction evmTx;
+    if (!IsEVMTransaction(tx, evmTx))
+        return false;
+    EVM engine;
+    CAmount gasUsed;
+    std::vector<unsigned char> out;
+    return engine.Execute(evmTx, g_evmState, gasUsed, out);
+}
 
