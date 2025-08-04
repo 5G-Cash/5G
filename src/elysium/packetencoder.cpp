@@ -7,7 +7,7 @@
 #include "../base58.h"
 #include "../utilstrencodings.h"
 
-#include "crypto/sha256.h"
+#include "../crypto/sha256.h"
 
 #include "../script/standard.h"
 
