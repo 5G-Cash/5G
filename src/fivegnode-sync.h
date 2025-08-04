@@ -8,7 +8,7 @@
 #include "chain.h"
 #include "net.h"
 
-#include <univalue.h>
+#include "univalue/include/univalue.h"
 
 class CFivegnodeSync;
 
