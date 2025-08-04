@@ -17,11 +17,11 @@ class CTransaction;
 #include "../uint256.h"
 #include "../util.h"
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <boost/filesystem/path.hpp>
 
-#include <leveldb/status.h>
+#include "../leveldb/include/leveldb/status.h"
 
 #include <map>
 #include <set>

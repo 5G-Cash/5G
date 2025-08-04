@@ -5,7 +5,7 @@
 #ifndef ZCOIN_ELYSIUM_ECDSA_CONTEXT_H
 #define ZCOIN_ELYSIUM_ECDSA_CONTEXT_H
 
-#include <secp256k1.h>
+#include "../secp256k1/include/secp256k1.h"
 
 namespace elysium {
 
