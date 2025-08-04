@@ -67,7 +67,7 @@ bool ProcessEVMTransaction(const CTransaction& tx)
     if (!IsEVMTransaction(tx, evmTx))
         return false;
     EVM engine;
-    CAmount gasUsed;
+    uint64_t gasUsed;
     std::vector<unsigned char> out;
     if (!engine.Execute(evmTx, g_evmState, gasUsed, out))
         return false;

@@ -8,7 +8,7 @@ uint256 EVMState::GetHash() const {
     return SerializeHash(accounts);
 }
 
-bool EVM::Execute(const CEVMTransaction& tx, EVMState& state, CAmount& gasUsed, std::vector<unsigned char>& output) {
+bool EVM::Execute(const CEVMTransaction& tx, EVMState& state, uint64_t& gasUsed, std::vector<unsigned char>& output) {
     gasUsed = 0;
 
     if (!state.Transfer(uint160(), tx.to, tx.value))

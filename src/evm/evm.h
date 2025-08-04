@@ -50,7 +50,7 @@ public:
 
 class EVM {
 public:
-    bool Execute(const CEVMTransaction& tx, EVMState& state, CAmount& gasUsed, std::vector<unsigned char>& output);
+    bool Execute(const CEVMTransaction& tx, EVMState& state, uint64_t& gasUsed, std::vector<unsigned char>& output);
 };
 
 #endif // BITCOIN_EVM_EVM_H
