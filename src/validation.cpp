@@ -39,6 +39,7 @@
 
 // Global EVM state used for experimental execution
 static EVMState g_evmState;
+static const size_t MAX_EVM_TX_SIZE = 1024;
 extern CBlockTreeDB* pblocktree;
 
 static bool IsEVMTransaction(const CTransaction& tx, CEVMTransaction& evmTx)
@@ -49,6 +50,8 @@ static bool IsEVMTransaction(const CTransaction& tx, CEVMTransaction& evmTx)
     if (script.empty() || script[0] != OP_RETURN)
         return false;
     std::vector<unsigned char> payload(script.begin() + 1, script.end());
+    if (payload.size() > MAX_EVM_TX_SIZE)
+        return false;
     CDataStream ss(payload, SER_NETWORK, 0);
     try {
         ss >> evmTx;
