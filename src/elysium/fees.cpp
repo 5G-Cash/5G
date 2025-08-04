@@ -12,7 +12,7 @@
 #include "elysium/sp.h"
 #include "elysium/sto.h"
 
-#include "leveldb/db.h"
+#include "../leveldb/include/leveldb/db.h"
 
 #include "main.h"
 

@@ -5,7 +5,7 @@
 #include "../../test/fixtures.h"
 #include "../../test/test_bitcoin.h"
 
-#include <leveldb/db.h>
+#include "../../leveldb/include/leveldb/db.h"
 
 #include <boost/test/unit_test.hpp>
 

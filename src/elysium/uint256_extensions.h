@@ -7,7 +7,7 @@
 #ifndef ELYSIUM_UINT256_EXTENSIONS_H
 #define ELYSIUM_UINT256_EXTENSIONS_H
 
-#include "arith_uint256.h"
+#include "../arith_uint256.h"
 
 #include <assert.h>
 #include <stdint.h>
