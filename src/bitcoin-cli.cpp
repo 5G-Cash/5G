@@ -23,7 +23,7 @@
 #include <event2/buffer.h>
 #include <event2/keyvalq_struct.h>
 
-#include <univalue.h>
+#include "univalue/include/univalue.h"
 
 using namespace std;
 
