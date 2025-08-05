@@ -7,7 +7,7 @@
 #include "util.h"
 #include <boost/filesystem/operations.hpp>
 #include "zmqconfig.h"
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 
 using namespace std;
 

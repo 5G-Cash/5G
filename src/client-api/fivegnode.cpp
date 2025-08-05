@@ -5,7 +5,7 @@
 #include "activefivegnode.h"
 #include "validationinterface.h"
 #include "fivegnodeman.h"
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 #include "fivegnode-sync.h"
 #include "fivegnodeconfig.h"
 #include "client-api/server.h"

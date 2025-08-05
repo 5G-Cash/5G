@@ -21,7 +21,7 @@
 #include "../wallet/wallet.h"
 #include "../wallet/walletexcept.h"
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <boost/function_output_iterator.hpp>
 #include <boost/optional.hpp>

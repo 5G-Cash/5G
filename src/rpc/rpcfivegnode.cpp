@@ -13,7 +13,7 @@
 
 #include <fstream>
 #include <iomanip>
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 void EnsureWalletIsUnlocked();
 

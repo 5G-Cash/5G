@@ -8,7 +8,7 @@ struct PrevTxsEntry;
 
 #include "sigmaprimitives.h"
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <string>
 #include <vector>

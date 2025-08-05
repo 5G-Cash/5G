@@ -14,7 +14,7 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/test/unit_test.hpp>
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 using namespace std;
 

@@ -34,7 +34,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/thread.hpp>
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 using namespace std;
 

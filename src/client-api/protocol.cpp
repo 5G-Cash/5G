@@ -4,7 +4,7 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "client-api/protocol.h"
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 #include <string>
 
 using namespace std;

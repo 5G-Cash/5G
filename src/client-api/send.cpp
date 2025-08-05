@@ -11,7 +11,7 @@
 #include <client-api/wallet.h>
 #include "client-api/protocol.h"
 #include "rpc/server.h"
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 #include <fstream>
 
 namespace fs = boost::filesystem;

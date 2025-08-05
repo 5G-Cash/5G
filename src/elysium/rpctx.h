@@ -1,7 +1,7 @@
 #ifndef ELYSIUM_RPCTX
 #define ELYSIUM_RPCTX
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 UniValue elysium_sendrawtx(const UniValue& params, bool fHelp);
 UniValue elysium_send(const UniValue& params, bool fHelp);

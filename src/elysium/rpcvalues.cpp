@@ -14,7 +14,7 @@
 #include "../script/script.h"
 #include "../uint256.h"
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <string>
 #include <vector>

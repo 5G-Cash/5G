@@ -24,7 +24,7 @@
 #include "sync.h"
 #include "uint256.h"
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
