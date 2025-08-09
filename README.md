@@ -79,3 +79,10 @@ Setting up a Fivegnode
 ==================================
 
 Read [contrib/masternode-setup-scripts/README.md](contrib/masternode-setup-scripts/README.md) for instructions.
+
+Rosetta API
+==================================
+
+A lightweight Rosetta Data API server is provided in `contrib/rosetta`.
+See `doc/rosetta.md` for details on running the server.
+
