@@ -18,4 +18,10 @@ extern std::map<CScriptID, CScript> mapStakeDelegations;
  */
 bool IsDelegatedStake(const CScript& owner, const CScript& delegate);
 
+/** Register a delegate script for an owner script. */
+void RegisterDelegation(const CScript& owner, const CScript& delegate);
+
+/** Remove an existing delegation for an owner script. */
+void RemoveDelegation(const CScript& owner);
+
 #endif // FIVEG_DELEGATION_H

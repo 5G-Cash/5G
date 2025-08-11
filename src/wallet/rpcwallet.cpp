@@ -19,8 +19,10 @@
 #include "timedata.h"
 #include "util.h"
 #include "utilmoneystr.h"
+#include "utilstrencodings.h"
 #include "wallet.h"
 #include "walletdb.h"
+#include "delegation.h"
 #include "hdmint/tracker.h"
 #include "fivegnode-sync.h"
 #include "zerocoin.h"
@@ -4082,6 +4084,79 @@ UniValue removetxwallet(const UniValue& params, bool fHelp) {
 }
 
 
+UniValue delegatestake(const UniValue& params, bool fHelp)
+{
+    if (!EnsureWalletIsAvailable(fHelp))
+        return NullUniValue;
+    if (fHelp || params.size() != 2)
+        throw runtime_error(
+            "delegatestake <owner> <delegate>\n" + HelpRequiringPassphrase() +
+            "\nAssigns staking rights from an owner address to a delegate address.\n" +
+            "\nArguments:\n" "1. \"owner\"    (string, required) coin-owner address\n" "2. \"delegate\" (string, required) delegate address\n");
+
+    EnsureWalletIsUnlocked();
+
+    CBitcoinAddress ownerAddr(params[0].get_str());
+    CBitcoinAddress delegateAddr(params[1].get_str());
+    if (!ownerAddr.IsValid() || !delegateAddr.IsValid())
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid address");
+
+    CScript ownerScript = GetScriptForDestination(ownerAddr.Get());
+    if (!IsMine(*pwalletMain, ownerScript))
+        throw JSONRPCError(RPC_WALLET_ERROR, "Owner address not found in wallet");
+    CScript delegateScript = GetScriptForDestination(delegateAddr.Get());
+
+    RegisterDelegation(ownerScript, delegateScript);
+    return UniValue(UniValue::VBOOL, true);
+}
+
+UniValue revokedelegation(const UniValue& params, bool fHelp)
+{
+    if (!EnsureWalletIsAvailable(fHelp))
+        return NullUniValue;
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "revokedelegation <owner>\n" + HelpRequiringPassphrase() +
+            "\nRemoves a previously assigned staking delegate.\n" +
+            "\nArguments:\n" "1. \"owner\"    (string, required) coin-owner address\n");
+
+    EnsureWalletIsUnlocked();
+
+    CBitcoinAddress ownerAddr(params[0].get_str());
+    if (!ownerAddr.IsValid())
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid address");
+
+    CScript ownerScript = GetScriptForDestination(ownerAddr.Get());
+    if (!IsMine(*pwalletMain, ownerScript))
+        throw JSONRPCError(RPC_WALLET_ERROR, "Owner address not found in wallet");
+
+    RemoveDelegation(ownerScript);
+    return UniValue(UniValue::VBOOL, true);
+}
+
+UniValue listdelegations(const UniValue& params, bool fHelp)
+{
+    if (!EnsureWalletIsAvailable(fHelp))
+        return NullUniValue;
+    if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "listdelegations\n" "\nLists known stake delegations.\n");
+
+    UniValue ret(UniValue::VARR);
+    for (const auto& entry : mapStakeDelegations) {
+        UniValue obj(UniValue::VOBJ);
+        obj.push_back(Pair("owner", CBitcoinAddress(entry.first).ToString()));
+        CTxDestination dest;
+        if (ExtractDestination(entry.second, dest))
+            obj.push_back(Pair("delegate", CBitcoinAddress(dest).ToString()));
+        else
+            obj.push_back(Pair("delegate", HexStr(entry.second.begin(), entry.second.end())));
+        ret.push_back(obj);
+    }
+    return ret;
+}
+
+
 
 extern UniValue dumpprivkey_index(const UniValue& params, bool fHelp); // in rpcdump.cpp
 extern UniValue importprivkey(const UniValue& params, bool fHelp);
@@ -4163,6 +4238,9 @@ static const CRPCCommand rpcCommands[] =
 
     { "wallet",             "removetxmempool",          &removetxmempool,          false },
     { "wallet",             "removetxwallet",           &removetxwallet,           false },
+    { "wallet",             "delegatestake",            &delegatestake,            false },
+    { "wallet",             "revokedelegation",         &revokedelegation,         false },
+    { "wallet",             "listdelegations",          &listdelegations,          false },
     { "wallet",             "listspendzerocoins",       &listspendzerocoins,       false },
     { "wallet",             "listsigmaspends",          &listsigmaspends,          false },
     { "wallet",             "spendallzerocoin",         &spendallzerocoin,         false },

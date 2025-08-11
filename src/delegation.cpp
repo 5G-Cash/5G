@@ -15,3 +15,13 @@ bool IsDelegatedStake(const CScript& owner, const CScript& delegate)
         return false;
     return it->second == delegate;
 }
+
+void RegisterDelegation(const CScript& owner, const CScript& delegate)
+{
+    mapStakeDelegations[CScriptID(owner)] = delegate;
+}
+
+void RemoveDelegation(const CScript& owner)
+{
+    mapStakeDelegations.erase(CScriptID(owner));
+}
