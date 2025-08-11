@@ -1,9 +1,9 @@
-#ifndef FIVEG_DELEGATION_H
-#define FIVEG_DELEGATION_H
-
 // Copyright (c) 2025 The FiveG developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
+#ifndef FIVEG_DELEGATION_H
+#define FIVEG_DELEGATION_H
 
 #include <map>
 #include "script/script.h"
