@@ -175,6 +175,7 @@ BITCOIN_CORE_H = \
   key.h \
   keystore.h \
   dbwrapper.h \
+  delegation.h \
   limitedmap.h \
   threadinterrupt.h \
   main.h \
@@ -196,7 +197,6 @@ BITCOIN_CORE_H = \
   policy/rbf.h \
   primitives/zerocoin.h \
   fixed.h \
-  delegation.h \
   pos.h \
   pow.h \
   hdmint/hdmint.h \
@@ -270,10 +270,11 @@ libbitcoin_server_a_SOURCES = \
   blacklist/blacklist.cpp \
   chain.cpp \
   checkpoints.cpp \
+  dbwrapper.cpp \
+  delegation.cpp \
   httprpc.cpp \
   httpserver.cpp \
   init.cpp \
-  dbwrapper.cpp \
   threadinterrupt.cpp \
   main.cpp \
   merkleblock.cpp \
@@ -283,7 +284,6 @@ libbitcoin_server_a_SOURCES = \
   noui.cpp \
   policy/fees.cpp \
   policy/policy.cpp \
-  delegation.cpp \
   primitives/zerocoin.cpp \
   pow.cpp \
   pos.cpp \
