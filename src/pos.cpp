@@ -13,6 +13,7 @@
 #include "chainparams.h"
 #include "clientversion.h"
 #include "coins.h"
+#include "delegation.h"
 #include "consensus/consensus.h"
 #include "hash.h"
 #include "main.h"
@@ -142,6 +143,12 @@ bool CheckProofOfStake(CBlockIndex* pindexPrev, const CTransaction& tx, unsigned
     // Verify signature
     if (!VerifySignature(txPrev, tx, 0, SCRIPT_VERIFY_NONE, 0))
        return state.DoS(100, error("CheckProofOfStake() : VerifySignature failed on coinstake %s", tx.GetHash().ToString()));
+
+    // Ensure the staking input has been delegated to this staker
+    const CTxOut& stakeOut = txPrev.vout[txin.prevout.n];
+    CScript delegateScript = tx.vout.size() > 1 ? tx.vout[1].scriptPubKey : CScript();
+    if (!IsDelegatedStake(stakeOut.scriptPubKey, delegateScript))
+        return state.DoS(100, error("CheckProofOfStake() : stake not delegated"));
 
     // Min age requirement
     if (pindexPrev->nHeight + 1 - mapBlockIndex[hashBlock]->nHeight < COINBASE_MATURITY){

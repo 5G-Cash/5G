@@ -196,6 +196,7 @@ BITCOIN_CORE_H = \
   policy/rbf.h \
   primitives/zerocoin.h \
   fixed.h \
+  delegation.h \
   pos.h \
   pow.h \
   hdmint/hdmint.h \
@@ -282,6 +283,7 @@ libbitcoin_server_a_SOURCES = \
   noui.cpp \
   policy/fees.cpp \
   policy/policy.cpp \
+  delegation.cpp \
   primitives/zerocoin.cpp \
   pow.cpp \
   pos.cpp \
