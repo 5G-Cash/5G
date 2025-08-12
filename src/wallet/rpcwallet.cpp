@@ -4107,7 +4107,7 @@ UniValue delegatestake(const UniValue& params, bool fHelp)
     CScript delegateScript = GetScriptForDestination(delegateAddr.Get());
 
     RegisterDelegation(ownerScript, delegateScript);
-    return UniValue(UniValue::VBOOL, true);
+    return UniValue(true);
 }
 
 UniValue revokedelegation(const UniValue& params, bool fHelp)
@@ -4131,7 +4131,7 @@ UniValue revokedelegation(const UniValue& params, bool fHelp)
         throw JSONRPCError(RPC_WALLET_ERROR, "Owner address not found in wallet");
 
     RemoveDelegation(ownerScript);
-    return UniValue(UniValue::VBOOL, true);
+    return UniValue(true);
 }
 
 UniValue listdelegations(const UniValue& params, bool fHelp)
