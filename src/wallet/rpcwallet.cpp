@@ -4145,12 +4145,8 @@ UniValue listdelegations(const UniValue& params, bool fHelp)
     UniValue ret(UniValue::VARR);
     for (const auto& entry : mapStakeDelegations) {
         UniValue obj(UniValue::VOBJ);
-        obj.push_back(Pair("owner", CBitcoinAddress(entry.first).ToString()));
-        CTxDestination dest;
-        if (ExtractDestination(entry.second, dest))
-            obj.push_back(Pair("delegate", CBitcoinAddress(dest).ToString()));
-        else
-            obj.push_back(Pair("delegate", HexStr(entry.second.begin(), entry.second.end())));
+        obj.push_back(Pair("owner", CBitcoinAddress(CTxDestination(entry.first)).ToString()));
+        obj.push_back(Pair("delegate", CBitcoinAddress(CTxDestination(entry.second)).ToString()));
         ret.push_back(obj);
     }
     return ret;

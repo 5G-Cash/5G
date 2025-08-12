@@ -6,19 +6,19 @@
 
 // In-memory delegation map.
 // TODO: Persist and populate via transactions or RPC calls.
-std::map<CScriptID, CScript> mapStakeDelegations;
+std::map<CScriptID, CScriptID> mapStakeDelegations;
 
 bool IsDelegatedStake(const CScript& owner, const CScript& delegate)
 {
     auto it = mapStakeDelegations.find(CScriptID(owner));
     if (it == mapStakeDelegations.end())
         return false;
-    return it->second == delegate;
+    return it->second == CScriptID(delegate);
 }
 
 void RegisterDelegation(const CScript& owner, const CScript& delegate)
 {
-    mapStakeDelegations[CScriptID(owner)] = delegate;
+    mapStakeDelegations[CScriptID(owner)] = CScriptID(delegate);
 }
 
 void RemoveDelegation(const CScript& owner)

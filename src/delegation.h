@@ -9,8 +9,8 @@
 #include "script/script.h"
 #include "script/standard.h"
 
-/** Simple registry mapping coin owner scripts to delegated staking scripts. */
-extern std::map<CScriptID, CScript> mapStakeDelegations;
+/** Simple registry mapping coin owner script hashes to delegate script hashes. */
+extern std::map<CScriptID, CScriptID> mapStakeDelegations;
 
 /**
  * Returns true if the provided delegate script is authorized to stake coins
