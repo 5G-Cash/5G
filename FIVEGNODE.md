@@ -4,6 +4,8 @@ Fivegnode Build Instructions and Notes
  - Date: July 26, 2020
  - More detailed guide available here: https://fivegx.org/fivegnode-setup-guide/
 
+Note: Fivegnode payments are enforced by consensus and cannot be disabled via spork.
+
 Prerequisites
 -------------
  - Ubuntu 18.04+

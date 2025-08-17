@@ -19,7 +19,6 @@ class CSporkMessage;
 static const int SPORK_2_INSTANTSEND_ENABLED                            = 10001;
 static const int SPORK_3_INSTANTSEND_BLOCK_FILTERING                    = 10002;
 static const int SPORK_5_INSTANTSEND_MAX_VALUE                          = 10004;
-static const int SPORK_8_FIVEGNODE_PAYMENT_ENFORCEMENT                 = 10007;
 static const int SPORK_9_SUPERBLOCKS_ENABLED                            = 10008;
 static const int SPORK_10_FIVEGNODE_PAY_UPDATED_NODES                  = 10009;
 static const int SPORK_12_RECONSIDER_BLOCKS                             = 10011;
@@ -35,7 +34,6 @@ static const int SPORK_END                                              = SPORK_
 static const int64_t SPORK_2_INSTANTSEND_ENABLED_DEFAULT                = 0;            // ON
 static const int64_t SPORK_3_INSTANTSEND_BLOCK_FILTERING_DEFAULT        = 0;            // ON
 static const int64_t SPORK_5_INSTANTSEND_MAX_VALUE_DEFAULT              = 1000;         // 1000 VGC
-static const int64_t SPORK_8_FIVEGNODE_PAYMENT_ENFORCEMENT_DEFAULT     = 4070908800ULL;// OFF
 static const int64_t SPORK_9_SUPERBLOCKS_ENABLED_DEFAULT                = 4070908800ULL;// OFF
 static const int64_t SPORK_10_FIVEGNODE_PAY_UPDATED_NODES_DEFAULT      = 4070908800ULL;// OFF
 static const int64_t SPORK_12_RECONSIDER_BLOCKS_DEFAULT                 = 0;            // 0 BLOCKS

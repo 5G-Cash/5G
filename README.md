@@ -16,11 +16,12 @@ For more information, read the
 
 ### Key Features
     -Privacy (Anonymous and Untraceable)
-    -Sigma Protocol 
+    -Sigma Protocol
     -Tor Protocol
     -Dandelion++ Protocol
     -Proof of Work and Proof of Stake (3.0) share 55% of the block reward
     -Masternode gets 45% of the block reward
+    -Masternode payments are enforced at all block heights and cannot be disabled
 
 ### Specifications and Block Rewards -----> https://discord.gg/tmQSFV9
 
