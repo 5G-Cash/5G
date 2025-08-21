@@ -20,6 +20,8 @@
 #include "utilstrencodings.h"
 #include "hash.h"
 #include "base58.h"
+#include "chainlocks.h"
+#include "finality.h"
 #include <stdint.h>
 
 #include <univalue.h>
@@ -1341,6 +1343,29 @@ UniValue reconsiderblock(const UniValue& params, bool fHelp)
     return NullUniValue;
 }
 
+UniValue getchainlockinfo(const UniValue& params, bool fHelp)
+{
+    if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "getchainlockinfo\n"
+            "Returns the best chainlock\n");
+    UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("height", g_chainlocks.GetBestChainLockHeight()));
+    obj.push_back(Pair("hash", g_chainlocks.GetBestChainLockHash().ToString()));
+    return obj;
+}
+
+UniValue getfinalityinfo(const UniValue& params, bool fHelp)
+{
+    if (fHelp || params.size() != 0)
+        throw runtime_error(
+            "getfinalityinfo\n"
+            "Returns the latest finalized height\n");
+    UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("height", g_finalityman.GetFinalizedHeight()));
+    return obj;
+}
+
 static const CRPCCommand commands[] =
 { //  category              name                      actor (function)         okSafeMode
   //  --------------------- ------------------------  -----------------------  ----------
@@ -1351,6 +1376,8 @@ static const CRPCCommand commands[] =
     { "blockchain",         "getblockhash",           &getblockhash,           true  },
     { "blockchain",         "getblockhashes",         &getblockhashes,         true  },
     { "blockchain",         "getblockheader",         &getblockheader,         true  },
+    { "blockchain",         "getchainlockinfo",       &getchainlockinfo,       true  },
+    { "blockchain",         "getfinalityinfo",        &getfinalityinfo,        true  },
     { "blockchain",         "getchaintips",           &getchaintips,           true  },
     { "blockchain",         "getdifficulty",          &getdifficulty,          true  },
     { "blockchain",         "getmempoolancestors",    &getmempoolancestors,    true  },

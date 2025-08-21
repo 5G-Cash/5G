@@ -21,6 +21,7 @@ For more information, read the
     -Dandelion++ Protocol
     -Proof of Work and Proof of Stake (3.0) share 55% of the block reward
     -Masternode gets 45% of the block reward
+    -ChainLocks finality to protect against 51% attacks
 
 ### Specifications and Block Rewards -----> https://discord.gg/tmQSFV9
 

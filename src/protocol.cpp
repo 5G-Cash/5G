@@ -63,6 +63,9 @@ namespace NetMsgType {
     const char *SYNCSTATUSCOUNT = "ssc";
     const char *MNVERIFY = "mnv";
     const char *TXLOCKREQUEST = "ix";
+    const char *CLSIG = "clsig";
+    const char *VOTE = "vote";
+    const char *COMMIT = "commit";
 
 };
 
@@ -117,6 +120,9 @@ const static std::string allNetMessageTypes[] = {
         NetMsgType::DSEG,
         NetMsgType::SYNCSTATUSCOUNT,
         NetMsgType::MNVERIFY,
+        NetMsgType::CLSIG,
+        NetMsgType::VOTE,
+        NetMsgType::COMMIT,
 
 };
 const static std::vector <std::string> allNetMessageTypesVec(allNetMessageTypes, allNetMessageTypes + ARRAYLEN(allNetMessageTypes));

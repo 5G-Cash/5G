@@ -268,6 +268,8 @@ libbitcoin_server_a_SOURCES = \
   blockencodings.cpp \
   blacklist/blacklist.cpp \
   chain.cpp \
+  chainlocks.cpp \
+  finality.cpp \
   checkpoints.cpp \
   httprpc.cpp \
   httpserver.cpp \

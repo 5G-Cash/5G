@@ -26,9 +26,10 @@ static const int SPORK_12_RECONSIDER_BLOCKS                             = 10011;
 static const int SPORK_13_OLD_SUPERBLOCK_FLAG                           = 10012;
 static const int SPORK_14_REQUIRE_SENTINEL_FLAG                         = 10013;
 static const int SPORK_15_BLACKLIST_ENABLED                             = 10014;
+static const int SPORK_16_CHAINLOCKS_ENABLED                            = 10015;
 
 static const int SPORK_START                                            = SPORK_2_INSTANTSEND_ENABLED;
-static const int SPORK_END                                              = SPORK_15_BLACKLIST_ENABLED;
+static const int SPORK_END                                              = SPORK_16_CHAINLOCKS_ENABLED;
 
 
 
@@ -42,6 +43,7 @@ static const int64_t SPORK_12_RECONSIDER_BLOCKS_DEFAULT                 = 0;    
 static const int64_t SPORK_13_OLD_SUPERBLOCK_FLAG_DEFAULT               = 4070908800ULL;// OFF
 static const int64_t SPORK_14_REQUIRE_SENTINEL_FLAG_DEFAULT             = 4070908800ULL;// OFF
 static const int64_t SPORK_15_BLACKLIST_ENABLED_DEFAULT                 = 0;// ON by default
+static const int64_t SPORK_16_CHAINLOCKS_ENABLED_DEFAULT                = 4070908800ULL;// OFF
 
 extern std::map<uint256, CSporkMessage> mapSporks;
 
