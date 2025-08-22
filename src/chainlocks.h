@@ -18,6 +18,7 @@ public:
     bool IsBlockChainLocked(const CBlockIndex* pindex) const;
     int GetBestChainLockHeight() const;
     uint256 GetBestChainLockHash() const;
+    void LoadBestChainLock(int nHeight, const uint256& hash);
 private:
     mutable CCriticalSection cs;
     int nBestChainLockHeight = -1;

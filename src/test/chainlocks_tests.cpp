@@ -46,6 +46,7 @@ BOOST_AUTO_TEST_CASE(process_new_chainlock_marks_block)
     g_chainlocks.ProcessNewChainLock(index.nHeight, hash, aggSig);
 
     BOOST_CHECK_EQUAL(g_chainlocks.GetBestChainLockHash(), hash);
+    BOOST_CHECK(index.fChainLocked);
 
     mapBlockIndex.erase(hash);
     mnodeman.Clear();

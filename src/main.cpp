@@ -5492,6 +5492,20 @@ bool static LoadBlockIndexDB() {
 
     PruneBlockIndexCandidates();
 
+    // Restore best ChainLock from block index
+    int nLocked = -1;
+    uint256 hashLocked;
+    for (const std::pair<const uint256, CBlockIndex*>& item : mapBlockIndex) {
+        CBlockIndex* pindex = item.second;
+        if (pindex->fChainLocked && chainActive.Contains(pindex) && pindex->nHeight > nLocked) {
+            nLocked = pindex->nHeight;
+            hashLocked = pindex->GetBlockHash();
+        }
+    }
+    if (nLocked >= 0) {
+        g_chainlocks.LoadBestChainLock(nLocked, hashLocked);
+    }
+
     // some blocks in index can change as a result of ZerocoinBuildStateFromIndex() call
     set<CBlockIndex *> changes;
     ZerocoinBuildStateFromIndex(&chainActive, changes);

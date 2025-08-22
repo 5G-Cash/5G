@@ -22,6 +22,7 @@ void CChainLocks::ProcessNewChainLock(int nHeight, const uint256& hash, const st
     BlockMap::iterator it = mapBlockIndex.find(hash);
     if (it != mapBlockIndex.end()) {
         CBlockIndex* pindex = it->second;
+        pindex->fChainLocked = true;
         if (chainActive[pindex->nHeight] != pindex) {
             CValidationState state;
             ActivateBestChain(state, Params(), pindex);
@@ -48,6 +49,13 @@ uint256 CChainLocks::GetBestChainLockHash() const
 {
     LOCK(cs);
     return sporkManager.IsSporkActive(SPORK_16_CHAINLOCKS_ENABLED) ? hashBestChainLock : uint256();
+}
+
+void CChainLocks::LoadBestChainLock(int nHeight, const uint256& hash)
+{
+    LOCK(cs);
+    nBestChainLockHeight = nHeight;
+    hashBestChainLock = hash;
 }
 
 bool CChainLocks::VerifyChainLockSignature(int nHeight, const uint256& hash, const std::vector<unsigned char>& vchSig)
