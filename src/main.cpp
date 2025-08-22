@@ -38,6 +38,7 @@
 #include "script/standard.h"
 #include "tinyformat.h"
 #include "txdb.h"
+#include "spork.h"
 #include "txmempool.h"
 #include "ui_interface.h"
 #include "undo.h"
@@ -3904,8 +3905,8 @@ static bool ActivateBestChainStep(CValidationState &state, const CChainParams &c
     // Disconnect active blocks which are no longer in the best chain.
     bool fBlocksDisconnected = false;
     while (chainActive.Tip() && chainActive.Tip() != pindexFork) {
-        if (chainActive.Tip()->fChainLocked ||
-            g_finalityman.IsBlockFinalized(chainActive.Tip())) {
+        if ((sporkManager.IsSporkActive(SPORK_16_CHAINLOCKS_ENABLED) && chainActive.Tip()->fChainLocked) ||
+            (sporkManager.IsSporkActive(SPORK_17_BFT_FINALITY_ENABLED) && g_finalityman.IsBlockFinalized(chainActive.Tip()))) {
             return error("Attempted to disconnect finalized block");
         }
         if (!DisconnectTip(state, chainparams)) {
@@ -8126,23 +8127,29 @@ bool static ProcessMessage(CNode *pfrom, string strCommand,
 //            LogPrint("net", "received: feefilter of %s from peer=%d\n", CFeeRate(newFeeFilter).ToString(), pfrom->id);
         }
     } else if (strCommand == NetMsgType::CLSIG) {
-        int nHeight;
-        uint256 hash;
-        std::vector<unsigned char> vchSig;
-        vRecv >> nHeight >> hash >> vchSig;
-        g_chainlocks.ProcessNewChainLock(nHeight, hash, vchSig);
+        if (sporkManager.IsSporkActive(SPORK_16_CHAINLOCKS_ENABLED)) {
+            int nHeight;
+            uint256 hash;
+            std::vector<unsigned char> vchSig;
+            vRecv >> nHeight >> hash >> vchSig;
+            g_chainlocks.ProcessNewChainLock(nHeight, hash, vchSig);
+        }
     } else if (strCommand == NetMsgType::VOTE) {
-        uint256 validator;
-        ValidatorVote vote;
-        vRecv >> validator >> vote.nHeight >> vote.blockHash;
-        g_finalityman.RegisterVote(validator, vote);
+        if (sporkManager.IsSporkActive(SPORK_17_BFT_FINALITY_ENABLED)) {
+            uint256 validator;
+            ValidatorVote vote;
+            vRecv >> validator >> vote.nHeight >> vote.blockHash;
+            g_finalityman.RegisterVote(validator, vote);
+        }
     } else if (strCommand == NetMsgType::COMMIT) {
-        uint256 validator;
-        int nHeight;
-        uint256 hash;
-        vRecv >> validator >> nHeight >> hash;
-        ValidatorVote vote{nHeight, hash};
-        g_finalityman.RegisterVote(validator, vote);
+        if (sporkManager.IsSporkActive(SPORK_17_BFT_FINALITY_ENABLED)) {
+            uint256 validator;
+            int nHeight;
+            uint256 hash;
+            vRecv >> validator >> nHeight >> hash;
+            ValidatorVote vote{nHeight, hash};
+            g_finalityman.RegisterVote(validator, vote);
+        }
     } else if (strCommand == NetMsgType::NOTFOUND) {
         // We do not care about the NOTFOUND message, but logging an Unknown Command
         // message would be undesirable as we transmit it ourselves.
