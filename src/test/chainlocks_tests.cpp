@@ -16,7 +16,7 @@ BOOST_AUTO_TEST_CASE(process_new_chainlock_marks_block)
 
     g_chainlocks.ProcessNewChainLock(index.nHeight, hash, std::vector<unsigned char>());
 
-    BOOST_CHECK(index.fChainLocked);
+    BOOST_CHECK_EQUAL(g_chainlocks.GetBestChainLockHash(), hash);
 
     mapBlockIndex.erase(hash);
 }

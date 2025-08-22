@@ -22,6 +22,7 @@
 #include "base58.h"
 #include "chainlocks.h"
 #include "finality.h"
+#include "spork.h"
 #include <stdint.h>
 
 #include <univalue.h>
@@ -1350,6 +1351,7 @@ UniValue getchainlockinfo(const UniValue& params, bool fHelp)
             "getchainlockinfo\n"
             "Returns the best chainlock\n");
     UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("enabled", sporkManager.IsSporkActive(SPORK_16_CHAINLOCKS_ENABLED)));
     obj.push_back(Pair("height", g_chainlocks.GetBestChainLockHeight()));
     obj.push_back(Pair("hash", g_chainlocks.GetBestChainLockHash().ToString()));
     return obj;

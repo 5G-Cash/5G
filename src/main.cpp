@@ -3905,7 +3905,7 @@ static bool ActivateBestChainStep(CValidationState &state, const CChainParams &c
     // Disconnect active blocks which are no longer in the best chain.
     bool fBlocksDisconnected = false;
     while (chainActive.Tip() && chainActive.Tip() != pindexFork) {
-        if ((sporkManager.IsSporkActive(SPORK_16_CHAINLOCKS_ENABLED) && chainActive.Tip()->fChainLocked) ||
+        if (g_chainlocks.IsBlockChainLocked(chainActive.Tip()) ||
             (sporkManager.IsSporkActive(SPORK_17_BFT_FINALITY_ENABLED) && g_finalityman.IsBlockFinalized(chainActive.Tip()))) {
             return error("Attempted to disconnect finalized block");
         }

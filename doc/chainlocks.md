@@ -7,7 +7,8 @@ any alternative branches extending below that height. This prevents deep
 reorganizations and protects against 51% attacks. Protection is controlled by
 `SPORK_16_CHAINLOCKS_ENABLED`, which defaults to active on mainnet, testnet, and regtest but can be disabled if needed.
 
-Incoming `CLSIG` messages update the best chain lock and persist
-that state across restarts via the `fChainLocked` flag in `CBlockIndex`.
+Incoming `CLSIG` messages update the best chain lock and nodes track the
+highest locked height in memory.
 
-Use the `getchainlockinfo` RPC to inspect the most recently locked block.
+Use the `getchainlockinfo` RPC to inspect the most recently locked block and
+whether ChainLocks are currently enabled.
