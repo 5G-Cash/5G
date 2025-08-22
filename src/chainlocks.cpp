@@ -1,11 +1,14 @@
 #include "chainlocks.h"
 #include "chain.h"
 #include "main.h"
+#include "spork.h"
 
 CChainLocks g_chainlocks;
 
 void CChainLocks::ProcessNewChainLock(int nHeight, const uint256& hash, const std::vector<unsigned char>& vchSig)
 {
+    if (!sporkManager.IsSporkActive(SPORK_16_CHAINLOCKS_ENABLED))
+        return;
     LOCK(cs);
     if (nHeight <= nBestChainLockHeight)
         return;

@@ -1,11 +1,14 @@
 #include "finality.h"
 #include "chain.h"
 #include "main.h"
+#include "spork.h"
 
 FinalityManager g_finalityman;
 
 void FinalityManager::RegisterVote(const uint256& validator, const ValidatorVote& vote)
 {
+    if (!sporkManager.IsSporkActive(SPORK_17_BFT_FINALITY_ENABLED))
+        return;
     LOCK(cs);
     mapVotes[vote.nHeight].insert(vote.blockHash);
     if (vote.nHeight > nFinalizedHeight) {
