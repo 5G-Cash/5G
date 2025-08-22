@@ -58,9 +58,10 @@ TOR_LIBS = tor/src/core/libtor-app.a \
 	tor/src/ext/keccak-tiny/libkeccak-tiny.a
 
 tor.timestamp: $(wildcard tor/src/core/or/*.c) $(wildcard tor/src/core/or/*.h) \
-		$(wildcard tor/src/lib/*.c) $(wildcard tor/src/lib/*.h) \
-		$(wildcard tor/src/trunnel/*.c) $(wildcard tor/src/trunnel/*.h) \
-		$(wildcard tor/src/ext/*.c) $(wildcard tor/src/ext/*.h)
+                $(wildcard tor/src/lib/*.c) $(wildcard tor/src/lib/*.h) \
+                $(wildcard tor/src/lib/tls/*.c) $(wildcard tor/src/lib/tls/*.h) \
+                $(wildcard tor/src/trunnel/*.c) $(wildcard tor/src/trunnel/*.h) \
+                $(wildcard tor/src/ext/*.c) $(wildcard tor/src/ext/*.h)
 	@rm -f tor.timestamp.tmp
 	@touch tor.timestamp.tmp
 	$(AM_V_at)$(MAKE) $(AM_MAKEFLAGS) -C tor
