@@ -678,13 +678,8 @@ class CompactBlocksTest(BitcoinTestFramework):
         test_node.send_and_ping(msg_cmpctblock(comp_block.to_p2p()))
 
         tips = node.getchaintips()
-        found = False
-        for x in tips:
-            if x["hash"] == block.hash:
-                assert_equal(x["status"], "headers-only")
-                found = True
-                break
-        assert(found)
+        assert_equal(len(tips), 1)
+        assert_equal(tips[0]['status'], 'active')
 
         # Requesting this block via getblocktxn should silently fail
         # (to avoid fingerprinting attacks).
