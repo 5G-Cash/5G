@@ -1133,8 +1133,7 @@ UniValue getchaintips(const UniValue& params, bool fHelp)
     if (fHelp || params.size() != 0)
         throw runtime_error(
             "getchaintips\n"
-            "Return information about all known tips in the block tree,"
-            " including the main chain as well as orphaned branches.\n"
+            "Return information about the active tip in the block tree.\n"
             "\nResult:\n"
             "[\n"
             "  {\n"
@@ -1142,20 +1141,8 @@ UniValue getchaintips(const UniValue& params, bool fHelp)
             "    \"hash\": \"xxxx\",         (string) block hash of the tip\n"
             "    \"branchlen\": 0          (numeric) zero for main chain\n"
             "    \"status\": \"active\"      (string) \"active\" for the main chain\n"
-            "  },\n"
-            "  {\n"
-            "    \"height\": xxxx,\n"
-            "    \"hash\": \"xxxx\",\n"
-            "    \"branchlen\": 1          (numeric) length of branch connecting the tip to the main chain\n"
-            "    \"status\": \"xxxx\"        (string) status of the chain (active, valid-fork, valid-headers, headers-only, invalid)\n"
             "  }\n"
             "]\n"
-            "Possible values for status:\n"
-            "1.  \"invalid\"               This branch contains at least one invalid block\n"
-            "2.  \"headers-only\"          Not all blocks for this branch are available, but the headers are valid\n"
-            "3.  \"valid-headers\"         All blocks are available for this branch, but they were never fully validated\n"
-            "4.  \"valid-fork\"            This branch is not part of the active chain, but is fully validated\n"
-            "5.  \"active\"                This is the tip of the active main chain, which is certainly valid\n"
             "\nExamples:\n"
             + HelpExampleCli("getchaintips", "")
             + HelpExampleRpc("getchaintips", "")
@@ -1163,34 +1150,20 @@ UniValue getchaintips(const UniValue& params, bool fHelp)
 
     LOCK(cs_main);
 
-    /*
-     * Idea:  the set of chain tips is chainActive.tip, plus orphan blocks which do not have another orphan building off of them.
-     * Algorithm:
-     *  - Make one pass through mapBlockIndex, picking out the orphan blocks, and also storing a set of the orphan block's pprev pointers.
-     *  - Iterate through the orphan blocks. If the block isn't pointed to by another orphan, it is a chain tip.
-     *  - add chainActive.Tip()
-     */
     std::set<const CBlockIndex*, CompareBlocksByHeight> setTips;
-    std::set<const CBlockIndex*> setOrphans;
-    std::set<const CBlockIndex*> setPrevs;
-
-    BOOST_FOREACH(const PAIRTYPE(const uint256, CBlockIndex*)& item, mapBlockIndex)
-    {
-        if (!chainActive.Contains(item.second)) {
-            setOrphans.insert(item.second);
-            setPrevs.insert(item.second->pprev);
-        }
-    }
-
-    for (std::set<const CBlockIndex*>::iterator it = setOrphans.begin(); it != setOrphans.end(); ++it)
-    {
-        if (setPrevs.erase(*it) == 0) {
-            setTips.insert(*it);
-        }
-    }
-
     // Always report the currently active tip.
     setTips.insert(chainActive.Tip());
+
+    // Filter out any tips that are not part of the active chain or have non-zero branch length
+    for (auto it = setTips.begin(); it != setTips.end(); ) {
+        const CBlockIndex* block = *it;
+        const int branchLen = block->nHeight - chainActive.FindFork(block)->nHeight;
+        if (branchLen != 0 || !chainActive.Contains(block)) {
+            it = setTips.erase(it);
+        } else {
+            ++it;
+        }
+    }
 
     /* Construct the output array.  */
     UniValue res(UniValue::VARR);
@@ -1203,27 +1176,8 @@ UniValue getchaintips(const UniValue& params, bool fHelp)
         const int branchLen = block->nHeight - chainActive.FindFork(block)->nHeight;
         obj.push_back(Pair("branchlen", branchLen));
 
-        string status;
-        if (chainActive.Contains(block)) {
-            // This block is part of the currently active chain.
-            status = "active";
-        } else if (block->nStatus & BLOCK_FAILED_MASK) {
-            // This block or one of its ancestors is invalid.
-            status = "invalid";
-        } else if (block->nChainTx == 0) {
-            // This block cannot be connected because full block data for it or one of its parents is missing.
-            status = "headers-only";
-        } else if (block->IsValid(BLOCK_VALID_SCRIPTS)) {
-            // This block is fully validated, but no longer part of the active chain. It was probably the active block once, but was reorganized.
-            status = "valid-fork";
-        } else if (block->IsValid(BLOCK_VALID_TREE)) {
-            // The headers for this block are valid, but it has not been validated. It was probably never part of the most-work chain.
-            status = "valid-headers";
-        } else {
-            // No clue.
-            status = "unknown";
-        }
-        obj.push_back(Pair("status", status));
+        // At this point, only the active tip remains
+        obj.push_back(Pair("status", "active"));
 
         res.push_back(obj);
     }

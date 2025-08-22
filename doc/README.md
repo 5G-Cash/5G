@@ -31,6 +31,20 @@ for help and more information.
 * Ask for help on [#bitcoin](http://webchat.freenode.net?channels=bitcoin) on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net?channels=bitcoin).
 * Ask for help on the [BitcoinTalk](https://bitcointalk.org/) forums, in the [Technical Support board](https://bitcointalk.org/index.php?board=4.0).
 
+### Chain Maintenance
+
+If your node encounters an unwanted fork, the offending branch can be removed
+with the `invalidateblock` RPC call. Provide the hash of the block where the
+fork begins:
+
+```
+fiveg-cli invalidateblock <blockhash>
+```
+
+This marks the block and all of its descendants as invalid so the node
+continues following the canonical chain. The pruned branch is removed from
+the block index and disk, ensuring it never appears as an alternate tip.
+
 Building
 ---------------------
 The following are developer notes on how to build Fiveg on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
