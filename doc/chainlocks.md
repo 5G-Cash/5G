@@ -7,6 +7,11 @@ any alternative branches extending below that height. This prevents deep
 reorganizations and protects against 51% attacks. Protection is controlled by
 `SPORK_16_CHAINLOCKS_ENABLED`, which defaults to active on mainnet, testnet, and regtest but can be disabled if needed.
 
+ChainLock signatures contain threshold BLS attestations from a deterministic
+masternode quorum. A node reconstructs the quorum for the target height and
+verifies that at least 3 of the 5 members signed the block hash before the lock
+is accepted.
+
 Incoming `CLSIG` messages update the best chain lock and nodes track the
 highest locked height in memory.
 

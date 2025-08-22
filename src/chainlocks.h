@@ -7,6 +7,10 @@
 
 class CBlockIndex;
 
+// ChainLocks quorum parameters
+static const size_t CHAINLOCKS_QUORUM_SIZE = 5;
+static const size_t CHAINLOCKS_THRESHOLD   = 3;
+
 class CChainLocks {
 public:
     void ProcessNewChainLock(int nHeight, const uint256& hash, const std::vector<unsigned char>& vchSig);
