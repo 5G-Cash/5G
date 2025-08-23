@@ -133,6 +133,7 @@ public:
     bool LoadBlockIndexGuts(boost::function<CBlockIndex*(const uint256&)> insertBlockIndex);
     int GetBlockIndexVersion();
     int GetBlockIndexVersion(uint256 const & blockHash);
+    bool EraseBlockIndex(const uint256 &hash);
     bool AddTotalSupply(CAmount const & supply);
     bool ReadTotalSupply(CAmount & supply);
 };
