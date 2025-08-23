@@ -1150,35 +1150,14 @@ UniValue getchaintips(const UniValue& params, bool fHelp)
 
     LOCK(cs_main);
 
-    std::set<const CBlockIndex*, CompareBlocksByHeight> setTips;
-    // Always report the currently active tip.
-    setTips.insert(chainActive.Tip());
-
-    // Filter out any tips that are not part of the active chain or have non-zero branch length
-    for (auto it = setTips.begin(); it != setTips.end(); ) {
-        const CBlockIndex* block = *it;
-        const int branchLen = block->nHeight - chainActive.FindFork(block)->nHeight;
-        if (branchLen != 0 || !chainActive.Contains(block)) {
-            it = setTips.erase(it);
-        } else {
-            ++it;
-        }
-    }
-
-    /* Construct the output array.  */
+    const CBlockIndex* tip = chainActive.Tip();
     UniValue res(UniValue::VARR);
-    BOOST_FOREACH(const CBlockIndex* block, setTips)
-    {
+    if (tip != nullptr) {
         UniValue obj(UniValue::VOBJ);
-        obj.push_back(Pair("height", block->nHeight));
-        obj.push_back(Pair("hash", block->phashBlock->GetHex()));
-
-        const int branchLen = block->nHeight - chainActive.FindFork(block)->nHeight;
-        obj.push_back(Pair("branchlen", branchLen));
-
-        // At this point, only the active tip remains
+        obj.push_back(Pair("height", tip->nHeight));
+        obj.push_back(Pair("hash", tip->GetBlockHash().GetHex()));
+        obj.push_back(Pair("branchlen", 0));
         obj.push_back(Pair("status", "active"));
-
         res.push_back(obj);
     }
 
