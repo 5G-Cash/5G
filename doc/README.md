@@ -45,6 +45,8 @@ This marks the block and all of its descendants as invalid so the node
 continues following the canonical chain. The pruned branch is removed from
 the block index and disk, ensuring it never appears as an alternate tip.
 
+Once pruned, `getchaintips` reports only the active chain tip.
+
 Building
 ---------------------
 The following are developer notes on how to build Fiveg on your native platform. They are not complete guides, but include notes on the necessary libraries, compile flags, etc.
