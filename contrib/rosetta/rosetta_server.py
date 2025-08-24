@@ -9,10 +9,14 @@ running 5G node using RPC calls. It is intentionally simple but covers
 the common Rosetta endpoints required by most tooling.
 """
 
+import json
 import os
+import time
 
 import requests
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 RPC_URL = os.environ.get("ROSETTA_RPC_URL", "http://127.0.0.1:9340")
 RPC_USER = os.environ.get("ROSETTA_RPC_USER", "")
@@ -22,8 +26,14 @@ RPC_TIMEOUT = int(os.environ.get("ROSETTA_RPC_TIMEOUT", "10"))
 ALLOWED_CALL_METHODS = set(
     filter(None, os.environ.get("ROSETTA_CALL_ALLOWED", "").split(","))
 )
+API_KEYS = set(filter(None, os.environ.get("ROSETTA_API_KEYS", "").split(",")))
+IP_WHITELIST = set(
+    filter(None, os.environ.get("ROSETTA_IP_WHITELIST", "").split(","))
+)
+RATE_LIMIT = os.environ.get("ROSETTA_RATE_LIMIT", "100 per minute")
 
 app = Flask(__name__)
+limiter = Limiter(get_remote_address, app=app, default_limits=[RATE_LIMIT])
 
 
 def rpc(method, params=None):
@@ -45,6 +55,16 @@ def rpc(method, params=None):
     if data.get("error"):
         raise RuntimeError(data["error"])
     return data["result"]
+
+
+@app.before_request
+def auth_and_ip():
+    if IP_WHITELIST and request.remote_addr not in IP_WHITELIST:
+        return jsonify({"error": "forbidden"}), 403
+    if API_KEYS:
+        key = request.headers.get("X-Api-Key") or request.args.get("api_key")
+        if key not in API_KEYS:
+            return jsonify({"error": "unauthorized"}), 401
 
 
 NETWORK_IDENTIFIER = {"blockchain": "5G", "network": NETWORK_NAME}
@@ -212,6 +232,51 @@ def account_coins():
     return jsonify({"coins": coins})
 
 
+@app.route("/account/history", methods=["POST"])
+def account_history():
+    """Return recent transactions for an address."""
+    address = request.json["account_identifier"]["address"]
+    depth = int(os.environ.get("ROSETTA_HISTORY_DEPTH", "100"))
+    info = rpc("getblockchaininfo")
+    height = info["blocks"]
+    matches = []
+    # Scan mempool
+    try:
+        txids = rpc("getrawmempool")
+        for txid in txids:
+            data = rpc("getrawtransaction", [txid, True])
+            for vout in data.get("vout", []):
+                addrs = vout.get("scriptPubKey", {}).get("addresses", [])
+                if address in addrs:
+                    matches.append(
+                        {
+                            "transaction_identifier": {"hash": txid},
+                            "metadata": data,
+                        }
+                    )
+                    break
+    except Exception:
+        pass
+    # Scan recent blocks
+    start = max(0, height - depth)
+    for i in range(height, start - 1, -1):
+        block_hash = rpc("getblockhash", [i])
+        block = rpc("getblock", [block_hash])
+        for txid in block.get("tx", []):
+            data = rpc("getrawtransaction", [txid, True, block_hash])
+            for vout in data.get("vout", []):
+                addrs = vout.get("scriptPubKey", {}).get("addresses", [])
+                if address in addrs:
+                    matches.append(
+                        {
+                            "transaction_identifier": {"hash": txid},
+                            "metadata": data,
+                        }
+                    )
+                    break
+    return jsonify({"transactions": matches})
+
+
 @app.route("/mempool", methods=["POST"])
 def mempool():
     """Return all transaction identifiers in the mempool."""
@@ -233,6 +298,22 @@ def mempool_transaction():
             }
         }
     )
+
+
+@app.route("/mempool/fees", methods=["POST"])
+def mempool_fees():
+    """Estimate current fee rates."""
+    target = request.json.get("target_block_count", 6)
+    result = rpc("estimatesmartfee", [target])
+    return jsonify({"fee": result.get("feerate")})
+
+
+@app.route("/mempool/submit", methods=["POST"])
+def mempool_submit():
+    """Submit a raw transaction to the network."""
+    tx_hex = request.json.get("transaction")
+    txid = rpc("sendrawtransaction", [tx_hex])
+    return jsonify({"transaction_identifier": {"hash": txid}})
 
 
 @app.route("/search/transactions", methods=["POST"])
@@ -270,9 +351,32 @@ def search_transactions():
     return jsonify({"transactions": matches})
 
 
+@app.route("/events/blocks", methods=["GET"])
+def events_blocks():
+    """Stream new block hashes using server-sent events."""
+    def generate():
+        last = None
+        while True:
+            try:
+                current = rpc("getbestblockhash")
+            except Exception:  # pragma: no cover - network errors
+                time.sleep(5)
+                continue
+            if current != last:
+                payload = json.dumps({"block_identifier": {"hash": current}})
+                yield f"data: {payload}\n\n"
+                last = current
+            time.sleep(5)
+
+    return Response(generate(), mimetype="text/event-stream")
+
+
 def main():
     port = int(os.environ.get("ROSETTA_PORT", "8080"))
-    app.run(host="0.0.0.0", port=port)
+    cert = os.environ.get("ROSETTA_SSL_CERT")
+    key = os.environ.get("ROSETTA_SSL_KEY")
+    ssl_context = (cert, key) if cert and key else None
+    app.run(host="0.0.0.0", port=port, ssl_context=ssl_context)
 
 
 if __name__ == "__main__":
