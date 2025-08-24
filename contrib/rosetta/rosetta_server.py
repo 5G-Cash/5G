@@ -19,6 +19,9 @@ RPC_USER = os.environ.get("ROSETTA_RPC_USER", "")
 RPC_PASSWORD = os.environ.get("ROSETTA_RPC_PASSWORD", "")
 NETWORK_NAME = os.environ.get("ROSETTA_NETWORK", "mainnet")
 RPC_TIMEOUT = int(os.environ.get("ROSETTA_RPC_TIMEOUT", "10"))
+ALLOWED_CALL_METHODS = set(
+    filter(None, os.environ.get("ROSETTA_CALL_ALLOWED", "").split(","))
+)
 
 app = Flask(__name__)
 
@@ -96,6 +99,32 @@ def network_options():
             },
         }
     )
+
+
+@app.route("/network/peers", methods=["POST"])
+def network_peers():
+    """Return the set of peers the node is connected to."""
+    try:
+        peer_info = rpc("getpeerinfo")
+    except Exception as exc:  # pragma: no cover - network errors
+        return jsonify({"error": str(exc)}), 500
+    peers = [{"peer_id": p.get("addr", "")} for p in peer_info]
+    return jsonify({"peers": peers})
+
+
+@app.route("/call", methods=["POST"])
+def call_endpoint():
+    """Proxy whitelisted RPC methods through Rosetta's optional Call API."""
+    payload = request.json or {}
+    method = payload.get("method")
+    if method not in ALLOWED_CALL_METHODS:
+        return (
+            jsonify({"error": f"method {method} not allowed"}),
+            403,
+        )
+    params = payload.get("params", [])
+    result = rpc(method, params)
+    return jsonify({"result": result})
 
 
 @app.route("/block", methods=["POST"])
@@ -204,6 +233,41 @@ def mempool_transaction():
             }
         }
     )
+
+
+@app.route("/search/transactions", methods=["POST"])
+def search_transactions():
+    """Search transactions by identifier or address in recent data."""
+    req = request.json or {}
+    tx_id = req.get("transaction_identifier", {}).get("hash")
+    address = req.get("address")
+    matches = []
+    if tx_id:
+        try:
+            tx = rpc("getrawtransaction", [tx_id, True])
+            matches.append(
+                {"transaction_identifier": {"hash": tx_id}, "metadata": tx}
+            )
+        except Exception:
+            pass
+    if address:
+        try:
+            txids = rpc("getrawmempool")
+            for txhash in txids:
+                data = rpc("getrawtransaction", [txhash, True])
+                for vout in data.get("vout", []):
+                    addrs = vout.get("scriptPubKey", {}).get("addresses", [])
+                    if address in addrs:
+                        matches.append(
+                            {
+                                "transaction_identifier": {"hash": txhash},
+                                "metadata": data,
+                            }
+                        )
+                        break
+        except Exception:
+            pass
+    return jsonify({"transactions": matches})
 
 
 def main():

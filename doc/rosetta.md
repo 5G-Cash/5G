@@ -22,7 +22,11 @@ Running the server
    export ROSETTA_NETWORK="mainnet"    # optional
    export ROSETTA_PORT="8080"          # optional
    export ROSETTA_RPC_TIMEOUT="10"     # optional
+   export ROSETTA_CALL_ALLOWED="getblockchaininfo"  # optional
    ```
+
+`ROSETTA_CALL_ALLOWED` is a comma-separated list of RPC methods that
+the optional `/call` endpoint will proxy.
 4. Start the server:
    ```bash
    python contrib/rosetta/rosetta_server.py
@@ -40,5 +44,8 @@ Rosetta Data API endpoints:
 * ``/mempool/transaction``
 * ``/account/balance``
 * ``/account/coins``
+* ``/network/peers``
+* ``/call``
+* ``/search/transactions``
 
 It listens on ``localhost:8080`` by default.
