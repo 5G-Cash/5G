@@ -36,6 +36,24 @@ app = Flask(__name__)
 limiter = Limiter(get_remote_address, app=app, default_limits=[RATE_LIMIT])
 
 
+ERRORS = {
+    "unauthorized": {"code": 1, "message": "unauthorized", "retriable": False},
+    "forbidden": {"code": 2, "message": "forbidden", "retriable": False},
+    "not_allowed": {
+        "code": 3,
+        "message": "method not allowed",
+        "retriable": False,
+    },
+    "internal": {"code": 4, "message": "internal error", "retriable": True},
+}
+
+
+def rosetta_error(name, status, details=None):
+    err = ERRORS[name].copy()
+    err["details"] = details or {}
+    return jsonify(err), status
+
+
 def rpc(method, params=None):
     """Make an RPC call to the 5G daemon."""
     payload = {
@@ -60,11 +78,11 @@ def rpc(method, params=None):
 @app.before_request
 def auth_and_ip():
     if IP_WHITELIST and request.remote_addr not in IP_WHITELIST:
-        return jsonify({"error": "forbidden"}), 403
+        return rosetta_error("forbidden", 403)
     if API_KEYS:
         key = request.headers.get("X-Api-Key") or request.args.get("api_key")
         if key not in API_KEYS:
-            return jsonify({"error": "unauthorized"}), 401
+            return rosetta_error("unauthorized", 401)
 
 
 NETWORK_IDENTIFIER = {"blockchain": "5G", "network": NETWORK_NAME}
@@ -127,7 +145,7 @@ def network_peers():
     try:
         peer_info = rpc("getpeerinfo")
     except Exception as exc:  # pragma: no cover - network errors
-        return jsonify({"error": str(exc)}), 500
+        return rosetta_error("internal", 500, {"message": str(exc)})
     peers = [{"peer_id": p.get("addr", "")} for p in peer_info]
     return jsonify({"peers": peers})
 
@@ -138,10 +156,7 @@ def call_endpoint():
     payload = request.json or {}
     method = payload.get("method")
     if method not in ALLOWED_CALL_METHODS:
-        return (
-            jsonify({"error": f"method {method} not allowed"}),
-            403,
-        )
+        return rosetta_error("not_allowed", 403, {"method": method})
     params = payload.get("params", [])
     result = rpc(method, params)
     return jsonify({"result": result})
@@ -155,7 +170,68 @@ def block():
         block_hash = identifier["hash"]
     else:
         block_hash = rpc("getblockhash", [identifier.get("index", 0)])
-    data = rpc("getblock", [block_hash])
+    data = rpc("getblock", [block_hash, 2])
+    transactions = []
+    for tx in data.get("tx", []):
+        ops = []
+        idx = 0
+        for vin in tx.get("vin", []):
+            if "coinbase" in vin:
+                continue
+            try:
+                prev = rpc("getrawtransaction", [vin["txid"], True])
+                vout = prev["vout"][vin["vout"]]
+                amount = vout["value"]
+                addrs = vout.get("scriptPubKey", {}).get("addresses", [])
+                addr = addrs[0] if addrs else ""
+            except Exception:
+                amount = 0
+                addr = ""
+            ops.append(
+                {
+                    "operation_identifier": {"index": idx},
+                    "type": "TRANSFER",
+                    "account": {"address": addr},
+                    "amount": {
+                        "value": f"-{amount}",
+                        "currency": {"symbol": "5G", "decimals": 8},
+                    },
+                    "coin_change": {
+                        "coin_identifier": {
+                            "identifier": f"{vin['txid']}:{vin['vout']}"
+                        },
+                        "coin_action": "coin_spent",
+                    },
+                }
+            )
+            idx += 1
+        for vout in tx.get("vout", []):
+            addrs = vout.get("scriptPubKey", {}).get("addresses", [])
+            addr = addrs[0] if addrs else ""
+            ops.append(
+                {
+                    "operation_identifier": {"index": idx},
+                    "type": "TRANSFER",
+                    "account": {"address": addr},
+                    "amount": {
+                        "value": str(vout["value"]),
+                        "currency": {"symbol": "5G", "decimals": 8},
+                    },
+                    "coin_change": {
+                        "coin_identifier": {
+                            "identifier": f"{tx['txid']}:{vout['n']}"
+                        },
+                        "coin_action": "coin_created",
+                    },
+                }
+            )
+            idx += 1
+        transactions.append(
+            {
+                "transaction_identifier": {"hash": tx["txid"]},
+                "operations": ops,
+            }
+        )
     result = {
         "block": {
             "block_identifier": {
@@ -167,7 +243,7 @@ def block():
                 "hash": data.get("previousblockhash", ""),
             },
             "timestamp": data["time"] * 1000,
-            "transactions": [],
+            "transactions": transactions,
         }
     }
     return jsonify(result)
@@ -355,7 +431,12 @@ def search_transactions():
 def events_blocks():
     """Stream new block hashes using server-sent events."""
     def generate():
-        last = None
+        last = rpc("getbestblockhash")
+        payload = json.dumps(
+            {"block_identifier": {"hash": last}, "sequence": 0}
+        )
+        yield f"data: {payload}\n\n"
+        seq = 1
         while True:
             try:
                 current = rpc("getbestblockhash")
@@ -363,12 +444,163 @@ def events_blocks():
                 time.sleep(5)
                 continue
             if current != last:
-                payload = json.dumps({"block_identifier": {"hash": current}})
-                yield f"data: {payload}\n\n"
+                try:
+                    prev = rpc("getblock", [current])["previousblockhash"]
+                except Exception:
+                    prev = None
+                if prev and prev != last:
+                    removed = json.dumps(
+                        {
+                            "block_identifier": {"hash": last},
+                            "type": "block_removed",
+                            "sequence": seq,
+                        }
+                    )
+                    yield f"data: {removed}\n\n"
+                    seq += 1
+                added = json.dumps(
+                    {
+                        "block_identifier": {"hash": current},
+                        "type": "block_added",
+                        "sequence": seq,
+                    }
+                )
+                yield f"data: {added}\n\n"
+                seq += 1
                 last = current
             time.sleep(5)
 
     return Response(generate(), mimetype="text/event-stream")
+
+
+@app.route("/construction/derive", methods=["POST"])
+def construction_derive():
+    """Derive an address from a public key."""
+    pubkey = request.json["public_key"]["hex"]
+    try:
+        addr = rpc("addmultisigaddress", [1, [pubkey]])["address"]
+    except Exception as exc:
+        return rosetta_error("internal", 500, {"message": str(exc)})
+    return jsonify({"address": addr})
+
+
+@app.route("/construction/preprocess", methods=["POST"])
+def construction_preprocess():
+    """Extract inputs and outputs from operations."""
+    ops = request.json.get("operations", [])
+    inputs, outputs = [], {}
+    for op in ops:
+        value = op.get("amount", {}).get("value", "0")
+        if value.startswith("-"):
+            cid = (
+                op.get("coin_change", {})
+                .get("coin_identifier", {})
+                .get("identifier")
+            )
+            if cid:
+                txid, vout = cid.split(":")
+                inputs.append({"txid": txid, "vout": int(vout)})
+        else:
+            addr = op.get("account", {}).get("address")
+            outputs[addr] = float(value)
+    return jsonify({"options": {"inputs": inputs, "outputs": outputs}})
+
+
+@app.route("/construction/metadata", methods=["POST"])
+def construction_metadata():
+    """Return fee estimate metadata."""
+    fee = rpc("estimatesmartfee", [6]).get("feerate")
+    return jsonify({"metadata": {"fee": fee}})
+
+
+@app.route("/construction/payloads", methods=["POST"])
+def construction_payloads():
+    """Create an unsigned transaction and payloads."""
+    opts = request.json.get("options", {})
+    inputs = opts.get("inputs", [])
+    outputs = opts.get("outputs", {})
+    try:
+        unsigned = rpc("createrawtransaction", [inputs, outputs])
+    except Exception as exc:
+        return rosetta_error("internal", 500, {"message": str(exc)})
+    payload = {"hex_bytes": unsigned, "signature_type": "ecdsa"}
+    return jsonify({"unsigned_transaction": unsigned, "payloads": [payload]})
+
+
+@app.route("/construction/parse", methods=["POST"])
+def construction_parse():
+    """Parse a transaction into operations."""
+    tx_hex = request.json.get("transaction")
+    tx = rpc("decoderawtransaction", [tx_hex])
+    ops = []
+    idx = 0
+    for vin in tx.get("vin", []):
+        if "txid" not in vin:
+            continue
+        prev = rpc("getrawtransaction", [vin["txid"], True])
+        vout = prev["vout"][vin["vout"]]
+        amount = vout["value"]
+        addrs = vout.get("scriptPubKey", {}).get("addresses", [])
+        addr = addrs[0] if addrs else ""
+        ops.append(
+            {
+                "operation_identifier": {"index": idx},
+                "type": "TRANSFER",
+                "account": {"address": addr},
+                "amount": {
+                    "value": f"-{amount}",
+                    "currency": {"symbol": "5G", "decimals": 8},
+                },
+            }
+        )
+        idx += 1
+    for vout in tx.get("vout", []):
+        addrs = vout.get("scriptPubKey", {}).get("addresses", [])
+        addr = addrs[0] if addrs else ""
+        ops.append(
+            {
+                "operation_identifier": {"index": idx},
+                "type": "TRANSFER",
+                "account": {"address": addr},
+                "amount": {
+                    "value": str(vout["value"]),
+                    "currency": {"symbol": "5G", "decimals": 8},
+                },
+            }
+        )
+        idx += 1
+    return jsonify({"operations": ops})
+
+
+@app.route("/construction/combine", methods=["POST"])
+def construction_combine():
+    """Combine signatures with an unsigned transaction."""
+    unsigned = request.json.get("unsigned_transaction")
+    sigs = [p.get("hex_bytes") for p in request.json.get("signatures", [])]
+    try:
+        raw = rpc("combinerawtransaction", [[unsigned] + sigs])
+    except Exception as exc:
+        return rosetta_error("internal", 500, {"message": str(exc)})
+    return jsonify({"signed_transaction": raw})
+
+
+@app.route("/construction/hash", methods=["POST"])
+def construction_hash():
+    """Compute the transaction identifier for a signed transaction."""
+    tx_hex = request.json.get("signed_transaction")
+    tx = rpc("decoderawtransaction", [tx_hex])
+    return jsonify({"transaction_identifier": {"hash": tx["txid"]}})
+
+
+@app.route("/construction/submit", methods=["POST"])
+def construction_submit():
+    """Submit a signed transaction to the network."""
+    tx_hex = request.json.get("signed_transaction")
+    try:
+        txid = rpc("sendrawtransaction", [tx_hex])
+    except Exception as exc:
+        return rosetta_error("internal", 500, {"message": str(exc)})
+    return jsonify({"transaction_identifier": {"hash": txid}})
 
 
 def main():

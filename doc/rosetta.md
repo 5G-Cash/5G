@@ -64,4 +64,28 @@ Rosetta Data API endpoints:
 * ``/search/transactions``
 * ``/events/blocks``
 
+It also exposes the Rosetta Construction API:
+
+* ``/construction/derive``
+* ``/construction/preprocess``
+* ``/construction/metadata``
+* ``/construction/payloads``
+* ``/construction/parse``
+* ``/construction/combine``
+* ``/construction/hash``
+* ``/construction/submit``
+
 It listens on ``localhost:8080`` by default.
+
+Example construction flow:
+
+```bash
+# Derive an address from a public key
+curl -X POST localhost:8080/construction/derive -d '{"network_identifier":{},"public_key":{"hex":"<pubkey>"}}'
+
+# Create payloads for signing
+curl -X POST localhost:8080/construction/payloads -d '{"network_identifier":{},"operations":[],"options":{"inputs":[],"outputs":{}}}'
+
+# Submit a signed transaction
+curl -X POST localhost:8080/construction/submit -d '{"network_identifier":{},"signed_transaction":"<hex>"}'
+```
