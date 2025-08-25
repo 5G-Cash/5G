@@ -20,7 +20,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include <leveldb/db.h>
+#include "leveldb/db.h"
 #include <leveldb/write_batch.h>
 
 #include <stdint.h>

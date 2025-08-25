@@ -11,15 +11,17 @@
 
 #include <stdint.h>
 
-#include "compat/byteswap.h"
+#include "byteswap.h"
 
 #if defined(HAVE_ENDIAN_H)
 #include <endian.h>
 #elif defined(HAVE_SYS_ENDIAN_H)
 #include <sys/endian.h>
+#else
+#include <endian.h>
 #endif
 
-#if defined(WORDS_BIGENDIAN)
+#if defined(HAVE_CONFIG_H) && defined(WORDS_BIGENDIAN)
 
 #if HAVE_DECL_HTOBE16 == 0
 inline uint16_t htobe16(uint16_t host_16bits)
@@ -105,7 +107,7 @@ inline uint64_t le64toh(uint64_t little_endian_64bits)
 }
 #endif // HAVE_DECL_LE64TOH
 
-#else // WORDS_BIGENDIAN
+#elif defined(HAVE_CONFIG_H)
 
 #if HAVE_DECL_HTOBE16 == 0
 inline uint16_t htobe16(uint16_t host_16bits)
@@ -191,6 +193,6 @@ inline uint64_t le64toh(uint64_t little_endian_64bits)
 }
 #endif // HAVE_DECL_LE64TOH
 
-#endif // WORDS_BIGENDIAN
+#endif // defined(HAVE_CONFIG_H)
 
 #endif // BITCOIN_COMPAT_ENDIAN_H

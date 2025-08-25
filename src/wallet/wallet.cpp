@@ -38,6 +38,7 @@
 #include "validation.h"
 #include "darksend.h"
 #include "instantx.h"
+#include "delegation.h"
 #include "fivegnode.h"
 #include "fivegnode-payments.h"
 #include "fivegnode-sync.h"
@@ -861,6 +862,17 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     CScript scriptPubKeyKernel;
     BOOST_FOREACH(const PAIRTYPE(const CWalletTx*, unsigned int)& pcoin, setCoins)
     {
+        CScript ownerScript = pcoin.first->vout[pcoin.second].scriptPubKey;
+        auto delIt = mapStakeDelegations.find(CScriptID(ownerScript));
+        CScript delegateScript;
+        bool fDelegated = false;
+        if (delIt != mapStakeDelegations.end()) {
+            delegateScript = GetScriptForDestination(CTxDestination(delIt->second));
+            if (!::IsMine(keystore, delegateScript))
+                continue; // skip coins delegated to others
+            fDelegated = true;
+        }
+
         static int nMaxStakeSearchInterval = 60;
         bool fKernelFound = false;
         for (unsigned int n=0; n < min(nSearchInterval,(int64_t)nMaxStakeSearchInterval) && !fKernelFound && pindexPrev == pindexBestHeader; n++)
@@ -879,7 +891,7 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
                 vector<vector<unsigned char> > vSolutions;
                 txnouttype whichType;
                 CScript scriptPubKeyOut;
-                scriptPubKeyKernel = pcoin.first->vout[pcoin.second].scriptPubKey;
+                scriptPubKeyKernel = ownerScript;
                 if (!Solver(scriptPubKeyKernel, whichType, vSolutions))
                 {
                     LogPrintf("CWallet::CreateCoinStake(): failed to parse kernel\n");
@@ -919,6 +931,9 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
 
                     scriptPubKeyOut = scriptPubKeyKernel;
                 }
+
+                if (fDelegated)
+                    scriptPubKeyOut = delegateScript;
 
                 //txNew.nTime -= n;
                 txNew.vin.push_back(CTxIn(pcoin.first->GetHash(), pcoin.second));

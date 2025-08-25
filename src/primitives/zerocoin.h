@@ -5,7 +5,7 @@
 #ifndef PRIMITIVES_ZEROCOIN_H
 #define PRIMITIVES_ZEROCOIN_H
 
-#include <amount.h>
+#include "amount.h"
 #include <streams.h>
 #include <boost/optional.hpp>
 #include <limits.h>
