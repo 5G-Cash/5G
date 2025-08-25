@@ -4107,6 +4107,7 @@ UniValue delegatestake(const UniValue& params, bool fHelp)
     CScript delegateScript = GetScriptForDestination(delegateAddr.Get());
 
     RegisterDelegation(ownerScript, delegateScript);
+    pwalletMain->mapDelegations[CScriptID(ownerScript)] = CScriptID(delegateScript);
     return UniValue(true);
 }
 
@@ -4131,6 +4132,7 @@ UniValue revokedelegation(const UniValue& params, bool fHelp)
         throw JSONRPCError(RPC_WALLET_ERROR, "Owner address not found in wallet");
 
     RemoveDelegation(ownerScript);
+    pwalletMain->mapDelegations.erase(CScriptID(ownerScript));
     return UniValue(true);
 }
 
@@ -4143,7 +4145,7 @@ UniValue listdelegations(const UniValue& params, bool fHelp)
             "listdelegations\n" "\nLists known stake delegations.\n");
 
     UniValue ret(UniValue::VARR);
-    for (const auto& entry : mapStakeDelegations) {
+    for (const auto& entry : pwalletMain->mapDelegations) {
         UniValue obj(UniValue::VOBJ);
         obj.push_back(Pair("owner", CBitcoinAddress(CTxDestination(entry.first)).ToString()));
         obj.push_back(Pair("delegate", CBitcoinAddress(CTxDestination(entry.second)).ToString()));

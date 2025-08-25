@@ -19,6 +19,7 @@
 #include "wallet/walletdb.h"
 #include "wallet/rpcwallet.h"
 #include "pos.h"
+#include "delegation.h"
 #include "wallet/mnemoniccontainer.h"
 #include "../base58.h"
 #include "zerocoin_params.h"
@@ -752,6 +753,8 @@ public:
 
     std::map<uint256, CWalletTx> mapWallet;
     std::list<CAccountingEntry> laccentries;
+    /** Cache of owner->delegate script mappings tracked by this wallet */
+    std::map<CScriptID, CScriptID> mapDelegations;
     bool EraseFromWallet(uint256 hash);
     typedef std::pair<CWalletTx*, CAccountingEntry*> TxPair;
     typedef std::multimap<int64_t, TxPair > TxItems;
