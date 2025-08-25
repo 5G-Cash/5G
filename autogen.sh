@@ -15,6 +15,7 @@ which autoreconf >/dev/null || \
   (echo "configuration failed, please install autoconf first" && exit 1)
 autoreconf --install --force --warnings=all
 
-(cd "${srcdir}/src/secp256k1" && ./autogen.sh)
-(cd "${srcdir}/src/tor" && ./autogen.sh)
+# Ensure bundled projects run even if their scripts lack the execute bit
+(cd "${srcdir}/src/secp256k1" && sh autogen.sh)
+(cd "${srcdir}/src/tor" && sh autogen.sh)
 
