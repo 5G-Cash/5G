@@ -1089,8 +1089,11 @@ void RunTor(){
 	std::transform(argv.begin(), argv.end(), std::back_inserter(argv_c),
 			convert_str);
 
-	tor_main(argv_c.size(), &argv_c[0]);
+        tor_main(argv_c.size(), &argv_c[0]);
 
+        for (char* ptr : argv_c)
+            delete[] ptr;
+        tor_cleanup();
 
 }
 

@@ -554,10 +554,10 @@ UniValue fivegnodelist(const UniValue &params, bool fHelp) {
                     nBlockHeight = pindex->nHeight;
                 }
                 int nMnCount = mnodeman.CountEnabled();
-                char* reasonStr = mnodeman.GetNotQualifyReason(mn, nBlockHeight, true, nMnCount);
+                std::string reasonStr = mnodeman.GetNotQualifyReason(mn, nBlockHeight, true, nMnCount);
                 std::string strOutpoint = mn.vin.prevout.ToStringShort();
                 if (strFilter != "" && strOutpoint.find(strFilter) == std::string::npos) continue;
-                obj.push_back(Pair(strOutpoint, (reasonStr != NULL) ? reasonStr : "true"));
+                obj.push_back(Pair(strOutpoint, (!reasonStr.empty()) ? reasonStr : "true"));
             }
         }
     }
