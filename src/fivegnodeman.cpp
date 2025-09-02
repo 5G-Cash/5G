@@ -409,7 +409,6 @@ int CFivegnodeMan::CountEnabled(int nProtocolVersion)
     return nCount;
 }
 
-/* Only IPv4 fivegnodes are allowed in 12.1, saving this for later
 int CFivegnodeMan::CountByIP(int nNetworkType)
 {
     LOCK(cs);
@@ -424,7 +423,6 @@ int CFivegnodeMan::CountByIP(int nNetworkType)
 
     return nNodeCount;
 }
-*/
 
 void CFivegnodeMan::DsegUpdate(CNode* pnode)
 {

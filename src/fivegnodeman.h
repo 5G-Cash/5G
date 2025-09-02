@@ -223,7 +223,7 @@ public:
     int CountEnabled(int nProtocolVersion = -1);
 
     /// Count Fivegnodes by network type - NET_IPV4, NET_IPV6, NET_TOR
-    // int CountByIP(int nNetworkType);
+    int CountByIP(int nNetworkType);
 
     void DsegUpdate(CNode* pnode);
 
