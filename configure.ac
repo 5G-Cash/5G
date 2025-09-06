@@ -51,6 +51,9 @@ else
 fi
 AC_PROG_CXX
 
+# Ensure OpenSSL 1.1 APIs remain available when building against OpenSSL 3.0
+CPPFLAGS="$CPPFLAGS -DOPENSSL_API_COMPAT=0x10100000L"
+
 dnl By default, libtool for mingw refuses to link static libs into a dll for
 dnl fear of mixing pic/non-pic objects, and import/export complications. Since
 dnl we have those under control, re-enable that functionality.

@@ -30,3 +30,7 @@ example, to run just the getarg_tests verbosely:
 
 Run `test_bitcoin --help` for the full list.
 
+The `chainlocks_tests` suite exercises ChainLocks finality, ensuring that
+incoming CLSIG messages correctly mark blocks as locked and persist the
+lock status in the block index.
+

@@ -268,6 +268,9 @@ extern const char *DSCOMPLETE;
 extern const char *DSFINALTX;
 extern const char *TXLOCKVOTE;
 extern const char *DSTX;
+extern const char *CLSIG;
+extern const char *VOTE;
+extern const char *COMMIT;
 extern const char *TXLOCKREQUEST;
 
 

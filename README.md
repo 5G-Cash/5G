@@ -22,6 +22,7 @@ For more information, read the
     -Dandelion++ Protocol
     -Proof of Work and Proof of Stake (3.0) share 55% of the block reward
     -Masternode gets 45% of the block reward
+    - ChainLocks and BFT finality enabled by default via sporks to protect against 51% attacks
 
 ### Specifications and Block Rewards -----> https://discord.gg/tmQSFV9
 
@@ -38,8 +39,10 @@ You can use the "depscript.sh" to automatically install Dependencies to build VG
         sudo apt-get update
 
 2.  Install required packages
-        
+
         sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libzmq3-dev libminizip-dev
+
+    The build sets `OPENSSL_API_COMPAT=0x10100000L` so legacy OpenSSL 1.1 APIs remain available when building against OpenSSL 3.0.
 
 3.  Install Berkeley DB 4.8
 

@@ -222,6 +222,12 @@ public:
     //! (memory only) Sequential id assigned to distinguish order in which blocks are received.
     uint32_t nSequenceId;
 
+    //! ChainLock finality indicator
+    bool fChainLocked;
+
+    //! BFT finality indicator
+    bool fFinalized;
+
     //! Public coin values of mints in this block, ordered by serialized value of public coin
     //! Maps <denomination,id> to vector of public coins
     map<pair<int,int>, vector<CBigNum>> mintedPubCoins;
@@ -259,6 +265,8 @@ public:
         nChainTx = 0;
         nStatus = 0;
         nSequenceId = 0;
+        fChainLocked = false;
+        fFinalized = false;
 
         nVersion       = 0;
         hashMerkleRoot = uint256();
@@ -426,6 +434,8 @@ public:
         ret.push_back(Pair("chainTx", to_string(nChainTx)));
         ret.push_back(Pair("status", to_string(nStatus)));
         ret.push_back(Pair("sequenceId", to_string(nSequenceId)));
+        ret.push_back(Pair("chainlocked", fChainLocked));
+        ret.push_back(Pair("finalized", fFinalized));
         ret.push_back(Pair("version", to_string(nVersion)));
         ret.push_back(Pair("nTime", to_string(nTime)));
         ret.push_back(Pair("bits", to_string(nBits)));
@@ -525,8 +535,11 @@ public:
             READWRITE(sigmaSpentSerials);
         }
 
-	    // PoS
+            // PoS
         READWRITE(nStakeModifier);
+
+        READWRITE(fChainLocked);
+        READWRITE(fFinalized);
 
         nDiskBlockVersion = nVersion;
     }

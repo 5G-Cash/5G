@@ -38,6 +38,7 @@
 #include "script/standard.h"
 #include "tinyformat.h"
 #include "txdb.h"
+#include "spork.h"
 #include "txmempool.h"
 #include "ui_interface.h"
 #include "undo.h"
@@ -58,6 +59,8 @@
 #include "fivegnode-sync.h"
 #include "fivegnodeman.h"
 #include "coins.h"
+#include "chainlocks.h"
+#include "finality.h"
 
 #include "sigma/coinspend.h"
 #include "sigma/remint.h"
@@ -3902,6 +3905,10 @@ static bool ActivateBestChainStep(CValidationState &state, const CChainParams &c
     // Disconnect active blocks which are no longer in the best chain.
     bool fBlocksDisconnected = false;
     while (chainActive.Tip() && chainActive.Tip() != pindexFork) {
+        if (g_chainlocks.IsBlockChainLocked(chainActive.Tip()) ||
+            (sporkManager.IsSporkActive(SPORK_17_BFT_FINALITY_ENABLED) && g_finalityman.IsBlockFinalized(chainActive.Tip()))) {
+            return error("Attempted to disconnect finalized block");
+        }
         if (!DisconnectTip(state, chainparams)) {
             LogPrintf("DisconnectTip() -> Failed!\n");
             return false;
@@ -5484,6 +5491,20 @@ bool static LoadBlockIndexDB() {
     chainActive.SetTip(it->second);
 
     PruneBlockIndexCandidates();
+
+    // Restore best ChainLock from block index
+    int nLocked = -1;
+    uint256 hashLocked;
+    for (const std::pair<const uint256, CBlockIndex*>& item : mapBlockIndex) {
+        CBlockIndex* pindex = item.second;
+        if (pindex->fChainLocked && chainActive.Contains(pindex) && pindex->nHeight > nLocked) {
+            nLocked = pindex->nHeight;
+            hashLocked = pindex->GetBlockHash();
+        }
+    }
+    if (nLocked >= 0) {
+        g_chainlocks.LoadBestChainLock(nLocked, hashLocked);
+    }
 
     // some blocks in index can change as a result of ZerocoinBuildStateFromIndex() call
     set<CBlockIndex *> changes;
@@ -8118,6 +8139,30 @@ bool static ProcessMessage(CNode *pfrom, string strCommand,
                 pfrom->minFeeFilter = newFeeFilter;
             }
 //            LogPrint("net", "received: feefilter of %s from peer=%d\n", CFeeRate(newFeeFilter).ToString(), pfrom->id);
+        }
+    } else if (strCommand == NetMsgType::CLSIG) {
+        if (sporkManager.IsSporkActive(SPORK_16_CHAINLOCKS_ENABLED)) {
+            int nHeight;
+            uint256 hash;
+            std::vector<unsigned char> vchSig;
+            vRecv >> nHeight >> hash >> vchSig;
+            g_chainlocks.ProcessNewChainLock(nHeight, hash, vchSig);
+        }
+    } else if (strCommand == NetMsgType::VOTE) {
+        if (sporkManager.IsSporkActive(SPORK_17_BFT_FINALITY_ENABLED)) {
+            uint256 validator;
+            ValidatorVote vote;
+            vRecv >> validator >> vote.nHeight >> vote.blockHash;
+            g_finalityman.RegisterVote(validator, vote);
+        }
+    } else if (strCommand == NetMsgType::COMMIT) {
+        if (sporkManager.IsSporkActive(SPORK_17_BFT_FINALITY_ENABLED)) {
+            uint256 validator;
+            int nHeight;
+            uint256 hash;
+            vRecv >> validator >> nHeight >> hash;
+            ValidatorVote vote{nHeight, hash};
+            g_finalityman.RegisterVote(validator, vote);
         }
     } else if (strCommand == NetMsgType::NOTFOUND) {
         // We do not care about the NOTFOUND message, but logging an Unknown Command
