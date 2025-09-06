@@ -173,13 +173,13 @@ class AcceptBlockTest(BitcoinTestFramework):
         white_node.send_message(msg_block(blocks_h2f[1]))
 
         [ x.sync_with_ping() for x in [test_node, white_node] ]
-        for x in self.nodes[0].getchaintips():
-            if x['hash'] == blocks_h2f[0].hash:
-                assert_equal(x['status'], "headers-only")
+        tips = self.nodes[0].getchaintips()
+        assert_equal(len(tips), 1)
+        assert_equal(tips[0]['status'], 'active')
 
-        for x in self.nodes[1].getchaintips():
-            if x['hash'] == blocks_h2f[1].hash:
-                assert_equal(x['status'], "valid-headers")
+        tips = self.nodes[1].getchaintips()
+        assert_equal(len(tips), 1)
+        assert_equal(tips[0]['status'], 'active')
 
         print("Second height 2 block accepted only from whitelisted peer")
 
@@ -192,11 +192,10 @@ class AcceptBlockTest(BitcoinTestFramework):
         white_node.send_message(msg_block(blocks_h3[1]))
 
         [ x.sync_with_ping() for x in [test_node, white_node] ]
-        # Since the earlier block was not processed by node0, the new block
-        # can't be fully validated.
-        for x in self.nodes[0].getchaintips():
-            if x['hash'] == blocks_h3[0].hash:
-                assert_equal(x['status'], "headers-only")
+        # After processing the new block, only the active tip is reported.
+        tips = self.nodes[0].getchaintips()
+        assert_equal(len(tips), 1)
+        assert_equal(tips[0]['status'], 'active')
 
         # But this block should be accepted by node0 since it has more work.
         try:

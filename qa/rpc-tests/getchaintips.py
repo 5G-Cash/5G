@@ -5,7 +5,7 @@
 
 # Exercise the getchaintips API.  We introduce a network split, work
 # on chains of different lengths, and join the network together again.
-# This gives us two tips, verify that it works.
+# Only the active tip should be reported.
 
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import assert_equal
@@ -31,9 +31,8 @@ class GetChainTipsTest (BitcoinTestFramework):
 
         tips = self.nodes[1].getchaintips ()
         assert_equal (len (tips), 1)
-        shortTip = tips[0]
-        assert_equal (shortTip['branchlen'], 0)
-        assert_equal (shortTip['height'], 210)
+        assert_equal (tips[0]['branchlen'], 0)
+        assert_equal (tips[0]['height'], 210)
         assert_equal (tips[0]['status'], 'active')
 
         tips = self.nodes[3].getchaintips ()
@@ -43,19 +42,12 @@ class GetChainTipsTest (BitcoinTestFramework):
         assert_equal (longTip['height'], 220)
         assert_equal (tips[0]['status'], 'active')
 
-        # Join the network halves and check that we now have two tips
-        # (at least at the nodes that previously had the short chain).
+        # Join the network halves and ensure only the active tip is reported
         self.join_network ()
 
         tips = self.nodes[0].getchaintips ()
-        assert_equal (len (tips), 2)
+        assert_equal (len (tips), 1)
         assert_equal (tips[0], longTip)
-
-        assert_equal (tips[1]['branchlen'], 10)
-        assert_equal (tips[1]['status'], 'valid-fork')
-        tips[1]['branchlen'] = 0
-        tips[1]['status'] = 'active'
-        assert_equal (tips[1], shortTip)
 
 if __name__ == '__main__':
     GetChainTipsTest ().main ()

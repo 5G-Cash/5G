@@ -399,6 +399,11 @@ int CBlockTreeDB::GetBlockIndexVersion(uint256 const & blockHash)
     return -1;
 }
 
+bool CBlockTreeDB::EraseBlockIndex(const uint256 &hash)
+{
+    return Erase(std::make_pair(DB_BLOCK_INDEX, hash));
+}
+
 
 bool CBlockTreeDB::AddTotalSupply(CAmount const & supply)
 {

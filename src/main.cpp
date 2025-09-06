@@ -2204,6 +2204,13 @@ void CheckForkWarningConditions() {
     if (IsInitialBlockDownload())
         return;
 
+    // Nothing to warn about if neither a best fork nor an invalid chain is tracked
+    if (!pindexBestForkTip && !pindexBestInvalid) {
+        fLargeWorkForkFound = false;
+        fLargeWorkInvalidChainFound = false;
+        return;
+    }
+
     // If our best fork is no longer within 72 blocks (+/- 12 hours if no one mines it)
     // of our head, drop it
     if (pindexBestForkTip && chainActive.Height() - pindexBestForkTip->nHeight >= 72)
@@ -2302,6 +2309,35 @@ void static InvalidChainFound(CBlockIndex *pindexNew) {
     CheckForkWarningConditions();
 }
 
+/**
+ * Remove an invalidated block and all of its descendants from the block index
+ * and related candidate sets. This prevents reappearance of pruned forks.
+ */
+static void PruneInvalidChain(CBlockIndex *root) {
+    if (root == NULL)
+        return;
+
+    std::vector<uint256> vErase;
+    for (const std::pair<const uint256, CBlockIndex*>& entry : mapBlockIndex) {
+        CBlockIndex* pindex = entry.second;
+        if (pindex->GetAncestor(root->nHeight) == root)
+            vErase.push_back(entry.first);
+    }
+
+    for (const uint256& hash : vErase) {
+        CBlockIndex* pindex = mapBlockIndex[hash];
+        setBlockIndexCandidates.erase(pindex);
+        setDirtyBlockIndex.erase(pindex);
+        pblocktree->EraseBlockIndex(hash);
+        mapBlockIndex.erase(hash);
+    }
+
+    if (pindexBestInvalid && pindexBestInvalid->GetAncestor(root->nHeight) == root)
+        pindexBestInvalid = NULL;
+    if (pindexBestForkTip && pindexBestForkTip->GetAncestor(root->nHeight) == root)
+        pindexBestForkTip = NULL;
+}
+
 void static InvalidBlockFound(CBlockIndex *pindex, const CValidationState &state) {
     int nDoS = 0;
     if (state.IsInvalid(nDoS)) {
@@ -2313,8 +2349,10 @@ void static InvalidBlockFound(CBlockIndex *pindex, const CValidationState &state
                                    state.GetRejectReason().substr(0, MAX_REJECT_MESSAGE_LENGTH),
                                    pindex->GetBlockHash()};
             State(it->second.first)->rejects.push_back(reject);
-            if (nDoS > 0 && it->second.second)
+            if (nDoS > 0 && it->second.second) {
+                nDoS *= 2;
                 Misbehaving(it->second.first, nDoS);
+            }
         }
     }
     if (!state.CorruptionPossible()) {
@@ -2322,6 +2360,8 @@ void static InvalidBlockFound(CBlockIndex *pindex, const CValidationState &state
         setDirtyBlockIndex.insert(pindex);
         setBlockIndexCandidates.erase(pindex);
         InvalidChainFound(pindex);
+        PruneInvalidChain(pindex);
+        CheckForkWarningConditions();
     }
 }
 
