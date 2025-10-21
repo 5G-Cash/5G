@@ -52,7 +52,7 @@ bool IsBlockValueValid(const CBlock &block, int nBlockHeight, CAmount blockRewar
 //                // no budget blocks should be accepted here, if SPORK_13_OLD_SUPERBLOCK_FLAG is disabled
 //                LogPrint("gobject", "IsBlockValueValid -- Client synced but budget spork is disabled, checking block value against block reward\n");
 //                if (!isBlockRewardValueMet) {
-//                    strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, budgets are disabled",
+//                    strErrorRet = strprintf("coinbase pays wrong amount at height %d (actual=%d vs limit=%d), block reward mismatch, budgets are disabled",
 //                                            nBlockHeight, block.vtx[0].GetValueOut(), blockReward);
 //                }
 //                return isBlockRewardValueMet;
@@ -63,7 +63,7 @@ bool IsBlockValueValid(const CBlock &block, int nBlockHeight, CAmount blockRewar
 //        }
 //        // LogPrint("gobject", "IsBlockValueValid -- Block is not in budget cycle window, checking block value against block reward\n");
 //        if (!isBlockRewardValueMet) {
-//            strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, block is not in budget cycle window",
+//            strErrorRet = strprintf("coinbase pays wrong amount at height %d (actual=%d vs limit=%d), block reward mismatch, block is not in budget cycle window",
 //                                    nBlockHeight, block.vtx[0].GetValueOut(), blockReward);
 //        }
 //        return isBlockRewardValueMet;
@@ -88,7 +88,7 @@ bool IsBlockValueValid(const CBlock &block, int nBlockHeight, CAmount blockRewar
 //            return isSuperblockMaxValueMet;
 //        }
         if (!isBlockRewardValueMet) {
-            strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, only regular blocks are allowed at this height",
+            strErrorRet = strprintf("coinbase pays wrong amount at height %d (actual=%d vs limit=%d), block reward mismatch, only regular blocks are allowed at this height",
                                     nBlockHeight, block.vtx[0].GetValueOut(), blockReward);
         }
         // it MUST be a regular block otherwise
@@ -113,14 +113,14 @@ bool IsBlockValueValid(const CBlock &block, int nBlockHeight, CAmount blockRewar
 ////        }
 //        LogPrint("gobject", "IsBlockValueValid -- No triggered superblock detected at height %d\n", nBlockHeight);
 //        if(!isBlockRewardValueMet) {
-//            strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, no triggered superblock detected",
+//            strErrorRet = strprintf("coinbase pays wrong amount at height %d (actual=%d vs limit=%d), block reward mismatch, no triggered superblock detected",
 //                                    nBlockHeight, block.vtx[0].GetValueOut(), blockReward);
 //        }
     } else {
 //        // should NOT allow superblocks at all, when superblocks are disabled
         LogPrint("gobject", "IsBlockValueValid -- Superblocks are disabled, no superblocks allowed\n");
         if (!isBlockRewardValueMet) {
-            strErrorRet = strprintf("coinbase pays too much at height %d (actual=%d vs limit=%d), exceeded block reward, superblocks are disabled",
+            strErrorRet = strprintf("coinbase pays wrong amount at height %d (actual=%d vs limit=%d), block reward mismatch, superblocks are disabled",
                                     nBlockHeight, block.vtx[0].GetValueOut(), blockReward);
         }
     }
