@@ -3132,7 +3132,7 @@ bool ConnectBlock(const CBlock &block, CValidationState &state, CBlockIndex *pin
     }
     //get proper vtx to check mn payments for
     const CTransaction& txNew = (block.nNonce == 0) ? block.vtx[1] : block.vtx[0];
-    if (block.nTime > sporkManager.GetSporkValue(SPORK_8_FIVEGNODE_PAYMENT_ENFORCEMENT) && !IsBlockPayeeValid(txNew, pindex->nHeight, blockReward)) {
+    if (!IsBlockPayeeValid(txNew, pindex->nHeight, blockReward)) {
         mapRejectedBlocks.insert(make_pair(block.GetHash(), GetTime()));
         return state.DoS(0, error("ConnectBlock(): couldn't find fivegnode or superblock payments"),
                          REJECT_INVALID, "bad-cb-payee");
@@ -3768,8 +3768,8 @@ int GetInputAge(const CTxIn &txin) {
 CAmount GetFivegnodePayment(const Consensus::Params &params, bool fMTP,int nHeight) {
     if(nHeight > Params().GetConsensus().nFivegnodePaymentsStartBlock)
     {
-        //Give 45 % to masternode
-        return GetBlockSubsidy(nHeight,params) * 0.45;
+        //Give 45 % to masternode using integer math
+        return GetBlockSubsidy(nHeight, params) * 45 / 100;
     }
         //No reward before fivegnodepaymentsstartblock
         return 0;

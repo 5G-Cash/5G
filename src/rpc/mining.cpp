@@ -503,7 +503,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
             "      \"amount\": n                   (numeric) required amount to pay\n"
             "  },\n"
             "  \"fivegnode_payments_started\" :  true|false, (boolean) true, if fivegnode payments started\n"
-            "  \"fivegnode_payments_enforced\" : true|false, (boolean) true, if fivegnode payments are enforced\n"
+            "  \"fivegnode_payments_enforced\" : true, (boolean) fivegnode payments are enforced\n"
             "}\n"
 
             "\nExamples:\n"
@@ -812,7 +812,7 @@ UniValue getblocktemplate(const UniValue& params, bool fHelp)
     }
     result.push_back(Pair("fivegnode", fivegnodeObj));
     result.push_back(Pair("fivegnode_payments_started", pindexPrev->nHeight + 1 > Params().GetConsensus().nFivegnodePaymentsStartBlock));
-    result.push_back(Pair("fivegnode_payments_enforced", sporkManager.IsSporkActive(SPORK_8_FIVEGNODE_PAYMENT_ENFORCEMENT)));
+    result.push_back(Pair("fivegnode_payments_enforced", true));
 
     const struct BIP9DeploymentInfo& segwit_info = VersionBitsDeploymentInfo[Consensus::DEPLOYMENT_SEGWIT];
     if (!pblocktemplate->vchCoinbaseCommitment.empty() && setClientRules.find(segwit_info.name) != setClientRules.end()) {

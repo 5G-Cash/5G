@@ -2,7 +2,7 @@ Fivegnode Build Instructions and Notes
 =============================
  - Version 1.0.0
  - Date: July 26, 2020
- - More detailed guide available here: https://fivegx.org/fivegnode-setup-guide/
+This document provides a basic outline for running a fivegnode.
 
 Prerequisites
 -------------
