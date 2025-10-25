@@ -4,7 +4,7 @@
 #include "main.h"
 #include "init.h"
 #include "wallet/wallet.h"
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 #include <boost/signals2/signal.hpp>
 
 static bool fAPIRunning = false;

@@ -6,7 +6,7 @@
 #define ZCOIN_ZMQ_ZMQPUBLISHER_H
 
 #include "zmqabstract.h"
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 #include "fivegnode.h"
 #include "client-api/server.h"
 #include <boost/thread/thread.hpp>

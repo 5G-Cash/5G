@@ -6,10 +6,12 @@
 #ifndef BITCOIN_PRIMITIVES_TRANSACTION_H
 #define BITCOIN_PRIMITIVES_TRANSACTION_H
 
-#include "amount.h"
-#include "script/script.h"
-#include "serialize.h"
-#include "uint256.h"
+#include "../amount.h"
+#include "../script/script.h"
+#include "../serialize.h"
+#include "../uint256.h"
+#include "../hash.h"
+#include "../key.h"
 
 #include <exception>
 
@@ -555,6 +557,37 @@ struct CMutableTransaction
     friend bool operator!=(const CMutableTransaction& a, const CMutableTransaction& b)
     {
         return !(a == b);
+    }
+};
+
+/** Simplified Ethereum-like transaction used by the embedded EVM. */
+struct CEVMTransaction {
+    uint64_t nonce;
+    CAmount gasPrice;
+    uint64_t gasLimit;
+    uint160 to;
+    CAmount value;
+    std::vector<unsigned char> data;
+
+    CEVMTransaction() : nonce(0), gasPrice(0), gasLimit(0), to(), value(0) {}
+
+    ADD_SERIALIZE_METHODS;
+
+    template <typename Stream, typename Operation>
+    inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
+        READWRITE(nonce);
+        READWRITE(gasPrice);
+        READWRITE(gasLimit);
+        READWRITE(to);
+        READWRITE(value);
+        READWRITE(data);
+    }
+
+    uint256 GetHash() const { return SerializeHash(*this); }
+
+    bool Sign(const CKey& key, std::vector<unsigned char>& sig) const {
+        uint256 h = GetHash();
+        return key.Sign(h, sig);
     }
 };
 

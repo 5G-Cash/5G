@@ -1,7 +1,7 @@
 #ifndef ELYSIUM_RPCRAWTX_H
 #define ELYSIUM_RPCRAWTX_H
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 UniValue elysium_decodetransaction(const UniValue& params, bool fHelp);
 UniValue elysium_createrawtx_opreturn(const UniValue& params, bool fHelp);

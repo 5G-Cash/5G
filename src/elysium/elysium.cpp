@@ -52,7 +52,7 @@
 #include "../wallet/wallet.h"
 #endif
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <boost/algorithm/string.hpp>
 #include <boost/exception/to_string.hpp>
@@ -62,7 +62,7 @@
 
 #include <openssl/sha.h>
 
-#include "leveldb/db.h"
+#include "../leveldb/include/leveldb/db.h"
 
 #include <assert.h>
 #include <stdint.h>

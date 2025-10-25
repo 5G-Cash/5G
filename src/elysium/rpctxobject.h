@@ -1,7 +1,7 @@
 #ifndef ELYSIUM_RPCTXOBJECT_H
 #define ELYSIUM_RPCTXOBJECT_H
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <string>
 

@@ -600,8 +600,21 @@ public:
      */
     bool isPrime(const int checks=BN_prime_checks) const {
         CAutoBN_CTX pctx;
-        int ret = BN_is_prime_ex(bn, checks, pctx, NULL);
-        if(ret < 0){
+        int ret;
+#if OPENSSL_VERSION_NUMBER >= 0x30000000L
+        /*
+         * BN_is_prime_ex was deprecated in OpenSSL 3.0. Use the
+         * replacement BN_check_prime when building against newer
+         * versions. The checks argument is unused with
+         * BN_check_prime, so silence any compiler warnings by
+         * explicitly discarding it.
+         */
+        (void)checks;
+        ret = BN_check_prime(bn, pctx, NULL);
+#else
+        ret = BN_is_prime_ex(bn, checks, pctx, NULL);
+#endif
+        if (ret < 0) {
             throw bignum_error("CBigNum::isPrime :BN_is_prime");
         }
         return ret;

@@ -15,7 +15,7 @@
 #include "sync.h"
 #include "utilstrencodings.h"
 #include "utiltime.h"
-#include "univalue.h"
+#include "univalue/include/univalue.h"
 
 #ifdef ENABLE_CLIENTAPI
 #include "minizip/zip.h"

@@ -8,7 +8,7 @@
 
 #include "fs.h"
 
-#include <univalue.h>
+#include "univalue/include/univalue.h"
 
 class CFivegnodeConfig;
 extern CFivegnodeConfig fivegnodeConfig;

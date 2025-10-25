@@ -1,11 +1,11 @@
-#include "elysium/persistence.h"
+#include "persistence.h"
 
-#include "elysium/log.h"
+#include "log.h"
 
-#include "util.h"
+#include "../util.h"
 
-#include "leveldb/db.h"
-#include "leveldb/write_batch.h"
+#include "../leveldb/include/leveldb/db.h"
+#include "../leveldb/include/leveldb/write_batch.h"
 
 #include <boost/filesystem/path.hpp>
 

@@ -4,7 +4,7 @@
 class CCoinControl;
 class CPubKey;
 
-#include "script/standard.h"
+#include "../script/standard.h"
 #include "elysium.h"
 
 #include <stdint.h>

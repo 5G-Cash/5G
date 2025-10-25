@@ -19,7 +19,7 @@
 #include <boost/test/unit_test.hpp>
 #include <boost/test/included/unit_test.hpp>
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 extern UniValue read_json(const std::string& jsondata);
 

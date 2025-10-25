@@ -23,7 +23,7 @@
 
 #include <openssl/crypto.h>
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #ifdef ENABLE_WALLET
 #include <db_cxx.h>

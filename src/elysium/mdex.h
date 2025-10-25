@@ -1,9 +1,9 @@
 #ifndef ELYSIUM_MDEX_H
 #define ELYSIUM_MDEX_H
 
-#include "elysium/tx.h"
+#include "tx.h"
 
-#include "uint256.h"
+#include "../uint256.h"
 
 #include <boost/lexical_cast.hpp>
 #include <boost/multiprecision/cpp_dec_float.hpp>

@@ -22,7 +22,7 @@
 #include "wallet/mnemoniccontainer.h"
 #include "../base58.h"
 #include "zerocoin_params.h"
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 
 #include "hdmint/tracker.h"
 #include "hdmint/wallet.h"

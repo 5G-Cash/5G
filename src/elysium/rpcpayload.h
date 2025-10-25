@@ -1,7 +1,7 @@
 #ifndef ELYSIUM_RPCPAYLOAD_H
 #define ELYSIUM_RPCPAYLOAD_H
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 UniValue elysium_createpayload_simplesend(const UniValue& params, bool fHelp);
 UniValue elysium_createpayload_sendall(const UniValue& params, bool fHelp);

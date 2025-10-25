@@ -15,7 +15,7 @@
 #include "uint256.h"
 #include "utilstrencodings.h"
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <stdint.h>
 #include <stdexcept>

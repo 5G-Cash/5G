@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "uint256.h"
+#include "../uint256.h"
 
 /** Determines the Bitcoin address associated with a given hash and version. */
 std::string HashToAddress(unsigned char version, const uint160& hash);

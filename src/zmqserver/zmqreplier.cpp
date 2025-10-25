@@ -5,7 +5,7 @@
 #include <boost/thread/thread.hpp>
 #include <boost/chrono.hpp>
 #include "util.h"
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 #include "client-api/server.h"
 #include "client-api/protocol.h"
 

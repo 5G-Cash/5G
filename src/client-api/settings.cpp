@@ -7,7 +7,7 @@
 #include "client-api/settings.h"
 #include "client-api/protocol.h"
 #include "util.h"
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 #include <fstream>
 #include "utilstrencodings.h"
 #include <boost/foreach.hpp>

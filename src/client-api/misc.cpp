@@ -17,7 +17,7 @@
 #include "fivegnodeman.h"
 #include "activefivegnode.h"
 #include <zmqserver/zmqabstract.h>
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/erase.hpp>

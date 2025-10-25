@@ -1,7 +1,7 @@
 #ifndef ELYSIUM_CONSENSUSHASH_H
 #define ELYSIUM_CONSENSUSHASH_H
 
-#include "uint256.h"
+#include "../uint256.h"
 
 namespace elysium
 {

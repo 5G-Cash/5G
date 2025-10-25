@@ -5,7 +5,7 @@
 
 #ifndef ZCOIN_APIPROTOCOL_H
 #define ZCOIN_APIPROTOCOL_H
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 
 #include <list>
 #include <map>

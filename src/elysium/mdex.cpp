@@ -15,7 +15,7 @@
 #include "tinyformat.h"
 #include "uint256.h"
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/rational.hpp>

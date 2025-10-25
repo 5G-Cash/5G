@@ -1,13 +1,13 @@
 #ifndef ELYSIUM_DEX_H
 #define ELYSIUM_DEX_H
 
-#include "elysium/log.h"
-#include "elysium/elysium.h"
-#include "elysium/tx.h"
+#include "log.h"
+#include "elysium.h"
+#include "tx.h"
 
-#include "amount.h"
-#include "tinyformat.h"
-#include "uint256.h"
+#include "../amount.h"
+#include "../tinyformat.h"
+#include "../uint256.h"
 
 #include <openssl/sha.h>
 

@@ -10,7 +10,7 @@
 #include "rpc/server.h"
 #include "utilstrencodings.h"
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 using std::runtime_error;
 using namespace elysium;

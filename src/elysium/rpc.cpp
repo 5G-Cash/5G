@@ -50,7 +50,7 @@
 #include "../wallet/wallet.h"
 #endif
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <map>
 #include <stdexcept>

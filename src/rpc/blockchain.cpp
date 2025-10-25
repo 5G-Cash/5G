@@ -22,7 +22,7 @@
 #include "base58.h"
 #include <stdint.h>
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <boost/thread/thread.hpp> // boost::thread::interrupt
 

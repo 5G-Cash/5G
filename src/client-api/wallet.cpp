@@ -12,7 +12,7 @@
 #include "client-api/send.h"
 #include "client-api/sigma.h"
 #include "client-api/protocol.h"
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 #include <fstream>
 
 namespace fs = boost::filesystem;

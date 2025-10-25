@@ -8,12 +8,12 @@
 
 #include "../uint256.h"
 
-#include <univalue.h>
+#include "../univalue/include/univalue.h"
 
 #include <boost/filesystem/path.hpp>
 #include <boost/signals2/signal.hpp>
 
-#include <leveldb/slice.h>
+#include "../leveldb/include/leveldb/slice.h"
 
 #include <string>
 #include <vector>

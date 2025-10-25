@@ -16,7 +16,7 @@
 #include <sigma.h>
 #include <vector>
 
-#include "univalue.h"
+#include "../univalue/include/univalue.h"
 
 using namespace std;
 

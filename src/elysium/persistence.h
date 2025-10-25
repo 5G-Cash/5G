@@ -1,7 +1,7 @@
 #ifndef ELYSIUM_PERSISTENCE_H
 #define ELYSIUM_PERSISTENCE_H
 
-#include "leveldb/db.h"
+#include "../leveldb/include/leveldb/db.h"
 
 #include <boost/filesystem/path.hpp>
 

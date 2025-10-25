@@ -307,6 +307,7 @@ libbitcoin_server_a_SOURCES = \
   zerocoin.cpp \
   sigma.cpp \
   coin_containers.cpp \
+  evm/evm.cpp \
   $(BITCOIN_CORE_H)
 
 if ENABLE_CLIENTAPI

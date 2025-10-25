@@ -9,11 +9,11 @@
 #include <deque>
 #include <type_traits>
 #include <boost/foreach.hpp>
-#include "primitives/transaction.h"
-#include "serialize.h"
-#include "uint256.h"
-#include "definition.h"
-#include "zerocoin_params.h"
+#include "transaction.h"
+#include "../serialize.h"
+#include "../uint256.h"
+#include "../definition.h"
+#include "../zerocoin_params.h"
 
 // Can't include sigma.h
 namespace sigma {

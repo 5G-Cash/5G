@@ -33,6 +33,46 @@
 #include "utilstrencodings.h"
 #include "validationinterface.h"
 #include "versionbits.h"
+#include "evm/evm.h"
 
 
+
+// Global EVM state used for experimental execution
+static EVMState g_evmState;
+static const size_t MAX_EVM_TX_SIZE = 1024;
+extern CBlockTreeDB* pblocktree;
+
+static bool IsEVMTransaction(const CTransaction& tx, CEVMTransaction& evmTx)
+{
+    if (tx.vout.empty() || !tx.vout[0].scriptPubKey.IsUnspendable())
+        return false;
+    std::vector<unsigned char> script(tx.vout[0].scriptPubKey.begin(), tx.vout[0].scriptPubKey.end());
+    if (script.empty() || script[0] != OP_RETURN)
+        return false;
+    std::vector<unsigned char> payload(script.begin() + 1, script.end());
+    if (payload.size() > MAX_EVM_TX_SIZE)
+        return false;
+    CDataStream ss(payload, SER_NETWORK, 0);
+    try {
+        ss >> evmTx;
+        return true;
+    } catch (const std::exception&) {
+        return false;
+    }
+}
+
+bool ProcessEVMTransaction(const CTransaction& tx)
+{
+    CEVMTransaction evmTx;
+    if (!IsEVMTransaction(tx, evmTx))
+        return false;
+    EVM engine;
+    uint64_t gasUsed;
+    std::vector<unsigned char> out;
+    if (!engine.Execute(evmTx, g_evmState, gasUsed, out))
+        return false;
+    pblocktree->WriteEVMAccount(evmTx.to, g_evmState.GetOrCreate(evmTx.to));
+    pblocktree->WriteEVMReceipt(tx.GetHash(), out);
+    return true;
+}
 

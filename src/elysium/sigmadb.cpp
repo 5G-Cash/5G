@@ -13,8 +13,8 @@
 
 #include <boost/filesystem.hpp>
 
-#include <leveldb/db.h>
-#include <leveldb/write_batch.h>
+#include "../leveldb/include/leveldb/db.h"
+#include "../leveldb/include/leveldb/write_batch.h"
 
 #include <string>
 #include <vector>
