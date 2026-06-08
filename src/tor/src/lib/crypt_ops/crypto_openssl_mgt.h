@@ -16,6 +16,19 @@
 #include "orconfig.h"
 
 #ifdef ENABLE_OPENSSL
+/*
+ * This bundled Tor compatibility layer intentionally supports OpenSSL 1.1-era
+ * APIs. OpenSSL 3 marks several of those APIs deprecated, and some build
+ * configurations promote those warnings to errors. Keep the compatibility
+ * layer buildable with OpenSSL 3 while retaining support for older OpenSSL and
+ * LibreSSL.
+ */
+#ifndef OPENSSL_API_COMPAT
+#define OPENSSL_API_COMPAT 0x10100000L
+#endif
+#ifndef OPENSSL_SUPPRESS_DEPRECATED
+#define OPENSSL_SUPPRESS_DEPRECATED
+#endif
 #include <openssl/engine.h>
 
 /*
