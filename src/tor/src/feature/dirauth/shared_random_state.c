@@ -1059,6 +1059,9 @@ sr_state_get_phase(void)
 {
   void *ptr;
   state_query(SR_STATE_ACTION_GET, SR_STATE_OBJ_PHASE, NULL, &ptr);
+  if (BUG(!ptr)) {
+    return SR_PHASE_COMMIT;
+  }
   return *(sr_phase_t *) ptr;
 }
 

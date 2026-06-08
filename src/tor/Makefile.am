@@ -143,6 +143,11 @@ TOR_CFLAGS_CRYPTLIB=
 if USE_NSS
 TOR_CFLAGS_CRYPTLIB+=@NSS_CFLAGS@
 TOR_LIBS_CRYPTLIB+=@NSS_LIBS@
+else
+# Tor's bundled OpenSSL backend still uses APIs deprecated by OpenSSL 3.x.
+# Keep those symbols available and non-fatal while preserving the upstream
+# compatibility implementation for older OpenSSL/LibreSSL releases.
+TOR_CFLAGS_CRYPTLIB+=-DOPENSSL_SUPPRESS_DEPRECATED -Wno-deprecated-declarations
 endif
 
 # All libraries used to link tor-cov
