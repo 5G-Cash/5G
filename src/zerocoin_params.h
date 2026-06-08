@@ -124,7 +124,7 @@ static const int64_t DUST_HARD_LIMIT = 1000;   // 0.00001 VGC mininput
 #define ZC_MINT_LIMIT         250
 
 /** Maximum number of outbound peers designated as Dandelion destinations */
-#define DANDELION_MAX_DESTINATIONS 2
+#define DANDELION_MAX_DESTINATIONS 4
 
 /** Expected time between Dandelion routing shuffles (in seconds). */
 #define DANDELION_SHUFFLE_INTERVAL 600

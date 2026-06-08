@@ -5069,6 +5069,15 @@ AcceptBlock(const CBlock &block, CValidationState &state, const CChainParams &ch
     // process an unrequested block if it's new and has enough work to
     // advance our tip, and isn't too many blocks ahead.
     bool fAlreadyHave = pindex->nStatus & BLOCK_HAVE_DATA;
+    const int nMaxReorgDepth = chainparams.GetConsensus().nMaxReorgDepth;
+    if (!fAlreadyHave && nMaxReorgDepth > 0 &&
+        chainActive.Height() - pindex->nHeight > nMaxReorgDepth &&
+        !chainActive.Contains(pindex)) {
+        return state.DoS(100,
+                         error("%s: rejected deep reorganization candidate at height %d (active height %d, limit %d)",
+                               __func__, pindex->nHeight, chainActive.Height(), nMaxReorgDepth),
+                         REJECT_INVALID, "bad-deep-reorg");
+    }
     bool fHasMoreWork = (chainActive.Tip() ? pindex->nChainWork > chainActive.Tip()->nChainWork : true);
     // Blocks that are too out-of-order needlessly limit the effectiveness of
     // pruning, because pruning will not delete block files that contain any

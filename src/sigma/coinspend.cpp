@@ -1,6 +1,5 @@
 #include "coinspend.h"
 #include "openssl_context.h"
-#include "util.h"
 
 namespace sigma {
 
@@ -101,6 +100,28 @@ bool CoinSpend::Verify(
         const std::vector<sigma::PublicCoin>& anonymity_set,
         const SpendMetaData& m,
         bool fPadding) const {
+    if (!params) {
+        LogPrintf("Sigma spend failed due to missing parameters.\n");
+        return false;
+    }
+
+    if (!HasValidSerial()) {
+        LogPrintf("Sigma spend failed due to invalid serial number.\n");
+        return false;
+    }
+
+    if (anonymity_set.empty()) {
+        LogPrintf("Sigma spend failed due to empty anonymity set.\n");
+        return false;
+    }
+
+    for (std::size_t i = 0; i < anonymity_set.size(); ++i) {
+        if (anonymity_set[i].getDenomination() != denomination || !anonymity_set[i].validate()) {
+            LogPrintf("Sigma spend failed due to invalid anonymity set coin.\n");
+            return false;
+        }
+    }
+
     SigmaPlusVerifier<Scalar, GroupElement> sigmaVerifier(params->get_g(), params->get_h(), params->get_n(), params->get_m());
     //compute inverse of g^s
     GroupElement gs = (params->get_g() * coinSerialNumber).inverse();
@@ -148,7 +169,7 @@ bool CoinSpend::Verify(
     return sigmaVerifier.verify(C_, sigmaProof, fPadding);
 }
 
-const Scalar& CoinSpend::getCoinSerialNumber() {
+const Scalar& CoinSpend::getCoinSerialNumber() const {
     return this->coinSerialNumber;
 }
 

@@ -31,50 +31,58 @@ Linux Build Instructions and Notes
 
 Dependencies
 ----------------------
-You can use the "depscript.sh" to automatically install Dependencies to build VGC or manually install them using the syntax below
+The repository ships a Linux dependency installer that supports Ubuntu/Debian
+18.04 and newer, plus other common Linux package managers. The default installs
+headless daemon/test dependencies and avoids the legacy Berkeley DB 4.8 PPA so
+modern distributions can build with their packaged DB libraries.
 
-1.  Update packages
+```bash
+./scripts/install-linux-deps.sh --no-gui
+```
 
-        sudo apt-get update
+For a Qt wallet build, include GUI dependencies:
 
-2.  Install required packages
-        
-        sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libzmq3-dev libminizip-dev
+```bash
+./scripts/install-linux-deps.sh --gui
+```
 
-3.  Install Berkeley DB 4.8
-
-        sudo add-apt-repository ppa:bitcoin/bitcoin && sudo apt-get update && sudo apt-get install libdb4.8-dev libdb4.8++-dev
-    
-5.  Install QT 5
-
-        sudo apt-get install libminiupnpc-dev && sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
-        
-        
+`depscript.sh` remains as a compatibility wrapper around the installer above.
 
 Building 5G-CASH
 ----------------------
-### 1. Static compile
-    git clone https://github.com/5G-Cash/5G.git
-    chmod -R +rwx 5G 
-    cd 5G/depends
-    make HOST=x86_64-linux-gnu
-    cd ..
-    ./autogen.sh
-    ./configure --prefix=$PWD/depends/x86_64-linux-gnu
-    make 
+### 1. Headless Linux build using system packages
+```bash
+git clone https://github.com/5G-Cash/5G.git
+cd 5G
+./scripts/install-linux-deps.sh --no-gui
+./scripts/build-linux.sh --no-gui
+```
 
+The build script runs `./autogen.sh`, configures with `--with-gui=no`, and
+passes `--with-incompatible-bdb` so Ubuntu 18.04+ and modern Linux distributions
+can use their packaged Berkeley DB versions.
 
-#### 2. Shared binary
-    git clone https://github.com/5G-Cash/5G.git
-    chmod -R +rwx 5G
-    cd 5G
-    ./autogen.sh
-    ./configure
-    make
-    
-### 3.  It is recommended to build and run the unit tests:
-    make check
+### 2. Qt GUI build using system packages
+```bash
+./scripts/install-linux-deps.sh --gui
+./scripts/build-linux.sh --gui
+```
 
+### 3. Repository-managed dependency build
+For the broadest binary compatibility and to avoid distribution-specific library
+versions, build the dependency prefix first:
+
+```bash
+./scripts/build-linux.sh --depends --no-gui
+```
+
+### 4. Unit tests
+The build script runs unit tests by default. To compile without tests, pass
+`--no-tests`; to re-run tests after a build, run:
+
+```bash
+make check
+```
 
 Setting up a Fivegnode
 ==================================

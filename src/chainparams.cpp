@@ -145,6 +145,7 @@ public:
         //Stake parameters
         consensus.nFirstPOSBlock = 2500;
         consensus.nStakeTimestampMask = 0xf; // 15
+        consensus.nMaxReorgDepth = 100;
         consensus.posLimit = uint256S("00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
         consensus.nDisableZCoinClientCheckTime = 1591139261; //Date and time (GMT): Tuesday, June 2, 2020 11:07:41 PM
@@ -281,6 +282,7 @@ public:
         //Proof-of-Stake related values
         consensus.nFirstPOSBlock = 135;
         consensus.nStakeTimestampMask = 0xf; // 15
+        consensus.nMaxReorgDepth = 100;
         consensus.nPowTargetTimespan = 5 * 60; // 5 minutes between retargets
         consensus.nPowTargetSpacing = 1 * 60; // 1 minute blocks
         consensus.fPowAllowMinDifficultyBlocks = true;
@@ -495,6 +497,7 @@ public:
         nConsecutivePoWHeight = INT_MAX;
         nMaxPoWBlocks = 101;
         consensus.nFirstPOSBlock = nConsecutivePoWHeight;
+        consensus.nMaxReorgDepth = 0;
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.

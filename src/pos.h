@@ -10,18 +10,15 @@
 #ifndef NOIR_POS_H
 #define NOIR_POS_H
 
-#include "pos.h"
-#include "txdb.h"
-#include "main.h"
-#include "arith_uint256.h"
 #include "consensus/validation.h"
-#include "hash.h"
-#include "timedata.h"
-#include "chainparams.h"
-#include "script/sign.h"
+#include "primitives/transaction.h"
+#include "uint256.h"
+
+#include <map>
 #include <stdint.h>
 
-using namespace std;
+class CBlockIndex;
+class CCoins;
 
 /** Compute the hash modifier for proof-of-stake */
 uint256 ComputeStakeModifier(const CBlockIndex* pindexPrev, const uint256& kernel);

@@ -30,7 +30,7 @@ public:
 
     void updateMetaData(const PrivateCoin& coin, const SpendMetaData& m);
 
-    const Scalar& getCoinSerialNumber();
+    const Scalar& getCoinSerialNumber() const;
 
     CoinDenomination getDenomination() const;
 

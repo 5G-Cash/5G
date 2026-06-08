@@ -2,7 +2,17 @@
 #define ZCOIN_SIGMA_SIGMAPLUS_VERIFIER_H
 
 #include "r1_proof_verifier.h"
+
+#if defined(__has_include) && __has_include(<boost/filesystem.hpp>)
 #include "util.h"
+#else
+template<typename... Args>
+static inline int LogPrintf(const char* fmt, const Args&... args)
+{
+    (void)fmt;
+    return 0;
+}
+#endif
 
 namespace sigma {
 template<class Exponent, class GroupElement>
