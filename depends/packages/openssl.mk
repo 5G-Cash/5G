@@ -1,12 +1,16 @@
 package=openssl
-$(package)_version=1.0.1k
-$(package)_download_path=https://www.openssl.org/source
+$(package)_version=3.5.6
+$(package)_download_path=https://github.com/openssl/openssl/releases/download/openssl-$($(package)_version)
 $(package)_file_name=$(package)-$($(package)_version).tar.gz
-$(package)_sha256_hash=8f9faeaebad088e772f4ef5e38252d472be4d878c6b3a2718c10a4fcebe7a41c
+$(package)_sha256_hash=deae7c80cba99c4b4f940ecadb3c3338b13cb77418409238e57d7f31f2a3b736
 
+# OpenSSL 3.5 is the current LTS line and keeps the deterministic depends
+# build on a supported OpenSSL release. Configure options below are limited to
+# options accepted by OpenSSL 3.x; old 1.0.x-only options such as no-store,
+# no-ssl2, no-static_engine, and no-jpake must not be reintroduced.
 define $(package)_set_vars
 $(package)_config_env=AR="$($(package)_ar)" RANLIB="$($(package)_ranlib)" CC="$($(package)_cc)"
-$(package)_config_opts=--prefix=$(host_prefix) --openssldir=$(host_prefix)/etc/openssl
+$(package)_config_opts=--prefix=$(host_prefix) --openssldir=$(host_prefix)/etc/openssl --libdir=lib
 $(package)_config_opts+=no-camellia
 $(package)_config_opts+=no-capieng
 $(package)_config_opts+=no-cast
@@ -15,28 +19,19 @@ $(package)_config_opts+=no-dso
 $(package)_config_opts+=no-dtls1
 $(package)_config_opts+=no-ec_nistp_64_gcc_128
 $(package)_config_opts+=no-gost
-$(package)_config_opts+=no-gmp
-$(package)_config_opts+=no-heartbeats
 $(package)_config_opts+=no-idea
-$(package)_config_opts+=no-jpake
-$(package)_config_opts+=no-krb5
-$(package)_config_opts+=no-libunbound
 $(package)_config_opts+=no-md2
 $(package)_config_opts+=no-mdc2
 $(package)_config_opts+=no-rc4
 $(package)_config_opts+=no-rc5
 $(package)_config_opts+=no-rdrand
 $(package)_config_opts+=no-rfc3779
-$(package)_config_opts+=no-rsax
 $(package)_config_opts+=no-sctp
 $(package)_config_opts+=no-seed
-$(package)_config_opts+=no-sha0
 $(package)_config_opts+=no-shared
 $(package)_config_opts+=no-ssl-trace
-$(package)_config_opts+=no-ssl2
 $(package)_config_opts+=no-ssl3
-$(package)_config_opts+=no-static_engine
-$(package)_config_opts+=no-store
+$(package)_config_opts+=no-tests
 $(package)_config_opts+=no-unit-test
 $(package)_config_opts+=no-weak-ssl-ciphers
 $(package)_config_opts+=no-whirlpool
@@ -56,11 +51,6 @@ $(package)_config_opts_x86_64_mingw32=mingw64
 $(package)_config_opts_i686_mingw32=mingw
 endef
 
-define $(package)_preprocess_cmds
-  sed -i.old "/define DATE/d" util/mkbuildinf.pl && \
-  sed -i.old "s|engines apps test|engines|" Makefile.org
-endef
-
 define $(package)_config_cmds
   ./Configure $($(package)_config_opts)
 endef
@@ -70,9 +60,9 @@ define $(package)_build_cmds
 endef
 
 define $(package)_stage_cmds
-  $(MAKE) INSTALL_PREFIX=$($(package)_staging_dir) -j1 install_sw
+  $(MAKE) DESTDIR=$($(package)_staging_dir) -j1 install_dev
 endef
 
 define $(package)_postprocess_cmds
-  rm -rf share bin etc
+  rm -rf share bin etc lib/cmake
 endef

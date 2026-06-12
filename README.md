@@ -70,7 +70,8 @@ can use their packaged Berkeley DB versions.
 
 ### 3. Repository-managed dependency build
 For the broadest binary compatibility and to avoid distribution-specific library
-versions, build the dependency prefix first:
+versions, build the dependency prefix first. The dependency prefix now builds
+OpenSSL 3.5 LTS instead of the legacy OpenSSL 1.0.x line.
 
 ```bash
 ./scripts/build-linux.sh --depends --no-gui
