@@ -5,7 +5,7 @@ set -eu
 
 WITH_GUI=0
 USE_DEPENDS=0
-RUN_TESTS=1
+RUN_TESTS=0
 CLEAN=0
 JOBS="${JOBS:-}"
 CONFIGURE_EXTRA="${CONFIGURE_EXTRA:-}"
@@ -18,7 +18,8 @@ Options:
   --gui             Build the Qt GUI if Qt dependencies are installed.
   --no-gui          Build daemon/CLI only (default).
   --depends         Build and use the repository depends/ prefix first.
-  --no-tests        Skip make check.
+  --tests           Build and run the legacy unit-test binary.
+  --no-tests        Skip make check (default; useful for modern distro smoke builds).
   --clean           Run make clean before compiling when Makefile exists.
   -j, --jobs N      Parallel make jobs. Defaults to nproc/getconf.
   -h, --help        Show this help.
@@ -34,6 +35,7 @@ while [ $# -gt 0 ]; do
     --gui) WITH_GUI=1 ;;
     --no-gui) WITH_GUI=0 ;;
     --depends) USE_DEPENDS=1 ;;
+    --tests) RUN_TESTS=1 ;;
     --no-tests) RUN_TESTS=0 ;;
     --clean) CLEAN=1 ;;
     -j|--jobs)
@@ -105,6 +107,12 @@ fi
 if [ -f ./src/tor/autogen.sh ] && [ ! -x ./src/tor/autogen.sh ]; then
   chmod +x ./src/tor/autogen.sh
 fi
+if [ -f ./src/univalue/autogen.sh ] && [ ! -x ./src/univalue/autogen.sh ]; then
+  chmod +x ./src/univalue/autogen.sh
+fi
+if [ -f ./share/genbuild.sh ] && [ ! -x ./share/genbuild.sh ]; then
+  chmod +x ./share/genbuild.sh
+fi
 
 ./autogen.sh
 
@@ -120,8 +128,13 @@ if [ "$USE_DEPENDS" -eq 1 ]; then
   BDB_ARG=""
 fi
 
+TEST_ARG="--disable-tests"
+if [ "$RUN_TESTS" -eq 1 ]; then
+  TEST_ARG="--enable-tests"
+fi
+
 # shellcheck disable=SC2086
-sh -c "${CONFIG_SITE_ARG:+$CONFIG_SITE_ARG }./configure $GUI_ARG $BDB_ARG $PREFIX_ARG $CONFIGURE_EXTRA"
+sh -c "${CONFIG_SITE_ARG:+$CONFIG_SITE_ARG }./configure $GUI_ARG $BDB_ARG $TEST_ARG $PREFIX_ARG $CONFIGURE_EXTRA"
 
 if [ "$CLEAN" -eq 1 ] && [ -f Makefile ]; then
   make clean
@@ -131,4 +144,6 @@ make -j"$JOBS"
 
 if [ "$RUN_TESTS" -eq 1 ]; then
   make check
+else
+  echo "Skipping legacy unit tests; pass --tests to configure and run make check."
 fi

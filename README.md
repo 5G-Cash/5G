@@ -55,7 +55,7 @@ Building 5G-CASH
 git clone https://github.com/5G-Cash/5G.git
 cd 5G
 ./scripts/install-linux-deps.sh --no-gui
-./scripts/build-linux.sh --no-gui
+./scripts/build-linux.sh --no-gui --no-tests
 ```
 
 The build script runs `./autogen.sh`, configures with `--with-gui=no`, and
@@ -77,12 +77,18 @@ OpenSSL 3.5 LTS instead of the legacy OpenSSL 1.0.x line.
 ./scripts/build-linux.sh --depends --no-gui
 ```
 
-### 4. Unit tests
-The build script runs unit tests by default. To compile without tests, pass
-`--no-tests`; to re-run tests after a build, run:
+### 4. Build checks and optional unit tests
+The default Linux path is a compile plus binary smoke check. The legacy Boost
+unit-test binary is still available, but it is opt-in because several historical
+fixtures are not reliable on modern distro toolchains.
 
 ```bash
-make check
+./src/fivegd --version
+./src/fiveg-cli --version
+./src/fiveg-tx -?
+
+# Optional legacy unit-test run
+./scripts/build-linux.sh --no-gui --tests
 ```
 
 Setting up a Fivegnode

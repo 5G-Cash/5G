@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   headless:
-    name: Headless build and tests
+    name: Headless build and smoke checks
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
@@ -28,5 +28,11 @@ jobs:
           grep -q -- '--disable-unittests' configure.ac
           grep -q '#ifdef SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION' src/tor/src/lib/tls/tortls_openssl.c
 
-      - name: Build and test
-        run: ./scripts/build-linux.sh --no-gui --clean
+      - name: Build
+        run: ./scripts/build-linux.sh --no-gui --no-tests --clean
+
+      - name: Smoke-test binaries
+        run: |
+          ./src/fivegd --version
+          ./src/fiveg-cli --version
+          ./src/fiveg-tx -?

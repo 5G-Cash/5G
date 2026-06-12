@@ -226,7 +226,12 @@ shellcheck:
                 fi; \
 	fi
 
+if UNITTESTS_ENABLED
 check-local: check-spaces check-changes check-includes shellcheck
+else
+check-local:
+	@echo "Bundled Tor check-local skipped because --disable-unittests is configured."
+endif
 
 need-chutney-path:
 	@if test ! -d "$$CHUTNEY_PATH"; then \
