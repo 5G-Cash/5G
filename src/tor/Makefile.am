@@ -16,12 +16,14 @@ noinst_PROGRAMS=
 DISTCLEANFILES=
 bin_SCRIPTS=
 AM_CPPFLAGS=\
+	-DOPENSSL_API_COMPAT=0x10100000L \
+	-DOPENSSL_SUPPRESS_DEPRECATED \
 	-I$(top_srcdir)/src \
 	-I$(top_srcdir)/src/ext \
 	-I$(top_srcdir)/src/ext/trunnel \
 	-I$(top_srcdir)/src/trunnel
 
-AM_CFLAGS=@TOR_SYSTEMD_CFLAGS@ @CFLAGS_BUGTRAP@ @TOR_LZMA_CFLAGS@ @TOR_ZSTD_CFLAGS@
+AM_CFLAGS=@TOR_SYSTEMD_CFLAGS@ @CFLAGS_BUGTRAP@ @TOR_LZMA_CFLAGS@ @TOR_ZSTD_CFLAGS@ -Wno-deprecated-declarations
 SHELL=@SHELL@
 
 if COVERAGE_ENABLED
@@ -143,11 +145,6 @@ TOR_CFLAGS_CRYPTLIB=
 if USE_NSS
 TOR_CFLAGS_CRYPTLIB+=@NSS_CFLAGS@
 TOR_LIBS_CRYPTLIB+=@NSS_LIBS@
-else
-# Tor's bundled OpenSSL backend still uses APIs deprecated by OpenSSL 3.x.
-# Keep those symbols available and non-fatal while preserving the upstream
-# compatibility implementation for older OpenSSL/LibreSSL releases.
-TOR_CFLAGS_CRYPTLIB+=-DOPENSSL_SUPPRESS_DEPRECATED -Wno-deprecated-declarations
 endif
 
 # All libraries used to link tor-cov
