@@ -18,6 +18,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Clean generated files
+        run: git clean -xffd
+
       - name: Install C++ dependencies
         run: ./scripts/install-linux-deps.sh --no-gui
 
@@ -26,8 +29,8 @@ jobs:
         with:
           languages: c-cpp
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
+      - name: Build with project script
+        run: ./scripts/build-linux.sh --no-gui --no-tests --clean
 
       - name: Perform CodeQL analysis
         uses: github/codeql-action/analyze@v3

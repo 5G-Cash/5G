@@ -41,7 +41,7 @@ AC_ARG_ENABLE(static-zlib,
 AC_ARG_ENABLE(static-tor,
    AS_HELP_STRING(--enable-static-tor, [create an entirely static Tor binary. Requires --with-openssl-dir and --with-libevent-dir and --with-zlib-dir]))
 AC_ARG_ENABLE(unittests,
-   AS_HELP_STRING(--disable-unittests, [don't build unit tests for Tor. Risky!]))
+   AS_HELP_STRING(--enable-unittests, [build Tor's internal unit tests. Disabled in the bundled 5G build.]))
 AC_ARG_ENABLE(coverage,
    AS_HELP_STRING(--enable-coverage, [enable coverage support in the unit-test build]))
 AC_ARG_ENABLE(asserts-in-tests,
@@ -71,7 +71,10 @@ if test "x$enable_coverage" != "xyes" -a "x$enable_asserts_in_tests" = "xno" ; t
     AC_MSG_ERROR([Can't disable assertions outside of coverage build])
 fi
 
-AM_CONDITIONAL(UNITTESTS_ENABLED, test "x$enable_unittests" != "xno")
+if test "x$enable_unittests" = "x"; then
+  enable_unittests=no
+fi
+AM_CONDITIONAL(UNITTESTS_ENABLED, test "x$enable_unittests" = "xyes")
 AM_CONDITIONAL(COVERAGE_ENABLED, test "x$enable_coverage" = "xyes")
 AM_CONDITIONAL(DISABLE_ASSERTS_IN_UNIT_TESTS, test "x$enable_asserts_in_tests" = "xno")
 AM_CONDITIONAL(LIBFUZZER_ENABLED, test "x$enable_libfuzzer" = "xyes")

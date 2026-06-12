@@ -17,8 +17,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Clean generated files
+        run: git clean -xffd
+
       - name: Install Linux dependencies
         run: ./scripts/install-linux-deps.sh --no-gui
 
+      - name: Verify bundled Tor OpenSSL 3 patch
+        run: |
+          grep -q -- '--disable-unittests' configure.ac
+          grep -q '#ifdef SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION' src/tor/src/lib/tls/tortls_openssl.c
+
       - name: Build and test
-        run: ./scripts/build-linux.sh --no-gui
+        run: ./scripts/build-linux.sh --no-gui --clean
