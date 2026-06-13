@@ -22,7 +22,7 @@ jobs:
         run: git clean -xffd
 
       - name: Install C++ dependencies
-        run: ./scripts/install-linux-deps.sh --no-gui
+        run: ./scripts/install-linux-deps.sh --no-gui --no-windows
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3

@@ -36,14 +36,30 @@ The repository ships a Linux dependency installer that supports Ubuntu/Debian
 headless daemon/test dependencies and avoids the legacy Berkeley DB 4.8 PPA so
 modern distributions can build with their packaged DB libraries.
 
+For a one-shot full development environment matching the historical manual setup
+(build tools, Qt5 GUI packages, MinGW/NSIS Windows cross-build tools, CMake,
+zip/unzip, Boost, libevent, miniupnpc, and ZeroMQ), run:
+
 ```bash
-./scripts/install-linux-deps.sh --no-gui
+./scripts/setup-build-env.sh
+```
+
+For a smaller headless Linux-only setup, run:
+
+```bash
+./scripts/install-linux-deps.sh --no-gui --no-windows
 ```
 
 For a Qt wallet build, include GUI dependencies:
 
 ```bash
 ./scripts/install-linux-deps.sh --gui
+```
+
+For Windows cross-build prerequisites on Linux, add:
+
+```bash
+./scripts/install-linux-deps.sh --windows
 ```
 
 `depscript.sh` remains as a compatibility wrapper around the installer above.
@@ -54,7 +70,7 @@ Building 5G-CASH
 ```bash
 git clone https://github.com/5G-Cash/5G.git
 cd 5G
-./scripts/install-linux-deps.sh --no-gui
+./scripts/install-linux-deps.sh --no-gui --no-windows
 ./scripts/build-linux.sh --no-gui --no-tests
 ```
 
@@ -64,7 +80,7 @@ can use their packaged Berkeley DB versions.
 
 ### 2. Qt GUI build using system packages
 ```bash
-./scripts/install-linux-deps.sh --gui
+./scripts/install-linux-deps.sh --gui --no-windows
 ./scripts/build-linux.sh --gui
 ```
 

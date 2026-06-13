@@ -21,7 +21,7 @@ jobs:
         run: git clean -xffd
 
       - name: Install Linux dependencies
-        run: ./scripts/install-linux-deps.sh --no-gui
+        run: ./scripts/install-linux-deps.sh --no-gui --no-windows
 
       - name: Verify bundled Tor OpenSSL 3 patch
         run: |
