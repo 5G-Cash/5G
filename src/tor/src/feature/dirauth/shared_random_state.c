@@ -1057,9 +1057,10 @@ sr_state_set_valid_after(time_t valid_after)
 sr_phase_t
 sr_state_get_phase(void)
 {
-  void *ptr;
-  state_query(SR_STATE_ACTION_GET, SR_STATE_OBJ_PHASE, NULL, &ptr);
-  return *(sr_phase_t *) ptr;
+  if (BUG(!sr_state)) {
+    return SR_PHASE_COMMIT;
+  }
+  return sr_state->phase;
 }
 
 /* Return the previous SRV value from our state. Value CAN be NULL.

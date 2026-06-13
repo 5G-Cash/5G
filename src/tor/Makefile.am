@@ -16,12 +16,14 @@ noinst_PROGRAMS=
 DISTCLEANFILES=
 bin_SCRIPTS=
 AM_CPPFLAGS=\
+	-DOPENSSL_API_COMPAT=0x10100000L \
+	-DOPENSSL_SUPPRESS_DEPRECATED \
 	-I$(top_srcdir)/src \
 	-I$(top_srcdir)/src/ext \
 	-I$(top_srcdir)/src/ext/trunnel \
 	-I$(top_srcdir)/src/trunnel
 
-AM_CFLAGS=@TOR_SYSTEMD_CFLAGS@ @CFLAGS_BUGTRAP@ @TOR_LZMA_CFLAGS@ @TOR_ZSTD_CFLAGS@
+AM_CFLAGS=@TOR_SYSTEMD_CFLAGS@ @CFLAGS_BUGTRAP@ @TOR_LZMA_CFLAGS@ @TOR_ZSTD_CFLAGS@ -Wno-deprecated-declarations
 SHELL=@SHELL@
 
 if COVERAGE_ENABLED
@@ -224,7 +226,12 @@ shellcheck:
                 fi; \
 	fi
 
+if UNITTESTS_ENABLED
 check-local: check-spaces check-changes check-includes shellcheck
+else
+check-local:
+	@echo "Bundled Tor check-local skipped because --disable-unittests is configured."
+endif
 
 need-chutney-path:
 	@if test ! -d "$$CHUTNEY_PATH"; then \

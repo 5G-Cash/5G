@@ -1,0 +1,36 @@
+name: Security scan
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  codeql:
+    name: CodeQL C/C++ analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clean generated files
+        run: git clean -xffd
+
+      - name: Install C++ dependencies
+        run: ./scripts/install-linux-deps.sh --no-gui --no-windows
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: c-cpp
+
+      - name: Build with project script
+        run: ./scripts/build-linux.sh --no-gui --no-tests --clean
+
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@v3

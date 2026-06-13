@@ -15,6 +15,7 @@
 #include <secp256k1_ecdh.h>
 
 static secp256k1_context* secp256k1_context_sign = NULL;
+static int secp256k1_context_sign_refs = 0;
 
 /** These functions are taken from the libsecp256k1 distribution and are very ugly. */
 static int ec_privkey_import_der(const secp256k1_context* ctx, unsigned char *out32, const unsigned char *privkey, size_t privkeylen) {
@@ -302,7 +303,10 @@ bool ECC_InitSanityCheck() {
 }
 
 void ECC_Start() {
-    assert(secp256k1_context_sign == NULL);
+    if (secp256k1_context_sign != NULL) {
+        secp256k1_context_sign_refs++;
+        return;
+    }
 
     secp256k1_context *ctx = secp256k1_context_create(SECP256K1_CONTEXT_SIGN);
     assert(ctx != NULL);
@@ -318,11 +322,18 @@ void ECC_Start() {
     }
 
     secp256k1_context_sign = ctx;
+    secp256k1_context_sign_refs = 1;
 }
 
 void ECC_Stop() {
+    if (secp256k1_context_sign_refs > 1) {
+        secp256k1_context_sign_refs--;
+        return;
+    }
+
     secp256k1_context *ctx = secp256k1_context_sign;
     secp256k1_context_sign = NULL;
+    secp256k1_context_sign_refs = 0;
 
     if (ctx) {
         secp256k1_context_destroy(ctx);

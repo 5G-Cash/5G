@@ -1,4 +1,5 @@
 #include <math.h>
+#include <limits>
 namespace sigma{
 template<class Exponent, class GroupElement>
 SigmaPlusVerifier<Exponent, GroupElement>::SigmaPlusVerifier(
@@ -17,6 +18,32 @@ bool SigmaPlusVerifier<Exponent, GroupElement>::verify(
         const std::vector<GroupElement>& commits,
         const SigmaPlusProof<Exponent, GroupElement>& proof,
         bool fPadding) const {
+
+    if (n <= 1 || m <= 0 || proof.n != n || proof.m != m) {
+        LogPrintf("Sigma spend failed due to proof parameter mismatch.\n");
+        return false;
+    }
+
+    if (static_cast<std::size_t>(n) > std::numeric_limits<std::size_t>::max() / static_cast<std::size_t>(m)) {
+        LogPrintf("Sigma spend failed due to invalid proof parameters.\n");
+        return false;
+    }
+    const std::size_t expectedGenerators = static_cast<std::size_t>(n) * static_cast<std::size_t>(m);
+
+    if (h_.size() < expectedGenerators) {
+        LogPrintf("Sigma spend failed due to insufficient generator set.\n");
+        return false;
+    }
+
+    if (proof.Gk_.size() != static_cast<std::size_t>(m)) {
+        LogPrintf("Sigma spend failed due to incorrect Gk proof size.\n");
+        return false;
+    }
+
+    if (proof.r1Proof_.f_.size() != static_cast<std::size_t>(n - 1) * static_cast<std::size_t>(m)) {
+        LogPrintf("Sigma spend failed due to incorrect R1 proof response size.\n");
+        return false;
+    }
 
     R1ProofVerifier<Exponent, GroupElement> r1ProofVerifier(g_, h_, proof.B_, n, m);
     std::vector<Exponent> f;
@@ -64,6 +91,26 @@ bool SigmaPlusVerifier<Exponent, GroupElement>::verify(
     }
 
     std::size_t N = commits.size();
+    std::size_t expectedMaxCommits = 1;
+    for (int i = 0; i < m; ++i) {
+        if (expectedMaxCommits > std::numeric_limits<std::size_t>::max() / static_cast<std::size_t>(n)) {
+            LogPrintf("Sigma spend failed due to invalid anonymity set parameters.\n");
+            return false;
+        }
+        expectedMaxCommits *= static_cast<std::size_t>(n);
+    }
+    if (N > expectedMaxCommits || (fPadding && N < 2)) {
+        LogPrintf("Sigma spend failed due to invalid anonymity set size.\n");
+        return false;
+    }
+
+    for (std::size_t i = 0; i < N; ++i) {
+        if (!commits[i].isMember() || commits[i].isInfinity()) {
+            LogPrintf("Sigma spend failed due to anonymity set value outside of group.\n");
+            return false;
+        }
+    }
+
     std::vector<Exponent> f_i_;
     f_i_.reserve(N);
 

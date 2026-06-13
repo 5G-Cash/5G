@@ -742,7 +742,7 @@ if ENABLE_TESTS
 include Makefile.test.include
 else
 check-local:
-	$(error Please rerun configure with tests enabling flag)
+	@echo "Fiveg unit tests skipped because configure was run with --disable-tests."
 endif
 
 if ENABLE_ELYSIUM

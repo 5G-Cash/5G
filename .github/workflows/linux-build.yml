@@ -1,0 +1,38 @@
+name: Linux build
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+permissions:
+  contents: read
+
+jobs:
+  headless:
+    name: Headless build and smoke checks
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clean generated files
+        run: git clean -xffd
+
+      - name: Install Linux dependencies
+        run: ./scripts/install-linux-deps.sh --no-gui --no-windows
+
+      - name: Verify bundled Tor OpenSSL 3 patch
+        run: |
+          grep -q -- '--disable-unittests' configure.ac
+          grep -q '#ifdef SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION' src/tor/src/lib/tls/tortls_openssl.c
+
+      - name: Build
+        run: ./scripts/build-linux.sh --no-gui --no-tests --clean
+
+      - name: Smoke-test binaries
+        run: |
+          ./src/fivegd --version
+          ./src/fiveg-cli --version
+          ./src/fiveg-tx -?

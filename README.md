@@ -31,50 +31,81 @@ Linux Build Instructions and Notes
 
 Dependencies
 ----------------------
-You can use the "depscript.sh" to automatically install Dependencies to build VGC or manually install them using the syntax below
+The repository ships a Linux dependency installer that supports Ubuntu/Debian
+18.04 and newer, plus other common Linux package managers. The default installs
+headless daemon/test dependencies and avoids the legacy Berkeley DB 4.8 PPA so
+modern distributions can build with their packaged DB libraries.
 
-1.  Update packages
+For a one-shot full development environment matching the historical manual setup
+(build tools, Qt5 GUI packages, MinGW/NSIS Windows cross-build tools, CMake,
+zip/unzip, Boost, libevent, miniupnpc, and ZeroMQ), run:
 
-        sudo apt-get update
+```bash
+./scripts/setup-build-env.sh
+```
 
-2.  Install required packages
-        
-        sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libzmq3-dev libminizip-dev
+For a smaller headless Linux-only setup, run:
 
-3.  Install Berkeley DB 4.8
+```bash
+./scripts/install-linux-deps.sh --no-gui --no-windows
+```
 
-        sudo add-apt-repository ppa:bitcoin/bitcoin && sudo apt-get update && sudo apt-get install libdb4.8-dev libdb4.8++-dev
-    
-5.  Install QT 5
+For a Qt wallet build, include GUI dependencies:
 
-        sudo apt-get install libminiupnpc-dev && sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
-        
-        
+```bash
+./scripts/install-linux-deps.sh --gui
+```
+
+For Windows cross-build prerequisites on Linux, add:
+
+```bash
+./scripts/install-linux-deps.sh --windows
+```
+
+`depscript.sh` remains as a compatibility wrapper around the installer above.
 
 Building 5G-CASH
 ----------------------
-### 1. Static compile
-    git clone https://github.com/5G-Cash/5G.git
-    chmod -R +rwx 5G 
-    cd 5G/depends
-    make HOST=x86_64-linux-gnu
-    cd ..
-    ./autogen.sh
-    ./configure --prefix=$PWD/depends/x86_64-linux-gnu
-    make 
+### 1. Headless Linux build using system packages
+```bash
+git clone https://github.com/5G-Cash/5G.git
+cd 5G
+./scripts/install-linux-deps.sh --no-gui --no-windows
+./scripts/build-linux.sh --no-gui --no-tests
+```
 
+The build script runs `./autogen.sh`, configures with `--with-gui=no`, and
+passes `--with-incompatible-bdb` so Ubuntu 18.04+ and modern Linux distributions
+can use their packaged Berkeley DB versions.
 
-#### 2. Shared binary
-    git clone https://github.com/5G-Cash/5G.git
-    chmod -R +rwx 5G
-    cd 5G
-    ./autogen.sh
-    ./configure
-    make
-    
-### 3.  It is recommended to build and run the unit tests:
-    make check
+### 2. Qt GUI build using system packages
+```bash
+./scripts/install-linux-deps.sh --gui --no-windows
+./scripts/build-linux.sh --gui
+```
 
+### 3. Repository-managed dependency build
+For the broadest binary compatibility and to avoid distribution-specific library
+versions, build the dependency prefix first. The dependency prefix now builds
+OpenSSL 3.5 LTS instead of the legacy OpenSSL 1.0.x line.
+
+```bash
+./scripts/build-linux.sh --depends --no-gui
+```
+
+### 4. Build checks and optional unit tests
+The default Linux path is a compile plus binary smoke check. The legacy Boost
+unit-test binary is still available, but it is opt-in because several historical
+fixtures are not reliable on modern distro toolchains.
+
+```bash
+./src/fivegd --version
+./src/fiveg-cli --version
+./src/fiveg-tx -?
+
+# Optional legacy unit-test run
+./scripts/build-linux.sh --no-gui --tests
+```
 
 Setting up a Fivegnode
 ==================================

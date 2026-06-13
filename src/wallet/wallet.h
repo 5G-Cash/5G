@@ -41,6 +41,8 @@
 
 #include <boost/shared_ptr.hpp>
 
+struct CBlockTemplate;
+
 extern CWallet* pwalletMain;
 extern CHDMintWallet* zwalletMain;
 

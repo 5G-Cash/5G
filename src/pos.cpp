@@ -9,18 +9,79 @@
 
 #include "pos.h"
 
+#include "arith_uint256.h"
+#include "clientversion.h"
+#include "consensus/consensus.h"
+#include "consensus/params.h"
+#include "hash.h"
+#include "script/interpreter.h"
+
+#if defined(__has_include) && __has_include(<boost/foreach.hpp>) && __has_include(<boost/multi_index_container.hpp>) && __has_include(<boost/filesystem.hpp>)
 #include "chain.h"
 #include "chainparams.h"
-#include "clientversion.h"
 #include "coins.h"
-#include "consensus/consensus.h"
-#include "hash.h"
 #include "main.h"
+#include "util.h"
+#else
+#include <vector>
+
+class CBlockIndex
+{
+public:
+    int nHeight;
+    uint256 nStakeModifier;
+
+    int64_t GetBlockTime() const;
+    const CBlockIndex* GetAncestor(int height) const;
+    uint256 GetBlockHash() const;
+};
+
+class CCoins
+{
+public:
+    CCoins(const CTransaction& txIn, int nHeightIn);
+
+    int nHeight;
+    std::vector<CTxOut> vout;
+};
+
+class CChainParams
+{
+public:
+    const Consensus::Params& GetConsensus() const;
+};
+
+const CChainParams& Params();
+
+class BlockMap
+{
+public:
+    size_t count(const uint256& hash) const;
+    CBlockIndex*& operator[](const uint256& hash);
+};
+
+extern BlockMap mapBlockIndex;
+extern bool fDebug;
+bool GetTransaction(const uint256 &hash, CTransaction &tx, const Consensus::Params& params, uint256 &hashBlock, bool fAllowSlow = false);
+
+template<typename... Args>
+static inline bool error(const char* fmt, const Args&... args)
+{
+    (void)fmt;
+    return false;
+}
+
+template<typename... Args>
+static inline int LogPrintf(const char* fmt, const Args&... args)
+{
+    (void)fmt;
+    return 0;
+}
+#endif
+
 #include "uint256.h"
 #include "primitives/transaction.h"
 #include <stdio.h>
-#include "util.h"
-#include "fivegnode-sync.h"
 
 // Stake Modifier (hash modifier of proof-of-stake):
 // The purpose of stake modifier is to prevent a txout (coin) owner from
@@ -32,8 +93,14 @@ uint256 ComputeStakeModifier(const CBlockIndex* pindexPrev, const uint256& kerne
     if (!pindexPrev)
         return uint256(); // genesis block's modifier is 0
 
+    const int STAKE_MODIFIER_LOOKBACK = 64;
+    const CBlockIndex* pindexEntropy = pindexPrev;
+    if (pindexPrev->nHeight >= STAKE_MODIFIER_LOOKBACK) {
+        pindexEntropy = pindexPrev->GetAncestor(pindexPrev->nHeight - STAKE_MODIFIER_LOOKBACK);
+    }
+
     CHashWriter ss(SER_GETHASH, 0);
-    ss << kernel << pindexPrev->nStakeModifier;
+    ss << kernel << pindexPrev->nStakeModifier << pindexEntropy->GetBlockHash();
     return ss.GetHash();
 }
 
