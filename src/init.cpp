@@ -61,6 +61,8 @@ static CZMQReplierInterface* pzmqReplierInterface = NULL;
 
 #include <stdint.h>
 #include <stdio.h>
+#include <cstdlib>
+#include <cstring>
 
 #ifndef WIN32
 #include <string.h>
@@ -127,9 +129,51 @@ extern "C" {
 
 
 static char *convert_str(const std::string &s) {
-    char *pc = new char[s.size()+1];
-    std::strcpy(pc, s.c_str());
+    char *pc = new char[s.size() + 1];
+    std::memcpy(pc, s.c_str(), s.size() + 1);
     return pc;
+}
+
+static bool IsExecutableFile(const fs::path& path)
+{
+    struct stat sb;
+    if (stat(path.string().c_str(), &sb) != 0) {
+        return false;
+    }
+#ifdef WIN32
+    return (sb.st_mode & S_IFREG) != 0;
+#else
+    return (sb.st_mode & S_IFREG) != 0 && (sb.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)) != 0;
+#endif
+}
+
+static bool FindExecutableInPath(const std::string& executable)
+{
+    if (IsExecutableFile(executable)) {
+        return true;
+    }
+
+    const char* path_env = std::getenv("PATH");
+    if (path_env == nullptr) {
+        return false;
+    }
+
+    std::vector<std::string> paths;
+#ifdef WIN32
+    const char path_separator = ';';
+#else
+    const char path_separator = ':';
+#endif
+    boost::split(paths, path_env, boost::is_any_of(std::string(1, path_separator)), boost::token_compress_off);
+
+    for (const std::string& path : paths) {
+        fs::path candidate = path.empty() ? fs::path(".") : fs::path(path);
+        candidate /= executable;
+        if (IsExecutableFile(candidate)) {
+            return true;
+        }
+    }
+    return false;
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1049,11 +1093,9 @@ void RunTor(){
 	printf("TOR thread started.\n");
 
 	boost::optional < std::string > clientTransportPlugin;
-	struct stat sb;
-	if ((stat("obfs4proxy", &sb) == 0 && sb.st_mode & S_IXUSR)
-			|| !std::system("which obfs4proxy")) {
+	if (FindExecutableInPath("obfs4proxy")) {
 		clientTransportPlugin = "obfs4 exec obfs4proxy";
-	} else if (stat("obfs4proxy.exe", &sb) == 0 && sb.st_mode & S_IXUSR) {
+	} else if (FindExecutableInPath("obfs4proxy.exe")) {
 		clientTransportPlugin = "obfs4 exec obfs4proxy.exe";
 	}
 
@@ -1091,7 +1133,9 @@ void RunTor(){
 
 	tor_main(argv_c.size(), &argv_c[0]);
 
-
+	for (char* arg : argv_c) {
+		delete[] arg;
+	}
 }
 
 
