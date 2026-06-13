@@ -286,7 +286,7 @@ public:
 
     fivegnode_info_t GetFivegnodeInfo(const CPubKey& pubKeyFivegnode);
 
-    char* GetNotQualifyReason(CFivegnode& mn, int nBlockHeight, bool fFilterSigTime, int nMnCount);
+    std::string GetNotQualifyReason(CFivegnode& mn, int nBlockHeight, bool fFilterSigTime, int nMnCount);
 
     UniValue GetNotQualifyReasonToUniValue(CFivegnode& mn, int nBlockHeight, bool fFilterSigTime, int nMnCount);
 
